@@ -31,6 +31,7 @@ echo '
 zend_extension=xdebug.so
 display_errors=on
 date.timezone=Europe/Madrid
+realpath_cache_size=2M
 
 [XDebug]
 xdebug.default_enable = 1
@@ -40,9 +41,9 @@ xdebug.remote_autostart = 1
 xdebug.remote_port = 9000
 xdebug.remote_handler=dbgp
 xdebug.max_nesting_level=250
-' > /etc/php5/mods-available/xdebug.ini
+' > /etc/php5/mods-available/symfony.ini
 php5enmod mcrypt
-php5enmod xdebug
+php5enmod symfony
 service apache2 restart
 
 echo 'Instalando Composer y el instalador Symfony'
