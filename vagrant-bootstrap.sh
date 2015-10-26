@@ -28,7 +28,6 @@ $cfg["Servers"][1]["AllowNoPassword"] = TRUE;
 echo 'Configurando PHP'
 echo '================'
 echo '
-zend_extension=xdebug.so
 display_errors=on
 date.timezone=Europe/Madrid
 realpath_cache_size=2M
