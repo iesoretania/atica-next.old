@@ -1,0 +1,29 @@
+{
+  "name": "atica",
+  "version": "6.0.0",
+  "description": "Aplicación web para la gestión de centros educativos",
+  "dependencies": {
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-sass": "^2.1.0",
+    "gulp-concat": "^2.6.0",
+    "autoprefixer": "^6.1.0",
+    "gulp-load-plugins": "^1.1.0",
+    "gulp-minify-css": "^1.2.1"
+  },
+  "devDependencies": {
+  },
+  "scripts": {
+    "test": "phpunit -c app/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iesoretania/atica-next.git"
+  },
+  "author": "Luis Ramón López López",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/iesoretania/atica-next/issues"
+  },
+  "homepage": "https://github.com/iesoretania/atica-next"
+}

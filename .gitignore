@@ -3,6 +3,8 @@
 /app/cache/*
 /app/config/parameters.yml
 /app/logs/*
+/web/config.php
+/app/SymfonyRequirements.php
 !app/cache/.gitkeep
 !app/logs/.gitkeep
 /app/phpunit.xml
@@ -11,3 +13,5 @@
 /bin/
 /composer.phar
 /.vagrant
+/web/dist
+/node_modules
