@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
 
-apt-get -q update
-
 export DEBIAN_FRONTEND=noninteractive
 echo 'Instalando componentes'
 echo '======================'
+
+echo 'nodejs'
+curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+# apt-get -q update
+
 echo 'phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2' | debconf-set-selections
-apt-get -q -y install apache2 php5 mysql-server mysql-client phpmyadmin wget php5-intl php5-mcrypt php5-xdebug php5-curl
+apt-get -q -y install apache2 php5 mysql-server mysql-client phpmyadmin wget php5-intl php5-mcrypt php5-xdebug php5-curl nodejs
+
+echo 'PATH=$PATH:/vagrant/node_modules/.bin
+' >> /home/vagrant/.profile
 
 echo 'Configurando Apache2'
 echo '===================='
@@ -52,3 +58,10 @@ chmod +x composer.phar
 mv composer.phar /usr/local/bin/composer
 curl -LsS http://symfony.com/installer -o /usr/local/bin/symfony
 chmod +x /usr/local/bin/symfony
+su - vagrant -c "cd /vagrant; composer install"
+
+echo 'Instalando componentes de npm'
+echo '============================='
+cd /vagrant
+su - vagrant -c "cd /vagrant; npm install"
+
