@@ -62,6 +62,6 @@ su - vagrant -c "cd /vagrant; composer install"
 
 echo 'Instalando componentes de npm'
 echo '============================='
-cd /vagrant
+npm install -g gulp
 su - vagrant -c "cd /vagrant; npm install"
 
