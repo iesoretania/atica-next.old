@@ -4,9 +4,55 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "df36e3eeae481d605e544d7ff6495711",
-    "content-hash": "79746f7467a61781ae53fdbf946be90d",
+    "hash": "54ab8a608b4bad479f4ac1cec597b24b",
+    "content-hash": "af0ac782e9b4d0f069d131d7731add43",
     "packages": [
+        {
+            "name": "austinsmorris/doctrine-dbal-datetimeutc",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/austinsmorris/doctrine-dbal-datetimeutc.git",
+                "reference": "3a2ddb4ce9515db75def0a4824b118db4376675e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/austinsmorris/doctrine-dbal-datetimeutc/zipball/3a2ddb4ce9515db75def0a4824b118db4376675e",
+                "reference": "3a2ddb4ce9515db75def0a4824b118db4376675e",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "~2.4",
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ASM\\Doctrine\\DBAL\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Austin Morris",
+                    "email": "austin.morris@gmail.com"
+                }
+            ],
+            "description": "A custom Doctine DBAL type to use PHP DateTime objects set to the UTC timezone.",
+            "keywords": [
+                "datetime",
+                "dbal",
+                "doctrine",
+                "utc"
+            ],
+            "time": "2014-11-27 20:10:47"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.2.7",
