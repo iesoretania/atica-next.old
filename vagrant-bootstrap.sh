@@ -58,7 +58,7 @@ chmod +x composer.phar
 mv composer.phar /usr/local/bin/composer
 curl -LsS http://symfony.com/installer -o /usr/local/bin/symfony
 chmod +x /usr/local/bin/symfony
-su - vagrant -c "cd /vagrant; composer install"
+#su - vagrant -c "cd /vagrant; composer install"
 
 echo 'Instalando componentes de npm'
 echo '============================='
