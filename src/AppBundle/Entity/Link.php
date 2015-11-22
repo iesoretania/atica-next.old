@@ -31,7 +31,7 @@ class Link
     /**
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Module")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(referencedColumnName="name", nullable=false)
      */
     protected $module;
 

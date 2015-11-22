@@ -76,7 +76,7 @@ class User
      * @ORM\Column(type="boolean")
      * @var bool
      */
-    protected $active;
+    protected $enabled;
 
     /**
      * @ORM\Column(type="boolean")
@@ -89,6 +89,12 @@ class User
      * @var Membership[]
      */
     protected $memberships;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Profile", inversedBy="users")
+     * @var Profile[]
+     */
+    protected $profiles;
 
     /**
      * Constructor
@@ -229,25 +235,25 @@ class User
     }
 
     /**
-     * Get active
+     * Get enabled
      *
      * @return boolean
      */
-    public function isActive()
+    public function isEnabled()
     {
-        return $this->active;
+        return $this->enabled;
     }
 
     /**
-     * Set active
+     * Set enabled
      *
-     * @param boolean $active
+     * @param boolean $enabled
      *
      * @return User
      */
-    public function setActive($active)
+    public function setEnabled($enabled)
     {
-        $this->active = $active;
+        $this->enabled = $enabled;
 
         return $this;
     }
