@@ -15,3 +15,4 @@
 /.vagrant
 /web/dist
 /node_modules
+*~
