@@ -91,10 +91,16 @@ class Organization
     protected $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="Membership", mappedBy="organizatiob")
+     * @ORM\OneToMany(targetEntity="Membership", mappedBy="organization")
      * @var Membership[]
      */
     protected $memberships;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Link", mappedBy="organization")
+     * @var Link[]
+     */
+    protected $links;
 
     /**
      * Constructor
@@ -102,6 +108,7 @@ class Organization
     public function __construct()
     {
         $this->memberships = new ArrayCollection();
+        $this->links = new ArrayCollection();
     }
 
     /**
@@ -333,13 +340,15 @@ class Organization
     /**
      * Add membership
      *
-     * @param \AppBundle\Entity\Membership $membership
+     * @param Membership $membership
      *
      * @return Organization
      */
-    public function addMembership(\AppBundle\Entity\Membership $membership)
+    public function addMembership(Membership $membership)
     {
-        $this->memberships[] = $membership;
+        if (!$this->memberships->contains($membership)) {
+            $this->memberships->add($membership);
+        }
 
         return $this;
     }
@@ -347,11 +356,17 @@ class Organization
     /**
      * Remove membership
      *
-     * @param \AppBundle\Entity\Membership $membership
+     * @param Membership $membership
+     *
+     * @return User
      */
-    public function removeMembership(\AppBundle\Entity\Membership $membership)
+    public function removeMembership(Membership $membership)
     {
-        $this->memberships->removeElement($membership);
+        if ($this->memberships->contains($membership)) {
+            $this->memberships->removeElement($membership);
+        }
+
+        return $this;
     }
 
     /**
@@ -376,6 +391,64 @@ class Organization
                 return $membership->getUser();
             },
             $this->memberships->toArray()
+        );
+    }
+
+    /**
+     * Add link
+     *
+     * @param Link $link
+     *
+     * @return Organization
+     */
+    public function addLink(Link $link)
+    {
+        if (!$this->links->contains($link)) {
+            $this->links->add($link);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove link
+     *
+     * @param Link $link
+     *
+     * @return Organization
+     */
+    public function removeLink(Link $link)
+    {
+        if ($this->links->contains($link)) {
+            $this->links->removeElement($link);
+        }
+
+        return $this;
+
+    }
+
+    /**
+     * Get links
+     *
+     * @return Collection
+     */
+    public function getLinks()
+    {
+        return $this->links;
+    }
+
+    /**
+     * Get modules
+     *
+     * @return Collection
+     */
+    public function getModules()
+    {
+        return array_map(
+            function ($link) {
+                return $link->getModule();
+            },
+            $this->links->toArray()
         );
     }
 }

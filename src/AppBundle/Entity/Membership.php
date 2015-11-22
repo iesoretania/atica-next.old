@@ -241,16 +241,6 @@ class Membership
     }
 
     /**
-     * Get localAdministrator
-     *
-     * @return boolean
-     */
-    public function getLocalAdministrator()
-    {
-        return $this->localAdministrator;
-    }
-
-    /**
      * @ORM\PreRemove
      */
     public function preRemoveCallback()
