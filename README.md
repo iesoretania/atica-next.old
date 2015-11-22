@@ -3,7 +3,7 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/iesoretania/atica-next/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/iesoretania/atica-next/?branch=master)
 [![Code Climate](https://codeclimate.com/github/iesoretania/atica-next/badges/gpa.svg)](https://codeclimate.com/github/iesoretania/atica-next)
 
-Evolución de la aplicación web para la gestión de centros educativos (en desarrollo, aún no está lista para producción).
+Evolución de la aplicación web para la gestión documental de centros educativos (en desarrollo, aún no está lista para producción).
 
 Aunque su origen se encuentra en la gestión documental, la nueva iteración permitirá la integración de distintos
 módulos. En concreto, están proyectados módulos para la gestión de la Formación en Centros de Trabajo (FCT), de
