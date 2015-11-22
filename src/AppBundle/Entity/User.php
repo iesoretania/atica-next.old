@@ -20,10 +20,12 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity()
  */
 class User
 {
@@ -83,6 +85,20 @@ class User
     protected $globalAdministrator;
 
     /**
+     * @ORM\OneToMany(targetEntity="Membership", mappedBy="user")
+     * @var Membership[]
+     */
+    protected $memberships;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->memberships = new ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -90,6 +106,16 @@ class User
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get userName
+     *
+     * @return string
+     */
+    public function getUserName()
+    {
+        return $this->userName;
     }
 
     /**
@@ -107,13 +133,13 @@ class User
     }
 
     /**
-     * Get userName
+     * Get email
      *
      * @return string
      */
-    public function getUserName()
+    public function getEmail()
     {
-        return $this->userName;
+        return $this->email;
     }
 
     /**
@@ -131,13 +157,13 @@ class User
     }
 
     /**
-     * Get email
+     * Get password
      *
      * @return string
      */
-    public function getEmail()
+    public function getPassword()
     {
-        return $this->email;
+        return $this->password;
     }
 
     /**
@@ -155,13 +181,13 @@ class User
     }
 
     /**
-     * Get password
+     * Get token
      *
      * @return string
      */
-    public function getPassword()
+    public function getToken()
     {
-        return $this->password;
+        return $this->token;
     }
 
     /**
@@ -179,13 +205,13 @@ class User
     }
 
     /**
-     * Get token
+     * Get tokenValidity
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getToken()
+    public function getTokenValidity()
     {
-        return $this->token;
+        return $this->tokenValidity;
     }
 
     /**
@@ -203,13 +229,13 @@ class User
     }
 
     /**
-     * Get tokenValidity
+     * Get active
      *
-     * @return \DateTime
+     * @return boolean
      */
-    public function getTokenValidity()
+    public function isActive()
     {
-        return $this->tokenValidity;
+        return $this->active;
     }
 
     /**
@@ -227,13 +253,13 @@ class User
     }
 
     /**
-     * Get active
+     * Get globalAdministrator
      *
      * @return boolean
      */
-    public function isActive()
+    public function isGlobalAdministrator()
     {
-        return $this->active;
+        return $this->globalAdministrator;
     }
 
     /**
@@ -251,33 +277,13 @@ class User
     }
 
     /**
-     * Get globalAdministrator
+     * Get person
      *
-     * @return boolean
+     * @return Person
      */
-    public function isGlobalAdministrator()
+    public function getPerson()
     {
-        return $this->globalAdministrator;
-    }
-
-    /**
-     * Get active
-     *
-     * @return boolean
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * Get globalAdministrator
-     *
-     * @return boolean
-     */
-    public function getGlobalAdministrator()
-    {
-        return $this->globalAdministrator;
+        return $this->person;
     }
 
     /**
@@ -287,7 +293,7 @@ class User
      *
      * @return User
      */
-    public function setPerson(Person $person = null)
+    public function setPerson(Person $person)
     {
         $this->person = $person;
 
@@ -295,12 +301,59 @@ class User
     }
 
     /**
-     * Get person
+     * Add membership
      *
-     * @return Person
+     * @param Membership $membership
+     *
+     * @return User
      */
-    public function getPerson()
+    public function addMembership(Membership $membership)
     {
-        return $this->person;
+        if (!$this->memberships->contains($membership)) {
+            $this->memberships->add($membership);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove membership
+     *
+     * @param Membership $membership
+     *
+     * @return User
+     */
+    public function removeMembership(Membership $membership)
+    {
+        if ($this->memberships->contains($membership)) {
+            $this->memberships->removeElement($membership);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get memberships
+     *
+     * @return Collection
+     */
+    public function getMemberships()
+    {
+        return $this->memberships;
+    }
+
+    /**
+     * Get organizations
+     *
+     * @return Collection|Organization[]|null
+     */
+    public function getOrganizations()
+    {
+        return array_map(
+           function ($membership) {
+                return $membership->getOrganization();
+            },
+            $this->memberships->toArray()
+        );
     }
 }

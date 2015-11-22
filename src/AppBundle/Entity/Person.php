@@ -42,6 +42,12 @@ class Person
      * @ORM\Column(type="string")
      * @var string
      */
+    protected $reference;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     protected $firstName;
 
     /**
@@ -69,13 +75,14 @@ class Person
     protected $initials;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @var string
      */
     protected $description;
 
     /**
      * @ORM\OneToOne(targetEntity="User", mappedBy="person")
+     * @var User
      */
     protected $user;
 
@@ -87,6 +94,30 @@ class Person
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set reference
+     *
+     * @param string $reference
+     *
+     * @return Person
+     */
+    public function setReference($reference)
+    {
+        $this->reference = $reference;
+
+        return $this;
+    }
+
+    /**
+     * Get reference
+     *
+     * @return string
+     */
+    public function getReference()
+    {
+        return $this->reference;
     }
 
     /**
