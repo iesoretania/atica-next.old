@@ -21,11 +21,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity
+ * @Gedmo\Tree(type="closure")
+ * @Gedmo\TreeClosure(class="AppBundle\Entity\ElementPath")
+ * @ORM\Entity(repositoryClass="ElementRepository")
  */
-class Enumeration
+class Element
 {
     /**
      * @ORM\Id
@@ -47,10 +50,23 @@ class Enumeration
     protected $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Module")
-     * @ORM\JoinColumn(referencedColumnName="name")
+     * @ORM\ManyToOne(targetEntity="Enumeration")
+     * @ORM\JoinColumn(nullable=false)
      */
-    protected $module;
+    protected $enumeration;
+
+    /**
+     * @ORM\Column(name="level", type="integer", nullable=true)
+     * @Gedmo\TreeLevel
+     */
+    private $level;
+
+    /**
+     * @Gedmo\TreeParent
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="Element")
+     */
+    private $parent;
 
     /**
      * Get id
@@ -67,7 +83,7 @@ class Enumeration
      *
      * @param string $name
      *
-     * @return Enumeration
+     * @return Element
      */
     public function setName($name)
     {
@@ -91,7 +107,7 @@ class Enumeration
      *
      * @param string $description
      *
-     * @return Enumeration
+     * @return Element
      */
     public function setDescription($description)
     {
@@ -111,26 +127,74 @@ class Enumeration
     }
 
     /**
-     * Set module
+     * Set level
      *
-     * @param \AppBundle\Entity\Module $module
+     * @param integer $level
      *
-     * @return Enumeration
+     * @return Element
      */
-    public function setModule(\AppBundle\Entity\Module $module = null)
+    public function setLevel($level)
     {
-        $this->module = $module;
+        $this->level = $level;
 
         return $this;
     }
 
     /**
-     * Get module
+     * Get level
      *
-     * @return \AppBundle\Entity\Module
+     * @return integer
      */
-    public function getModule()
+    public function getLevel()
     {
-        return $this->module;
+        return $this->level;
+    }
+
+    /**
+     * Set enumeration
+     *
+     * @param Enumeration $enumeration
+     *
+     * @return Element
+     */
+    public function setEnumeration(Enumeration $enumeration)
+    {
+        $this->enumeration = $enumeration;
+
+        return $this;
+    }
+
+    /**
+     * Get enumeration
+     *
+     * @return Enumeration
+     */
+    public function getEnumeration()
+    {
+        return $this->enumeration;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param Element $parent
+     *
+     * @return Element
+     */
+    public function setParent(Element $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return Element
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 }
