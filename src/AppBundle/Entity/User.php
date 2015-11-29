@@ -91,10 +91,10 @@ class User
     protected $memberships;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Profile", inversedBy="users")
-     * @var Profile[]
+     * @ORM\OneToMany(targetEntity="Role", mappedBy="user")
+     * @var Roles[]
      */
-    protected $profiles;
+    protected $roles;
 
     /**
      * Constructor
@@ -356,10 +356,67 @@ class User
     public function getOrganizations()
     {
         return array_map(
-           function ($membership) {
+            function ($membership) {
                 return $membership->getOrganization();
             },
             $this->memberships->toArray()
+        );
+    }
+
+    /**
+     * Add role
+     *
+     * @param Role $role
+     *
+     * @return User
+     */
+    public function addRole(Role $role)
+    {
+        if (!$this->roles->contains($role)) {
+            $this->roles->add($role);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove role
+     *
+     * @param Role $role
+     *
+     * @return User
+     */
+    public function removeRole(Role $role)
+    {
+        if ($this->roles->contains($role)) {
+            $this->roles->removeElement($role);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get roles
+     *
+     * @return Collection
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * Get profiles
+     *
+     * @return Collection|Profile[]|null
+     */
+    public function getProfiles()
+    {
+        return array_map(
+           function ($role) {
+                return $role->getProfile();
+            },
+            $this->roles->toArray()
         );
     }
 }

@@ -79,10 +79,16 @@ class Profile
     protected $module;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="profiles")
-     * @var User[]
+     * @ORM\ManyToOne(targetEntity="Enumeration")
+     * @ORM\JoinColumn(nullable=false)
      */
-    protected $users;
+    protected $enumeration;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Role", mappedBy="profile")
+     * @var Role[]
+     */
+    protected $roles;
 
     /**
      * Constructor
@@ -225,11 +231,11 @@ class Profile
     /**
      * Set organization
      *
-     * @param \AppBundle\Entity\Organization $organization
+     * @param Organization $organization
      *
      * @return Profile
      */
-    public function setOrganization(\AppBundle\Entity\Organization $organization)
+    public function setOrganization(Organization $organization)
     {
         $this->organization = $organization;
 
@@ -239,7 +245,7 @@ class Profile
     /**
      * Get organization
      *
-     * @return \AppBundle\Entity\Organization
+     * @return Organization
      */
     public function getOrganization()
     {
@@ -249,11 +255,11 @@ class Profile
     /**
      * Set module
      *
-     * @param \AppBundle\Entity\Module $module
+     * @param Module $module
      *
      * @return Profile
      */
-    public function setModule(\AppBundle\Entity\Module $module = null)
+    public function setModule(Module $module = null)
     {
         $this->module = $module;
 
@@ -263,7 +269,7 @@ class Profile
     /**
      * Get module
      *
-     * @return \AppBundle\Entity\Module
+     * @return Module
      */
     public function getModule()
     {
@@ -271,43 +277,83 @@ class Profile
     }
 
     /**
-     * Add user
+     * Set enumeration
      *
-     * @param User $user
+     * @param Enumeration $enumeration
      *
      * @return Profile
      */
-    public function addUser(User $user)
+    public function setEnumeration(Enumeration $enumeration = null)
     {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
+        $this->enumeration = $enumeration;
+
+        return $this;
+    }
+
+    /**
+     * Get enumeration
+     *
+     * @return Enumeration
+     */
+    public function getEnumeration()
+    {
+        return $this->enumeration;
+    }
+
+    /**
+     * Add role
+     *
+     * @param Role $role
+     *
+     * @return User
+     */
+    public function addRole(Role $role)
+    {
+        if (!$this->roles->contains($role)) {
+            $this->roles->add($role);
         }
 
         return $this;
     }
 
     /**
-     * Remove user
+     * Remove role
      *
-     * @param User $user
-     * @return Profile
+     * @param Membership $membership
+     *
+     * @return User
      */
-    public function removeUser(User $user)
+    public function removeRole(Role $role)
     {
-        if ($this->users->contains($user)) {
-            $this->users->removeElement($user);
+        if ($this->roles->contains($role)) {
+            $this->roles->removeElement($role);
         }
 
         return $this;
+    }
+
+    /**
+     * Get roles
+     *
+     * @return Collection
+     */
+    public function getRoles()
+    {
+        return $this->roles;
     }
 
     /**
      * Get users
      *
-     * @return Collection
+     * @return Collection|User[]|null
      */
     public function getUsers()
     {
-        return $this->users;
+        return array_map(
+            function ($role) {
+                return $role->getUser();
+            },
+            $this->roles->toArray()
+        );
     }
 }

@@ -30,14 +30,14 @@ class Membership
 {
     /**
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="organizations")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="memberships")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $user;
 
     /**
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="memberships")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $organization;
