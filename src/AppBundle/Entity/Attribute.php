@@ -57,6 +57,12 @@ class Attribute
     protected $multiple;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    protected $description;
+
+    /**
      * @Gedmo\SortablePosition
      * @ORM\Column(type="integer")
      * @var int
@@ -190,5 +196,29 @@ class Attribute
     public function getTarget()
     {
         return $this->target;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Attribute
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }
