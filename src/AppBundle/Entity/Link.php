@@ -56,4 +56,76 @@ class Link
         $this->setModule(null);
         $this->setOrganization(null);
     }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     *
+     * @return Link
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * Set module
+     *
+     * @param Module $module
+     *
+     * @return Link
+     */
+    public function setModule(Module $module)
+    {
+        $this->module = $module;
+
+        return $this;
+    }
+
+    /**
+     * Get module
+     *
+     * @return Module
+     */
+    public function getModule()
+    {
+        return $this->module;
+    }
+
+    /**
+     * Set organization
+     *
+     * @param Organization $organization
+     *
+     * @return Link
+     */
+    public function setOrganization(Organization $organization)
+    {
+        $this->organization = $organization;
+
+        return $this;
+    }
+
+    /**
+     * Get organization
+     *
+     * @return Organization
+     */
+    public function getOrganization()
+    {
+        return $this->organization;
+    }
 }
