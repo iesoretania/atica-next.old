@@ -20,10 +20,13 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity
+ *
+ * @ORM\Entity(repositoryClass="Gedmo\Sortable\Entity\Repository\SortableRepository")
  */
 class Enumeration
 {
@@ -47,10 +50,45 @@ class Enumeration
     protected $description;
 
     /**
+     * @Gedmo\SortableGroup
      * @ORM\ManyToOne(targetEntity="Module")
      * @ORM\JoinColumn(referencedColumnName="name")
      */
     protected $module;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Attribute", mappedBy="source")
+     * @var Attribute[]
+     */
+    protected $attributes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Attribute", mappedBy="target")
+     * @var Attribute[]
+     */
+    protected $related;
+
+    /**
+     * @Gedmo\SortableGroup
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Organization")
+     * @var Organization
+     */
+    protected $organization;
+
+    /**
+     * @Gedmo\SortablePosition
+     * @ORM\Column(name="position", type="integer")
+     */
+    protected $position;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->attributes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->related = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -111,13 +149,37 @@ class Enumeration
     }
 
     /**
-     * Set module
+     * Set position
      *
-     * @param \AppBundle\Entity\Module $module
+     * @param integer $position
      *
      * @return Enumeration
      */
-    public function setModule(\AppBundle\Entity\Module $module = null)
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * Set module
+     *
+     * @param Module $module
+     *
+     * @return Enumeration
+     */
+    public function setModule(Module $module = null)
     {
         $this->module = $module;
 
@@ -127,10 +189,118 @@ class Enumeration
     /**
      * Get module
      *
-     * @return \AppBundle\Entity\Module
+     * @return Module
      */
     public function getModule()
     {
         return $this->module;
+    }
+
+    /**
+     * Add attribute
+     *
+     * @param Attribute $attribute
+     *
+     * @return Enumeration
+     */
+    public function addAttribute(Attribute $attribute)
+    {
+        if (!$this->attributes->contains($attribute)) {
+            $this->attributes->add($attribute);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove attribute
+     *
+     * @param Attribute $attribute
+     *
+     * @return Enumeration
+     */
+    public function removeAttribute(Attribute $attribute)
+    {
+        if ($this->attributes->contains($attribute)) {
+            $this->attributes->removeElement($attribute);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get attributes
+     *
+     * @return Collection
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
+
+    /**
+     * Add related
+     *
+     * @param Attribute $related
+     *
+     * @return Enumeration
+     */
+    public function addRelated(Attribute $related)
+    {
+        if (!$this->related->contains($related)) {
+            $this->related->add($related);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove related
+     *
+     * @param Attribute $related
+     *
+     * @return Enumeration
+     */
+    public function removeRelated(Attribute $related)
+    {
+        if ($this->related->contains($related)) {
+            $this->related->removeElement($related);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get related
+     *
+     * @return Collection
+     */
+    public function getRelated()
+    {
+        return $this->related;
+    }
+
+    /**
+     * Set organization
+     *
+     * @param Organization $organization
+     *
+     * @return Enumeration
+     */
+    public function setOrganization(Organization $organization = null)
+    {
+        $this->organization = $organization;
+
+        return $this;
+    }
+
+    /**
+     * Get organization
+     *
+     * @return Organization
+     */
+    public function getOrganization()
+    {
+        return $this->organization;
     }
 }

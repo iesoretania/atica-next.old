@@ -59,14 +59,20 @@ class Element
      * @ORM\Column(name="level", type="integer", nullable=true)
      * @Gedmo\TreeLevel
      */
-    private $level;
+    protected $level;
 
     /**
      * @Gedmo\TreeParent
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
      * @ORM\ManyToOne(targetEntity="Element")
      */
-    private $parent;
+    protected $parent;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @var int
+     */
+    protected $position;
 
     /**
      * Get id
@@ -196,5 +202,29 @@ class Element
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * Set position
+     *
+     * @param integer $position
+     *
+     * @return Element
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 }
