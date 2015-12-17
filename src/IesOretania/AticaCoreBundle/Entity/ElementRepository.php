@@ -18,7 +18,7 @@
   along with this program.  If not, see [http://www.gnu.org/licenses/].
 */
 
-namespace AppBundle\Entity;
+namespace IesOretania\AticaCoreBundle\Entity;
 
 use Gedmo\Tree\Entity\MappedSuperclass\AbstractClosure;
 use Gedmo\Tree\Entity\Repository\ClosureTreeRepository;

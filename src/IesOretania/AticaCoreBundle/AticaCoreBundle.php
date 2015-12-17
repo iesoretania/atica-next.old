@@ -18,14 +18,10 @@
   along with this program.  If not, see [http://www.gnu.org/licenses/].
 */
 
-namespace AppBundle\Entity;
+namespace IesOretania\AticaCoreBundle;
 
-use Gedmo\Tree\Entity\MappedSuperclass\AbstractClosure;
-use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-/**
- * @ORM\Entity
- */
-class ElementPath extends AbstractClosure
+class AticaCoreBundle extends Bundle
 {
 }

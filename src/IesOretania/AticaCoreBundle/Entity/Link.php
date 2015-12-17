@@ -18,7 +18,7 @@
   along with this program.  If not, see [http://www.gnu.org/licenses/].
 */
 
-namespace AppBundle\Entity;
+namespace IesOretania\AticaCoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -26,106 +26,106 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
-class Role
+class Link
 {
     /**
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="roles")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="Module")
+     * @ORM\JoinColumn(referencedColumnName="name", nullable=false)
      */
-    protected $user;
+    protected $module;
 
     /**
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Profile", inversedBy="roles")
+     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="links")
      * @ORM\JoinColumn(nullable=false)
      */
-    protected $profile;
+    protected $organization;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Element")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="boolean")
+     * @var bool
      */
-    protected $element;
+    protected $active;
 
     /**
      * @ORM\PreRemove
      */
     public function preRemoveCallback()
     {
-        $this->setUser(null);
-        $this->setProfile(null);
+        $this->setModule(null);
+        $this->setOrganization(null);
     }
 
     /**
-     * Set user
+     * Set active
      *
-     * @param User $user
+     * @param boolean $active
      *
-     * @return Role
+     * @return Link
      */
-    public function setUser(User $user)
+    public function setActive($active)
     {
-        $this->user = $user;
+        $this->active = $active;
 
         return $this;
     }
 
     /**
-     * Get user
+     * Get active
      *
-     * @return User
+     * @return boolean
      */
-    public function getUser()
+    public function getActive()
     {
-        return $this->user;
+        return $this->active;
     }
 
     /**
-     * Set profile
+     * Set module
      *
-     * @param Profile $profile
+     * @param Module $module
      *
-     * @return Role
+     * @return Link
      */
-    public function setProfile(Profile $profile)
+    public function setModule(Module $module)
     {
-        $this->profile = $profile;
+        $this->module = $module;
 
         return $this;
     }
 
     /**
-     * Get profile
+     * Get module
      *
-     * @return Profile
+     * @return Module
      */
-    public function getProfile()
+    public function getModule()
     {
-        return $this->profile;
+        return $this->module;
     }
 
     /**
-     * Set element
+     * Set organization
      *
-     * @param Element $element
+     * @param Organization $organization
      *
-     * @return Role
+     * @return Link
      */
-    public function setElement(Element $element)
+    public function setOrganization(Organization $organization)
     {
-        $this->element = $element;
+        $this->organization = $organization;
 
         return $this;
     }
 
     /**
-     * Get element
+     * Get organization
      *
-     * @return Element
+     * @return Organization
      */
-    public function getElement()
+    public function getOrganization()
     {
-        return $this->element;
+        return $this->organization;
     }
 }
