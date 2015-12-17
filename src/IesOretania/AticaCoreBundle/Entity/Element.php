@@ -25,7 +25,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @Gedmo\Tree(type="closure")
- * @Gedmo\TreeClosure(class="AppBundle\Entity\ElementPath")
+ * @Gedmo\TreeClosure(class="IesOretania\AticaCoreBundle\Entity\ElementPath")
  * @ORM\Entity(repositoryClass="ElementRepository")
  */
 class Element

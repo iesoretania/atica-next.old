@@ -70,7 +70,7 @@ class Enumeration
 
     /**
      * @Gedmo\SortableGroup
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Organization")
+     * @ORM\ManyToOne(targetEntity="Organization")
      * @var Organization
      */
     protected $organization;

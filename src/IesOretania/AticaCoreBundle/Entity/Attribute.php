@@ -32,7 +32,7 @@ class Attribute
     /**
      * @Gedmo\SortableGroup
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Enumeration", inversedBy="atributes")
+     * @ORM\ManyToOne(targetEntity="Enumeration", inversedBy="attributes")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $source;
