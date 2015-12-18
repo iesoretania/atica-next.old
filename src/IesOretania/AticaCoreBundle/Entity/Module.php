@@ -59,6 +59,18 @@ class Module
     protected $fixed;
 
     /**
+     * @ORM\OneToMany(targetEntity="Dependency", mappedBy="module")
+     * @var Dependency[]
+     */
+    protected $needs;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Dependency", mappedBy="dependsOn")
+     * @var Dependency[]
+     */
+    protected $usedBy;
+
+    /**
      * Get id
      *
      * @return integer
@@ -186,5 +198,119 @@ class Module
     public function isFixed()
     {
         return $this->fixed;
+    }
+
+    /**
+ * Add need
+ *
+ * @param Dependency $need
+ *
+ * @return Module
+ */
+    public function addNeed(Dependency $need)
+    {
+        if (!$this->needs->contains($need)) {
+            $this->needs->add($need);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove need
+     *
+     * @param Dependency $need
+     *
+     * @return Module
+     */
+    public function removeNeed(Dependency $need)
+    {
+        if ($this->needs->contains($need)) {
+            $this->needs->removeElement($need);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get needs
+     *
+     * @return Collection
+     */
+    public function getNeeds()
+    {
+        return $this->needs;
+    }
+
+    /**
+     * Get needed modules
+     *
+     * @return Collection|Module[]|null
+     */
+    public function getNeededModules()
+    {
+        return array_map(
+            function ($need) {
+                return $need->getModule();
+            },
+            $this->needs->toArray()
+        );
+    }
+
+    /**
+     * Add usedBy
+     *
+     * @param Dependency $usedBy
+     *
+     * @return Module
+     */
+    public function addUsedBy(Dependency $usedBy)
+    {
+        if (!$this->usedBy->contains($usedBy)) {
+            $this->usedBy->add($usedBy);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove usedBy
+     *
+     * @param Dependency $usedBy
+     *
+     * @return Module
+     */
+    public function removeUsedBy(Dependency $usedBy)
+    {
+        if ($this->usedBy->contains($usedBy)) {
+            $this->usedBy->removeElement($usedBy);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get usedBy
+     *
+     * @return Collection
+     */
+    public function getUsedBy()
+    {
+        return $this->usedBy;
+    }
+
+    /**
+     * Get modules that uses this one
+     *
+     * @return Collection|Module[]|null
+     */
+    public function getUsedByModules()
+    {
+        return array_map(
+            function ($usedBy) {
+                return $usedBy->getDependsOn();
+            },
+            $this->usedBy->toArray()
+        );
     }
 }
