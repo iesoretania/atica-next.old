@@ -67,12 +67,6 @@ class Profile
     protected $initials;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Organization")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    protected $organization;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Module")
      * @ORM\JoinColumn(referencedColumnName="name")
      */
@@ -226,30 +220,6 @@ class Profile
     public function getInitials()
     {
         return $this->initials;
-    }
-
-    /**
-     * Set organization
-     *
-     * @param Organization $organization
-     *
-     * @return Profile
-     */
-    public function setOrganization(Organization $organization)
-    {
-        $this->organization = $organization;
-
-        return $this;
-    }
-
-    /**
-     * Get organization
-     *
-     * @return Organization
-     */
-    public function getOrganization()
-    {
-        return $this->organization;
     }
 
     /**
