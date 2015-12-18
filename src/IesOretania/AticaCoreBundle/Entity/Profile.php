@@ -85,10 +85,10 @@ class Profile
     protected $enumeration;
 
     /**
-     * @ORM\OneToMany(targetEntity="Role", mappedBy="profile")
-     * @var Role[]
+     * @ORM\OneToMany(targetEntity="UserProfile", mappedBy="profile")
+     * @var UserProfile[]
      */
-    protected $roles;
+    protected $userProfiles;
 
     /**
      * Constructor
@@ -301,45 +301,45 @@ class Profile
     }
 
     /**
-     * Add role
+     * Add userProfile
      *
-     * @param Role $role
+     * @param UserProfile $userProfile
      *
-     * @return User
+     * @return Profile
      */
-    public function addRole(Role $role)
+    public function addUserProfile(UserProfile $userProfile)
     {
-        if (!$this->roles->contains($role)) {
-            $this->roles->add($role);
+        if (!$this->userProfiles->contains($userProfile)) {
+            $this->userProfiles->add($userProfile);
         }
 
         return $this;
     }
 
     /**
-     * Remove role
+     * Remove userProfile
      *
-     * @param Membership $membership
+     * @param UserProfile $userProfile
      *
-     * @return User
+     * @return Profile
      */
-    public function removeRole(Role $role)
+    public function removeUserProfile(UserProfile $userProfile)
     {
-        if ($this->roles->contains($role)) {
-            $this->roles->removeElement($role);
+        if ($this->userProfiles->contains($userProfile)) {
+            $this->userProfiles->removeElement($userProfile);
         }
 
         return $this;
     }
 
     /**
-     * Get roles
+     * Get userProfiles
      *
      * @return Collection
      */
-    public function getRoles()
+    public function getUserProfile()
     {
-        return $this->roles;
+        return $this->userProfiles;
     }
 
     /**
@@ -350,10 +350,10 @@ class Profile
     public function getUsers()
     {
         return array_map(
-            function ($role) {
-                return $role->getUser();
+            function ($userProfile) {
+                return $userProfile->getUser();
             },
-            $this->roles->toArray()
+            $this->userProfiles->toArray()
         );
     }
 }

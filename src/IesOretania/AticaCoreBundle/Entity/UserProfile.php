@@ -26,18 +26,18 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
-class Role
+class UserProfile
 {
     /**
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="roles")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="userProfiles")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $user;
 
     /**
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Profile", inversedBy="roles")
+     * @ORM\ManyToOne(targetEntity="Profile", inversedBy="userProfiles")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $profile;

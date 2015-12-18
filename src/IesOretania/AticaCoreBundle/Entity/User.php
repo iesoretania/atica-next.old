@@ -23,6 +23,7 @@ namespace IesOretania\AticaCoreBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -92,10 +93,10 @@ class User implements UserInterface, \Serializable
     protected $memberships;
 
     /**
-     * @ORM\OneToMany(targetEntity="Role", mappedBy="user")
-     * @var Roles[]
+     * @ORM\OneToMany(targetEntity="UserProfile", mappedBy="user")
+     * @var UserProfile[]
      */
-    protected $roles;
+    protected $userProfiles;
 
     /**
      * Constructor
@@ -363,45 +364,45 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Add role
+     * Add userProfile
      *
-     * @param Role $role
+     * @param UserProfile $userProfile
      *
      * @return User
      */
-    public function addRole(Role $role)
+    public function addUserProfile(UserProfile $userProfile)
     {
-        if (!$this->roles->contains($role)) {
-            $this->roles->add($role);
+        if (!$this->userProfiles->contains($userProfile)) {
+            $this->userProfiles->add($userProfile);
         }
 
         return $this;
     }
 
     /**
-     * Remove role
+     * Remove userProfile
      *
-     * @param Role $role
+     * @param UserProfile $userProfile
      *
      * @return User
      */
-    public function removeRole(Role $role)
+    public function removeUserProfile(UserProfile $userProfile)
     {
-        if ($this->roles->contains($role)) {
-            $this->roles->removeElement($role);
+        if ($this->userProfiles->contains($userProfile)) {
+            $this->userProfiles->removeElement($userProfile);
         }
 
         return $this;
     }
 
     /**
-     * Get roles
+     * Get userProfiles
      *
      * @return Collection
      */
-    public function getRoles()
+    public function getUserProfile()
     {
-        return $this->roles;
+        return $this->userProfiles;
     }
 
     /**
@@ -412,10 +413,10 @@ class User implements UserInterface, \Serializable
     public function getProfiles()
     {
         return array_map(
-           function ($role) {
-                return $role->getProfile();
+           function ($userProfile) {
+                return $userProfile->getProfile();
             },
-            $this->roles->toArray()
+            $this->userProfiles->toArray()
         );
     }
 
@@ -474,5 +475,20 @@ class User implements UserInterface, \Serializable
      */
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * Returns the roles granted to the user.
+     *
+     * @return Role[] The user roles
+     */
+    public function getRoles()
+    {
+        // Always return ROLE_USER
+        $roles = [new Role('ROLE_USER')];
+
+        if ($this->isGlobalAdministrator()) {
+            $roles[] = new Role('ROLE_ADMIN');
+        }
     }
 }
