@@ -2,8 +2,15 @@
 # http://symfony.com/doc/current/book/security.html
 security:
 
+    encoders:
+        IesOretania\AticaCoreBundle\Entity\User:
+            algorithm: bcrypt
+
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
+        db_provider:
+            entity:
+                class: AticaCoreBundle:User
         in_memory:
             memory: ~
 
