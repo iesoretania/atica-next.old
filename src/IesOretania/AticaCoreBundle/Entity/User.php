@@ -433,7 +433,7 @@ class User implements UserInterface, \Serializable
     {
         return serialize(array(
             $this->id,
-            $this->username,
+            $this->userName,
             $this->email,
             $this->password
         ));
@@ -452,7 +452,7 @@ class User implements UserInterface, \Serializable
     {
         list (
             $this->id,
-            $this->username,
+            $this->userName,
             $this->email,
             $this->password
         ) = unserialize($serialized);
@@ -493,5 +493,7 @@ class User implements UserInterface, \Serializable
         if ($this->isGlobalAdministrator()) {
             $roles[] = new Role('ROLE_ADMIN');
         }
+
+        return $roles;
     }
 }
