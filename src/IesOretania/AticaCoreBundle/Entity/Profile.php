@@ -318,12 +318,12 @@ class Profile
     /**
      * Get users
      *
-     * @return Collection|User[]|null
+     * @return Collection|User[]
      */
     public function getUsers()
     {
         return array_map(
-            function ($userProfile) {
+            function (UserProfile $userProfile) {
                 return $userProfile->getUser();
             },
             $this->userProfiles->toArray()

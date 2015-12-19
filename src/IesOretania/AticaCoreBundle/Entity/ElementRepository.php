@@ -37,7 +37,7 @@ class ElementRepository extends ClosureTreeRepository
         if ($node !== null) {
             if ($node instanceof $meta->name) {
                 if (!$this->_em->getUnitOfWork()->isInIdentityMap($node)) {
-                    throw new InvalidArgumentException("Node is not managed by UnitOfWork");
+                    throw new InvalidArgumentException('Node is not managed by UnitOfWork');
                 }
 
                 $where = 'c.descendant = :node AND ';
@@ -58,7 +58,7 @@ class ElementRepository extends ClosureTreeRepository
                     $qb->orWhere('c.descendant = :node AND c.ascestor = :node');
                 }
             } else {
-                throw new \InvalidArgumentException("Node is not related to this repository");
+                throw new \InvalidArgumentException('Node is not related to this repository');
             }
         } else {
             $qb->select('node')

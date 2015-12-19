@@ -83,11 +83,11 @@ class Module
     /**
      * Get id
      *
-     * @return integer
+     * @return string
      */
     public function getId()
     {
-        return $this->id;
+        return $this->name;
     }
 
     /**
@@ -245,7 +245,7 @@ class Module
     /**
      * Get needs
      *
-     * @return Collection
+     * @return ArrayCollection
      */
     public function getNeeds()
     {
@@ -255,12 +255,12 @@ class Module
     /**
      * Get needed modules
      *
-     * @return Collection|Module[]|null
+     * @return ArrayCollection|Module[]
      */
     public function getNeededModules()
     {
         return array_map(
-            function ($need) {
+            function (Dependency $need) {
                 return $need->getModule();
             },
             $this->needs->toArray()
@@ -302,7 +302,7 @@ class Module
     /**
      * Get usedBy
      *
-     * @return Collection
+     * @return ArrayCollection
      */
     public function getUsedBy()
     {
@@ -312,12 +312,12 @@ class Module
     /**
      * Get modules that uses this one
      *
-     * @return Collection|Module[]|null
+     * @return ArrayCollection|Module[]
      */
     public function getUsedByModules()
     {
         return array_map(
-            function ($usedBy) {
+            function (Dependency $usedBy) {
                 return $usedBy->getDependsOn();
             },
             $this->usedBy->toArray()

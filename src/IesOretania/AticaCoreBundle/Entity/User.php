@@ -354,12 +354,12 @@ class User implements UserInterface, \Serializable
     /**
      * Get organizations
      *
-     * @return Collection|Organization[]|null
+     * @return Collection|Organization[]
      */
     public function getOrganizations()
     {
         return array_map(
-            function ($membership) {
+            function (Membership $membership) {
                 return $membership->getOrganization();
             },
             $this->memberships->toArray()
@@ -411,12 +411,12 @@ class User implements UserInterface, \Serializable
     /**
      * Get profiles
      *
-     * @return Collection|Profile[]|null
+     * @return Collection|Profile[]
      */
     public function getProfiles()
     {
         return array_map(
-           function ($userProfile) {
+            function (UserProfile $userProfile) {
                 return $userProfile->getProfile();
             },
             $this->userProfiles->toArray()

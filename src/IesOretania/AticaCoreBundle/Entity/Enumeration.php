@@ -20,6 +20,7 @@
 
 namespace IesOretania\AticaCoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -89,8 +90,8 @@ class Enumeration
      */
     public function __construct()
     {
-        $this->attributes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->related = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->attributes = new ArrayCollection();
+        $this->related = new ArrayCollection();
     }
 
     /**

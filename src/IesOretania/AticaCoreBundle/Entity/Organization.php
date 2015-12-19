@@ -383,12 +383,12 @@ class Organization
     /**
      * Get users
      *
-     * @return Collection
+     * @return User[]
      */
     public function getUsers()
     {
         return array_map(
-            function ($membership) {
+            function (Membership $membership) {
                 return $membership->getUser();
             },
             $this->memberships->toArray()
@@ -441,12 +441,12 @@ class Organization
     /**
      * Get modules
      *
-     * @return Collection
+     * @return Module[]
      */
     public function getModules()
     {
         return array_map(
-            function ($link) {
+            function (Link $link) {
                 return $link->getModule();
             },
             $this->links->toArray()
