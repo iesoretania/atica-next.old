@@ -65,7 +65,7 @@ class UserProfile
      *
      * @param User $user
      *
-     * @return Role
+     * @return UserProfile
      */
     public function setUser(User $user)
     {
@@ -96,7 +96,7 @@ class UserProfile
      *
      * @param Profile $profile
      *
-     * @return Role
+     * @return UserProfile
      */
     public function setProfile(Profile $profile)
     {
@@ -128,7 +128,7 @@ class UserProfile
      *
      * @param Element $element
      *
-     * @return Role
+     * @return UserProfile
      */
     public function setElement(Element $element)
     {
