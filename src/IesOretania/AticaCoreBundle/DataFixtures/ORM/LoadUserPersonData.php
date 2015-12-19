@@ -23,6 +23,8 @@ namespace IesOretania\AticaCoreBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use IesOretania\AticaCoreBundle\Entity\Membership;
+use IesOretania\AticaCoreBundle\Entity\Organization;
 use IesOretania\AticaCoreBundle\Entity\Person;
 use IesOretania\AticaCoreBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -30,6 +32,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LoadUserPersonData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
+    /**
+     * @var ContainerInterface
+     */
     private $container;
 
     public function load(ObjectManager $manager)
@@ -43,6 +48,8 @@ class LoadUserPersonData extends AbstractFixture implements OrderedFixtureInterf
             ->setGender(Person::GENDER_UNKNOWN)
             ->setReference('admin');
 
+        $manager->persist($personAdmin);
+
         $userAdmin = new User();
         $userAdmin
             ->setEnabled(true)
@@ -52,11 +59,24 @@ class LoadUserPersonData extends AbstractFixture implements OrderedFixtureInterf
             ->setEmail('admin@example.com')
             ->setPerson($personAdmin);
 
-        $manager->persist($personAdmin);
         $manager->persist($userAdmin);
 
         $this->addReference('admin-user', $userAdmin);
 
+        $organization = new Organization();
+        $organization
+            ->setName('I.E.S. Test')
+            ->setSlug('iestest');
+
+        $manager->persist($organization);
+
+        $membership = new Membership();
+        $membership
+            ->setUser($userAdmin)
+            ->setOrganization($organization)
+            ->setLocalAdministrator(false);
+
+        $manager->persist($membership);
         $manager->flush();
     }
 
