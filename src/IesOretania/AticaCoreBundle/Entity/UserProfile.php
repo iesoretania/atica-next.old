@@ -66,6 +66,13 @@ class UserProfile
      */
     public function setUser(User $user)
     {
+        if ($this->user !== null) {
+            $this->user->removeUserProfile($this);
+        }
+
+        if ($user !== null) {
+            $user->addUserProfile($this);
+        }
         $this->user = $user;
 
         return $this;
@@ -90,6 +97,14 @@ class UserProfile
      */
     public function setProfile(Profile $profile)
     {
+        if ($this->profile !== null) {
+            $this->profile->removeUserProfile($this);
+        }
+
+        if ($profile !== null) {
+            $profile->addUserProfile($this);
+        }
+
         $this->profile = $profile;
 
         return $this;

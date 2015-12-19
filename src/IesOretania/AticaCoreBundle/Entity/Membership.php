@@ -201,6 +201,14 @@ class Membership
      */
     public function setUser(User $user)
     {
+        if ($this->user !== null) {
+            $this->user->removeMembership($this);
+        }
+
+        if ($user !== null) {
+            $user->addMembership($this);
+        }
+
         $this->user = $user;
 
         return $this;
@@ -225,6 +233,14 @@ class Membership
      */
     public function setOrganization(Organization $organization)
     {
+        if ($this->organization !== null) {
+            $this->organization->removeMembership($this);
+        }
+
+        if ($organization !== null) {
+            $organization->addMembership($this);
+        }
+
         $this->organization = $organization;
 
         return $this;

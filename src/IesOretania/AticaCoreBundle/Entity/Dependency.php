@@ -89,6 +89,14 @@ class Dependency
      */
     public function setModule(Module $module)
     {
+        if ($this->module !== null) {
+            $this->module->removeNeed($this);
+        }
+
+        if ($module !== null) {
+            $module->addNeed($this);
+        }
+
         $this->module = $module;
 
         return $this;
@@ -113,6 +121,14 @@ class Dependency
      */
     public function setDependsOn(Module $dependsOn)
     {
+        if ($this->dependsOn !== null) {
+            $this->dependsOn->removeUsedBy($this);
+        }
+
+        if ($dependsOn !== null) {
+            $dependsOn->addUsedBy($this);
+        }
+
         $this->dependsOn = $dependsOn;
 
         return $this;

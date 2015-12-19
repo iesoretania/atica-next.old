@@ -114,6 +114,14 @@ class Link
      */
     public function setOrganization(Organization $organization)
     {
+        if ($this->organization !== null) {
+            $this->organization->removeLink($this);
+        }
+
+        if ($organization !== null) {
+            $organization->addLink($this);
+        }
+
         $this->organization = $organization;
 
         return $this;
