@@ -34,6 +34,7 @@ class Element
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
+     * @var int
      */
     protected $id;
 
@@ -52,19 +53,22 @@ class Element
     /**
      * @ORM\ManyToOne(targetEntity="Enumeration")
      * @ORM\JoinColumn(nullable=false)
+     * @var Enumeration
      */
     protected $enumeration;
 
     /**
      * @ORM\Column(name="level", type="integer", nullable=true)
      * @Gedmo\TreeLevel
+     * @var int
      */
     protected $level;
 
     /**
      * @Gedmo\TreeParent
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
      * @ORM\ManyToOne(targetEntity="Element")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
+     * @var Element
      */
     protected $parent;
 

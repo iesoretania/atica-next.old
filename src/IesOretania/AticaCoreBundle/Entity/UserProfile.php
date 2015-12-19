@@ -32,6 +32,7 @@ class UserProfile
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="User", inversedBy="userProfiles")
      * @ORM\JoinColumn(nullable=false)
+     * @var User
      */
     protected $user;
 
@@ -39,12 +40,14 @@ class UserProfile
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Profile", inversedBy="userProfiles")
      * @ORM\JoinColumn(nullable=false)
+     * @var Profile
      */
     protected $profile;
 
     /**
      * @ORM\ManyToOne(targetEntity="Element")
      * @ORM\JoinColumn(nullable=false)
+     * @var Element
      */
     protected $element;
 

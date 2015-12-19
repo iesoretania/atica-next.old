@@ -33,6 +33,7 @@ class Profile
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
+     * @var int
      */
     protected $id;
 
@@ -69,12 +70,14 @@ class Profile
     /**
      * @ORM\ManyToOne(targetEntity="Module")
      * @ORM\JoinColumn(referencedColumnName="name")
+     * @var Module
      */
     protected $module;
 
     /**
      * @ORM\ManyToOne(targetEntity="Enumeration")
      * @ORM\JoinColumn(nullable=false)
+     * @var Enumeration
      */
     protected $enumeration;
 

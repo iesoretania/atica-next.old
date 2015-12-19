@@ -32,6 +32,7 @@ class Membership
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="User", inversedBy="memberships")
      * @ORM\JoinColumn(nullable=false)
+     * @var User
      */
     protected $user;
 
@@ -39,6 +40,7 @@ class Membership
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Organization", inversedBy="memberships")
      * @ORM\JoinColumn(nullable=false)
+     * @var Organization
      */
     protected $organization;
 

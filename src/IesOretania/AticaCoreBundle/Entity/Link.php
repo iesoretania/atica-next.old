@@ -32,6 +32,7 @@ class Link
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Module")
      * @ORM\JoinColumn(referencedColumnName="name", nullable=false)
+     * @var Module
      */
     protected $module;
 
@@ -39,6 +40,7 @@ class Link
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Organization", inversedBy="links")
      * @ORM\JoinColumn(nullable=false)
+     * @var Organization
      */
     protected $organization;
 

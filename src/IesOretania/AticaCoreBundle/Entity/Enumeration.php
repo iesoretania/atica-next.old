@@ -34,6 +34,7 @@ class Enumeration
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
+     * @var int
      */
     protected $id;
 
@@ -53,6 +54,7 @@ class Enumeration
      * @Gedmo\SortableGroup
      * @ORM\ManyToOne(targetEntity="Module")
      * @ORM\JoinColumn(referencedColumnName="name")
+     * @var Module
      */
     protected $module;
 
@@ -78,6 +80,7 @@ class Enumeration
     /**
      * @Gedmo\SortablePosition
      * @ORM\Column(name="position", type="integer")
+     * @var int
      */
     protected $position;
 

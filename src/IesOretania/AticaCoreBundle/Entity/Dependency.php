@@ -32,6 +32,7 @@ class Dependency
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Module", inversedBy="needs")
      * @ORM\JoinColumn(referencedColumnName="name", nullable=false)
+     * @var Module
      */
     protected $module;
 
@@ -39,11 +40,13 @@ class Dependency
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Module", inversedBy="usedBy")
      * @ORM\JoinColumn(referencedColumnName="name", nullable=false)
+     * @var Module
      */
     protected $dependsOn;
 
     /**
      * @ORM\Column(type="boolean", nullable=false)
+     * @var bool
      */
     protected $hard;
 

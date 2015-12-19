@@ -35,12 +35,14 @@ class User implements UserInterface, \Serializable
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
+     * @var int
      */
     protected $id;
 
     /**
      * @ORM\OneToOne(targetEntity="Person", inversedBy="user")
      * @ORM\JoinColumn(unique=true, nullable=false)
+     * @var Person
      */
     protected $person;
 

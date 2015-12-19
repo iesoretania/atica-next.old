@@ -34,6 +34,7 @@ class Attribute
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Enumeration", inversedBy="attributes")
      * @ORM\JoinColumn(nullable=false)
+     * @var Enumeration
      */
     protected $source;
 
@@ -41,6 +42,7 @@ class Attribute
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Enumeration", inversedBy="related")
      * @ORM\JoinColumn(nullable=false)
+     * @var Enumeration
      */
     protected $target;
 
