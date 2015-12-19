@@ -106,6 +106,7 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->memberships = new ArrayCollection();
+        $this->userProfiles = new ArrayCollection();
     }
 
     /**

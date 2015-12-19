@@ -92,7 +92,7 @@ class Profile
      */
     public function __construct()
     {
-        $this->users = new ArrayCollection();
+        $this->userProfiles = new ArrayCollection();
     }
 
     /**

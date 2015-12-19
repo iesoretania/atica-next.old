@@ -20,6 +20,7 @@
 
 namespace IesOretania\AticaCoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -69,6 +70,15 @@ class Module
      * @var Dependency[]
      */
     protected $usedBy;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->needs = new ArrayCollection();
+        $this->usedBy = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -201,12 +211,12 @@ class Module
     }
 
     /**
- * Add need
- *
- * @param Dependency $need
- *
- * @return Module
- */
+     * Add need
+     *
+     * @param Dependency $need
+     *
+     * @return Module
+     */
     public function addNeed(Dependency $need)
     {
         if (!$this->needs->contains($need)) {
