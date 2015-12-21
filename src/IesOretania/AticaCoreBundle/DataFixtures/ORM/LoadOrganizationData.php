@@ -23,14 +23,11 @@ namespace IesOretania\AticaCoreBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use IesOretania\AticaCoreBundle\Entity\Membership;
 use IesOretania\AticaCoreBundle\Entity\Organization;
-use IesOretania\AticaCoreBundle\Entity\Person;
-use IesOretania\AticaCoreBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadUserPersonData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
+class LoadOrganizationData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -39,46 +36,20 @@ class LoadUserPersonData extends AbstractFixture implements OrderedFixtureInterf
 
     public function load(ObjectManager $manager)
     {
-        $personAdmin = new Person();
-        $personAdmin
-            ->setDescription('Administrador')
-            ->setDisplayName('Admin')
-            ->setFirstName('Admin')
-            ->setLastName('Admin')
-            ->setGender(Person::GENDER_UNKNOWN)
-            ->setReference('admin');
+        $organization = new Organization();
+        $organization
+            ->setName('I.E.S. Test')
+            ->setSlug('iestest');
 
-        $manager->persist($personAdmin);
+        $manager->persist($organization);
+        $this->setReference('test-org', $organization);
 
-        $userAdmin = new User();
-        $userAdmin
-            ->setEnabled(true)
-            ->setGlobalAdministrator(true)
-            ->setUserName('admin')
-            ->setPassword($this->container->get('security.password_encoder')->encodePassword($userAdmin, 'admin'))
-            ->setEmail('admin@example.com')
-            ->setPerson($personAdmin);
-
-        $manager->persist($userAdmin);
-
-        $this->addReference('admin-user', $userAdmin);
-
-        /** @var Organization $organization */
-        $organization = $this->getReference('test-org');
-
-        $membership = new Membership();
-        $membership
-            ->setUser($userAdmin)
-            ->setOrganization($organization)
-            ->setLocalAdministrator(false);
-
-        $manager->persist($membership);
         $manager->flush();
     }
 
     public function getOrder()
     {
-        return 10;
+        return 1;
     }
 
     /**
