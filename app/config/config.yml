@@ -37,6 +37,7 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         app_name:     "ÁTICA"
+        app_repository: "https://github.com/iesoretania/atica-next"
 
 # Doctrine Configuration
 doctrine:

@@ -54,7 +54,6 @@ class LoadUserPersonData extends AbstractFixture implements OrderedFixtureInterf
         $userAdmin
             ->setEnabled(true)
             ->setGlobalAdministrator(true)
-            ->setUserName('admin')
             ->setPassword($this->container->get('security.password_encoder')->encodePassword($userAdmin, 'admin'))
             ->setEmail('admin@example.com')
             ->setPerson($personAdmin);
@@ -77,7 +76,6 @@ class LoadUserPersonData extends AbstractFixture implements OrderedFixtureInterf
         $userTeacher
             ->setEnabled(true)
             ->setGlobalAdministrator(false)
-            ->setUserName('juan')
             ->setPassword($this->container->get('security.password_encoder')->encodePassword($userTeacher, 'juan'))
             ->setEmail('juan@example.com')
             ->setPerson($personTeacher);

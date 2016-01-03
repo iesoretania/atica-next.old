@@ -15,6 +15,7 @@
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-main">
+                {% if not app.user %}<a href="{{ path('login') }}" class="btn btn-default navbar-btn pull-right">Entrar en la aplicación</a>{% endif %}
             </div>
         </div>
     </nav>

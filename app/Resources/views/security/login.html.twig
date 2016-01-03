@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="login-form">
+        <div class="panel panel-default">
+            <div class="panel-heading">{{ app_name }}</div>
+            <div class="panel-body">
+                {% if error %}
+                    <div class="alert alert-danger alert-dismissable">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+                <form method="post" action="{{ path('login_check') }}" role="login">
+                    <div class="form-group">
+                        <div class="pull-right"><a href="#" tabindex="1">Solicitar registro</a></div>
+                        <label for="email">Correo electrónico</label>
+                        <input type="email" name="_username" id="email" required="" class="form-control" autofocus="" tabindex="2">
+                    </div>
+                    <div class="form-group">
+                        <div class="pull-right"><a href="#" tabindex="5">¿Olvidó la contraseña?</a></div>
+                        <label for="password">Contraseña</label>
+                        <input type="password" name="_password" id="password" required="" class="form-control" tabindex="3">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" name="login" class="btn btn-lg btn-info btn-block" tabindex="4">ACCEDER A LA APLICACIÓN</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <hr/>
+    <p class="text-muted text-center">Esta aplicación es <a href="{{ app_repository }}">software libre</a> con licencia AGPLv3</p>
+{% endblock %}

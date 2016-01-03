@@ -47,12 +47,6 @@ class User implements UserInterface, \Serializable
     protected $person;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var string
-     */
-    protected $userName;
-
-    /**
      * @ORM\Column(type="string")
      * @var string
      */
@@ -126,21 +120,7 @@ class User implements UserInterface, \Serializable
      */
     public function getUserName()
     {
-        return $this->userName;
-    }
-
-    /**
-     * Set userName
-     *
-     * @param string $userName
-     *
-     * @return User
-     */
-    public function setUserName($userName)
-    {
-        $this->userName = $userName;
-
-        return $this;
+        return $this->email;
     }
 
     /**
@@ -433,7 +413,6 @@ class User implements UserInterface, \Serializable
     {
         return serialize(array(
             $this->id,
-            $this->userName,
             $this->email,
             $this->password
         ));
@@ -452,7 +431,6 @@ class User implements UserInterface, \Serializable
     {
         list (
             $this->id,
-            $this->userName,
             $this->email,
             $this->password
         ) = unserialize($serialized);
