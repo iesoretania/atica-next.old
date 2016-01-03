@@ -23,7 +23,7 @@ gulp.task('default', function() {
         .pipe(gulp.dest('web/dist/css'));
 
     // copiar Javascript de Bootstrap
-    gulp.src('vendor/twbs/bootstrap/js/dist/*')
+    gulp.src('node_modules/bootstrap-sass/js/dist/*.min.js')
         .pipe(gulp.dest('web/dist/js/bootstrap'));
 
     // copiar fuentes

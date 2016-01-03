@@ -4,6 +4,7 @@
   "description": "Aplicación web para la gestión de centros educativos",
   "dependencies": {
     "autoprefixer": "^6.1.0",
+    "bootstrap-sass": "^3.3.6",
     "font-awesome": "^4.5.0",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.1.0",
