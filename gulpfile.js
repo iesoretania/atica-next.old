@@ -19,7 +19,7 @@ gulp.task('default', function() {
             cascade: false
         }))
         .pipe(plugins.concat('pack.css'))
-        .pipe(plugins.minifyCss())
+        .pipe(plugins.cssnano())
         .pipe(gulp.dest('web/dist/css'));
 
     // copiar Javascript de Bootstrap
