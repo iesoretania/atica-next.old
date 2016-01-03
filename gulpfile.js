@@ -27,6 +27,6 @@ gulp.task('default', function() {
         .pipe(gulp.dest('web/dist/js/bootstrap'));
 
     // copiar fuentes
-    gulp.src('vendor/fortawesome/font-awesome/fonts/*')
+    gulp.src('node_modules/font-awesome/fonts/*')
         .pipe(gulp.dest('web/dist/fonts'));
 });
