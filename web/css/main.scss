@@ -1,4 +1,6 @@
 // Colocar aquí personalizaciones de Bootstrap y Fontawesome
 
+@import "flatly/variables";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "flatly/bootswatch";
 @import "../../node_modules/font-awesome/scss/font-awesome";

@@ -3,7 +3,7 @@ var plugins = require('gulp-load-plugins')();
 
 gulp.task('default', function() {
     // procesar SCSS
-    gulp.src(['web/css/**/*.scss', 'web/css/atica.css'])
+    gulp.src(['web/css/**/*.scss', 'web/css/ato/css/fonts.css', 'web/css/atica.css'])
         .pipe(plugins.sass())
         .pipe(plugins.autoprefixer({
             browsers: [
@@ -31,6 +31,6 @@ gulp.task('default', function() {
         .pipe(gulp.dest('web/dist/js/bootstrap'));
 
     // copiar fuentes
-    gulp.src('node_modules/font-awesome/fonts/*')
+    gulp.src(['node_modules/font-awesome/fonts/*', 'web/css/lato/fonts/*'])
         .pipe(gulp.dest('web/dist/fonts'));
 });
