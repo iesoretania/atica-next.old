@@ -22,8 +22,12 @@ gulp.task('default', function() {
         .pipe(plugins.cssnano())
         .pipe(gulp.dest('web/dist/css'));
 
+    // copiar jQuery
+    gulp.src('node_modules/jquery/dist/*.min.js')
+        .pipe(gulp.dest('web/dist/js/jquery'));
+
     // copiar Javascript de Bootstrap
-    gulp.src('node_modules/bootstrap-sass/js/dist/*.min.js')
+    gulp.src('node_modules/bootstrap-sass/assets/javascripts/*.min.js')
         .pipe(gulp.dest('web/dist/js/bootstrap'));
 
     // copiar fuentes
