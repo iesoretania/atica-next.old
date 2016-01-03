@@ -85,7 +85,7 @@ class LoadProfileData extends AbstractFixture implements OrderedFixtureInterface
             ->setEnumeration($groupEnum);
 
         /** @var User $user */
-        $user = $this->getReference('admin-user');
+        $user = $this->getReference('teacher-user');
 
         $userProfile = new UserProfile();
         $userProfile

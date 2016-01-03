@@ -63,6 +63,29 @@ class LoadUserPersonData extends AbstractFixture implements OrderedFixtureInterf
 
         $this->addReference('admin-user', $userAdmin);
 
+        $personTeacher = new Person();
+        $personTeacher
+            ->setDisplayName('Juan Nadie')
+            ->setFirstName('Juan')
+            ->setLastName('Nadie Nadie')
+            ->setGender(Person::GENDER_MALE)
+            ->setReference('juan');
+
+        $manager->persist($personTeacher);
+
+        $userTeacher = new User();
+        $userTeacher
+            ->setEnabled(true)
+            ->setGlobalAdministrator(false)
+            ->setUserName('juan')
+            ->setPassword($this->container->get('security.password_encoder')->encodePassword($userTeacher, 'juan'))
+            ->setEmail('juan@example.com')
+            ->setPerson($personTeacher);
+
+        $manager->persist($userTeacher);
+
+        $this->addReference('teacher-user', $userTeacher);
+
         /** @var Organization $organization */
         $organization = $this->getReference('test-org');
 
@@ -73,6 +96,15 @@ class LoadUserPersonData extends AbstractFixture implements OrderedFixtureInterf
             ->setLocalAdministrator(false);
 
         $manager->persist($membership);
+
+        $membership = new Membership();
+        $membership
+            ->setUser($userTeacher)
+            ->setOrganization($organization)
+            ->setLocalAdministrator(false);
+
+        $manager->persist($membership);
+
         $manager->flush();
     }
 
