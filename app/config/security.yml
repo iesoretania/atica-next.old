@@ -21,8 +21,11 @@ security:
             pattern: ^/(_(profiler|wdt)|dist|css|img|js)/
             security: false
 
+        login:
+            pattern:  ^/entrar$
+            security: false
+
         main:
-            anonymous: ~
             form_login:
                 login_path: login
                 check_path: login_check

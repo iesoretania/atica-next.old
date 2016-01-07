@@ -40,7 +40,7 @@ class User implements UserInterface, \Serializable
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Person", inversedBy="user")
+     * @ORM\OneToOne(targetEntity="Person", inversedBy="user",fetch="EAGER")
      * @ORM\JoinColumn(unique=true, nullable=false)
      * @var Person
      */
