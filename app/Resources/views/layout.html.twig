@@ -27,6 +27,10 @@
                                     <li class="divider"></li>
                                     <li><a href="{{ path('frontpage', {'_switch_to': '_exit'}) }}"><i class="fa fa-user-secret"></i> Volver al usuario normal</a></li>
                                 {% endif %}
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li class="divider"></li>
+                                    <li><a href="{{ path('admin_menu') }}"><i class="fa fa-wrench"></i> Administrar la plataforma</a></li>
+                                {% endif %}
                                 <li class="divider"></li>
                                 <li><a href="{{ path('logout') }}"><i class="fa fa-power-off"></i> Salir de la aplicación</a></li>
                             </ul>
