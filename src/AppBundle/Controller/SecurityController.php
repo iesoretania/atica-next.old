@@ -35,7 +35,6 @@ class SecurityController extends Controller
      */
     public function loginCheckAction()
     {
-        die('This action never should be run');
     }
 
     /**
@@ -43,6 +42,5 @@ class SecurityController extends Controller
      */
     public function logoutCheckAction()
     {
-        die('This action never should be run');
     }
 }
