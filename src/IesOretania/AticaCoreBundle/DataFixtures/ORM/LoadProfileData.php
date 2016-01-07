@@ -23,11 +23,6 @@ namespace IesOretania\AticaCoreBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use IesOretania\AticaCoreBundle\Entity\Element;
-use IesOretania\AticaCoreBundle\Entity\Enumeration;
-use IesOretania\AticaCoreBundle\Entity\Profile;
-use IesOretania\AticaCoreBundle\Entity\User;
-use IesOretania\AticaCoreBundle\Entity\UserProfile;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -40,68 +35,6 @@ class LoadProfileData extends AbstractFixture implements OrderedFixtureInterface
 
     public function load(ObjectManager $manager)
     {
-        $levelEnum = new Enumeration();
-        $levelEnum
-            ->setName('Niveles')
-            ->setDescription('Niveles educativos de la organización');
-
-        $level1Elem = new Element();
-        $level1Elem
-            ->setEnumeration($levelEnum)
-            ->setName('ESO')
-            ->setPosition(0);
-
-        $courseEnum = new Enumeration();
-        $courseEnum
-            ->setName('Cursos')
-            ->setDescription('Cursos de la organización');
-
-        $course1Elem = new Element();
-        $course1Elem
-            ->setEnumeration($courseEnum)
-            ->setName('2ºESO')
-            ->setPosition(0)
-            ->setParent($level1Elem);
-
-        $groupEnum = new Enumeration();
-        $groupEnum
-            ->setName('Grupos')
-            ->setDescription('Grupos de la organización');
-
-        $group1Elem = new Element();
-        $group1Elem
-            ->setEnumeration($groupEnum)
-            ->setName('2ºESO-A')
-            ->setPosition(0)
-            ->setParent($course1Elem);
-
-        $profile = new Profile();
-        $profile
-            ->setNameNeutral('Profesor/a')
-            ->setNameFemale('Profesora')
-            ->setNameMale('Profesor')
-            ->setDescription('Docente de la organización')
-            ->setInitials('P')
-            ->setEnumeration($groupEnum);
-
-        /** @var User $user */
-        $user = $this->getReference('teacher-user');
-
-        $userProfile = new UserProfile();
-        $userProfile
-            ->setUser($user)
-            ->setProfile($profile)
-            ->setElement($group1Elem);
-
-        $manager->persist($level1Elem);
-        $manager->persist($levelEnum);
-        $manager->persist($course1Elem);
-        $manager->persist($courseEnum);
-        $manager->persist($group1Elem);
-        $manager->persist($groupEnum);
-        $manager->persist($profile);
-        $manager->persist($userProfile);
-
         $manager->flush();
     }
 
