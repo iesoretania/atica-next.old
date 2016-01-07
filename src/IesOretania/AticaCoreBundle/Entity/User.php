@@ -104,6 +104,16 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Returns the user's display name
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getPerson()->__toString();
+    }
+
+    /**
      * Get id
      *
      * @return integer

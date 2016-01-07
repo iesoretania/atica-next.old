@@ -81,6 +81,16 @@ class Module
     }
 
     /**
+     * Returns the module name
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    /**
      * Get id
      *
      * @return string

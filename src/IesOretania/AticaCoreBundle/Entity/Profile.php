@@ -96,6 +96,14 @@ class Profile
     }
 
     /**
+     * Get profile display name
+     */
+    public function __toString()
+    {
+        return $this->getNameNeutral();
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -328,5 +336,24 @@ class Profile
             },
             $this->userProfiles->toArray()
         );
+    }
+
+    /**
+     * Get profile display name for an specific gender
+     * @param $gender
+     * @return string
+     */
+    public function getName($gender)
+    {
+        switch($gender) {
+            case Person::GENDER_FEMALE:
+                $name = $this->getNameFemale();
+            case Person::GENDER_MALE:
+                $name = $this->getNameMale();
+                break;
+            default:
+                $name = $this->getProfile()->getNameNeutral();
+        }
+        return $name;
     }
 }

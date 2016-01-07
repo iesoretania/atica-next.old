@@ -98,6 +98,16 @@ class Person
     }
 
     /**
+     * Returns the person's display name
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getDisplayName();
+    }
+
+    /**
      * Set reference
      *
      * @param string $reference

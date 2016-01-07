@@ -61,6 +61,17 @@ class UserProfile
     }
 
     /**
+     * Get user profile display string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $profile = $this->getProfile()->getName($this->getUser()->getPerson()->getGender());
+        return $profile . ($this->getElement()->getName() ? (' ' . $this->getElement()->getName()) : '');
+    }
+
+    /**
      * Set user
      *
      * @param User $user
