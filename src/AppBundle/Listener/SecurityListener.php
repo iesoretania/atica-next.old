@@ -46,7 +46,7 @@ class SecurityListener
         $organizations = $user->getOrganizations();
 
         if (0 === count($organizations)) {
-            throw new CustomUserMessageAuthenticationException('This user does not belong to any organization.');
+            throw new CustomUserMessageAuthenticationException('atica.security.no_membership');
         }
 
         $defaultOrganization = $user->getDefaultOrganization();
