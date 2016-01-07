@@ -6,6 +6,9 @@ security:
         IesOretania\AticaCoreBundle\Entity\User:
             algorithm: bcrypt
 
+    role_hierarchy:
+        ROLE_ADMIN:       [ROLE_USER, ROLE_LOCAL_ADMIN]
+
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
         db_provider:
@@ -32,3 +35,6 @@ security:
             logout:
                 path: logout
                 target: /
+            switch_user:
+                role: ROLE_ADMIN
+                parameter: _switch_to
