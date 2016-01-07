@@ -1,3 +1,8 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
 body {
     padding-top: 70px;
 }
@@ -145,6 +150,10 @@ form[role=login] button {
 
 .tile-violet {
     background: #aa00ff !important;
+}
+
+.tile-purple {
+    background-color: #7B4F9D !important;
 }
 
 .tile-pink {

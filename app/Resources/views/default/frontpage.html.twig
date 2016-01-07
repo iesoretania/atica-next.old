@@ -1,0 +1,28 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <section class="row tile-row">
+        <article class="col-md-4 tile tile-col-4 tile-purple">
+            <a class="tile-link" href="">
+                <div class="tile-icon-holder">
+                    <i class="fa fa-cog fa-4x"></i>
+                </div>
+                <div class="text-holder">
+                    <h4>Modificar mis datos</h4>
+                    <p>Cambia los datos propios</p>
+                </div>
+            </a>
+        </article>
+        <article class="col-md-4 tile tile-col-4 tile-gray">
+            <a class="tile-link" href="{{ path('logout') }}">
+                <div class="tile-icon-holder">
+                    <i class="fa fa-power-off fa-4x"></i>
+                </div>
+                <div class="text-holder">
+                    <h4>Desconectar</h4>
+                    <p>Salir de la aplicación</p>
+                </div>
+            </a>
+        </article>
+    </section>
+{% endblock %}
