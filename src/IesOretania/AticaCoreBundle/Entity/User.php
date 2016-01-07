@@ -95,6 +95,13 @@ class User implements UserInterface, \Serializable
     protected $userProfiles;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Organization")
+     * @ORM\JoinColumn(nullable=true)
+     * @var Organization|null
+     */
+    protected $defaultOrganization;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -110,7 +117,7 @@ class User implements UserInterface, \Serializable
      */
     public function __toString()
     {
-        return $this->getPerson()->__toString();
+        return (string) $this->getPerson();
     }
 
     /**
@@ -483,5 +490,29 @@ class User implements UserInterface, \Serializable
         }
 
         return $roles;
+    }
+
+    /**
+     * Set defaultOrganization
+     *
+     * @param Organization $defaultOrganization
+     *
+     * @return User
+     */
+    public function setDefaultOrganization(Organization $defaultOrganization = null)
+    {
+        $this->defaultOrganization = $defaultOrganization;
+
+        return $this;
+    }
+
+    /**
+     * Get defaultOrganization
+     *
+     * @return Organization|null
+     */
+    public function getDefaultOrganization()
+    {
+        return $this->defaultOrganization;
     }
 }
