@@ -108,7 +108,7 @@ form[role=login] button {
     float: left;
     margin: 5px;
     height: 100%;
-    color: #FFF;
+    color: #fff;
     cursor: pointer;
     overflow: hidden;
     text-decoration: none;
@@ -117,9 +117,7 @@ form[role=login] button {
     background-clip: padding-box;
     border-top-left-radius: 5%;
     border-top-right-radius: 5%;
-    -webkit-box-shadow: 2px 2px 5px 0 rgba(50, 50, 50, 0.75);
-    -moz-box-shadow:    2px 2px 5px 0 rgba(50, 50, 50, 0.75);
-    box-shadow:         2px 2px 5px 0 rgba(50, 50, 50, 0.75);
+    box-shadow: 2px 2px 5px 0 rgba(50, 50, 50, 0.75);
     padding: 0;
 }
 
