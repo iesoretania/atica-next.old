@@ -7,16 +7,48 @@ body {
     padding-top: 70px;
 }
 
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding-top: 15px;
+    height: 45px;
+    text-align: center;
+}
+
+.app-name {
+    font-size: 200%;
+    font-weight: bold;
+    letter-spacing: -4px;
+}
+
+.app-version {
+    font-size: 120%;
+    font-weight: bold;
+    letter-spacing: -6px;
+    transform: scale(0.8, 1.0);
+    color: #244500;
+    color: rgba(20, 40, 0, 0.5);
+}
+
 .login-form {
-    margin: 100px auto;
+    margin: -70px auto 0 auto;
     max-width: 500px;
-    font: 15px/1.6em Lato, serif;
+    font-size: 15px;
+}
+
+@media (min-width: 992px) {
+    .login-form {
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
 }
 
 .login-form .panel {
     border: none;
     box-shadow: 0 0 8px 0 rgba(0,0,0,0.63);
 }
+
 .login-form .panel .panel-heading {
     color: #fff;
     background: #6e91af;
@@ -24,6 +56,7 @@ body {
     font-weight: bold;
     padding-left: 26px;
 }
+
 .login-form .panel .panel-body {
     background: #f2f2f2;
     padding: 20px 26px;

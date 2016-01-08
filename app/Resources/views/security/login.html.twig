@@ -2,13 +2,17 @@
 
 {% block body %}
     <section class="login-form">
+        <h1 class="text-center">
+            <span class="app-name">{{ app_name }} </span>
+            <span class="app-version">{{ app_version }}</span>
+        </h1>
         <div class="panel panel-default">
-            <div class="panel-heading">{{ app_name }}</div>
+            <div class="panel-heading">Introduzca datos de acceso</div>
             <div class="panel-body">
                 {% if error %}
                     <div class="alert alert-danger alert-dismissable">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}
-                <form method="post" action="{{ path('login_check') }}" role="login">
+                <form method="post" action="{{ path('login_check') }}" role="form">
                     <div class="form-group">
                         <div class="pull-right"><a href="#" tabindex="1">Solicitar registro</a></div>
                         <label for="email">Correo electrónico</label>
