@@ -21,15 +21,17 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DefaultController extends Controller
+class AdminController extends Controller
 {
     /**
-     * @Route("/", name="frontpage")
+     * @Route("/admin", name="admin_menu")
+     * @Security("has_role('ROLE_ADMIN')")
      */
-    public function indexAction()
+    public function adminIndexAction()
     {
-        return $this->render('default/frontpage.html.twig');
+        return $this->render('admin/menu.html.twig');
     }
 }

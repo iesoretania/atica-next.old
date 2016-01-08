@@ -1,0 +1,83 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <section class="row tile-row">
+        <article class="col-md-4 tile tile-col-4 tile-orange">
+            <a class="tile-link" href="{{ path('frontpage') }}">
+                <div class="tile-icon-holder">
+                    <i class="fa fa-pie-chart fa-4x"></i>
+                </div>
+                <div class="text-holder">
+                    <h4>Visualizar estadísticas y registros</h4>
+                    <p>Muestra el estado global de la plataforma</p>
+                </div>
+            </a>
+        </article>
+        <article class="col-md-4 tile tile-col-4 tile-amber">
+            <a class="tile-link" href="{{ path('frontpage') }}">
+                <div class="tile-icon-holder">
+                    <i class="fa fa-bank fa-4x"></i>
+                </div>
+                <div class="text-holder">
+                    <h4>Gestionar organizaciones</h4>
+                    <p>Permite crear, modificar o eliminar organizaciones</p>
+                </div>
+            </a>
+        </article>
+        <article class="col-md-4 tile tile-col-4 tile-magenta">
+            <a class="tile-link" href="{{ path('frontpage') }}">
+                <div class="tile-icon-holder">
+                    <i class="fa fa-users fa-4x"></i>
+                </div>
+                <div class="text-holder">
+                    <h4>Gestionar usuarios</h4>
+                    <p>Permite crear, modificar o eliminar usuarios</p>
+                </div>
+            </a>
+        </article>
+        <article class="col-md-4 tile tile-col-4 tile-green">
+            <a class="tile-link" href="{{ path('frontpage') }}">
+                <div class="tile-icon-holder">
+                    <i class="fa fa-street-view fa-4x"></i>
+                </div>
+                <div class="text-holder">
+                    <h4>Gestionar perfiles</h4>
+                    <p>Permite crear, modificar o eliminar perfiles</p>
+                </div>
+            </a>
+        </article>
+        <article class="col-md-4 tile tile-col-4 tile-emerald">
+            <a class="tile-link" href="{{ path('frontpage') }}">
+                <div class="tile-icon-holder">
+                    <i class="fa fa-list-ol fa-4x"></i>
+                </div>
+                <div class="text-holder">
+                    <h4>Gestionar listas</h4>
+                    <p>Permite crear, modificar o eliminar listas de elementos</p>
+                </div>
+            </a>
+        </article>
+        <article class="col-md-4 tile tile-col-4 tile-cyan">
+            <a class="tile-link" href="{{ path('frontpage') }}">
+                <div class="tile-icon-holder">
+                    <i class="fa fa-cubes fa-4x"></i>
+                </div>
+                <div class="text-holder">
+                    <h4>Gestionar módulos</h4>
+                    <p>Permite activar o desactivar módulos a nivel global</p>
+                </div>
+            </a>
+        </article>
+        <article class="col-md-4 tile tile-col-4 tile-teal">
+            <a class="tile-link" href="{{ path('frontpage') }}">
+                <div class="tile-icon-holder">
+                    <i class="fa fa-home fa-4x"></i>
+                </div>
+                <div class="text-holder">
+                    <h4>Volver</h4>
+                    <p>Muestra el menú principal</p>
+                </div>
+            </a>
+        </article>
+    </section>
+{% endblock %}
