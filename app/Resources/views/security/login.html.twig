@@ -7,14 +7,14 @@
             <span class="app-version">{{ app_version }}</span>
         </h1>
         <div class="panel panel-default">
-            <div class="panel-heading">Introduzca datos de acceso</div>
+            <div class="panel-heading">Introduzca sus credenciales de acceso</div>
             <div class="panel-body">
                 {% if error %}
                     <div class="alert alert-danger alert-dismissable">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}
                 <form method="post" action="{{ path('login_check') }}" role="form">
                     <div class="form-group">
-                        <div class="pull-right"><a href="#" tabindex="1">Solicitar registro</a></div>
+                        <div class="pull-right"><a href="#" tabindex="1">Solicitar el alta</a></div>
                         <label for="email">Correo electrónico</label>
                         <input type="email" name="_username" id="email" required="" class="form-control" autofocus="" tabindex="2">
                     </div>
