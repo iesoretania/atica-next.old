@@ -20,8 +20,10 @@
 
 namespace IesOretania\AticaCoreBundle\Form\Type;
 
+use IesOretania\AticaCoreBundle\Entity\Person;
 use IesOretania\AticaCoreBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -40,23 +42,68 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('person', PersonType::class, [
-                'label' => 'Datos personales*',
-                'admin' => $options['admin']
-            ])
+            ->add('reference', null, array(
+                'property_path' => 'person.reference',
+                'label' => 'reference',
+                'disabled' => !$options['admin']
+            ))
+            ->add('firstName', null, array(
+                'property_path' => 'person.firstName',
+                'label' => 'firstName',
+                'required' => true
+            ))
+            ->add('lastName', null, array(
+                'property_path' => 'person.lastName',
+                'label' => 'lastName',
+                'required' => true
+            ))
+            ->add('displayName', null, array(
+                'property_path' => 'person.displayName',
+                'label' => 'displayName',
+                'required' => true
+            ))
+            ->add('gender', ChoiceType::class, array(
+                'property_path' => 'person.gender',
+                'label' => 'gender',
+                'choices_as_values' => true,
+                'choices' => [
+                    'gender.unknown' => Person::GENDER_UNKNOWN,
+                    'gender.male' => Person::GENDER_MALE,
+                    'gender.female' => Person::GENDER_FEMALE
+                ],
+                'expanded' => true,
+                'multiple' => false,
+                'required' => true
+            ))
+            ->add('initials', null, array(
+                'property_path' => 'person.initials',
+                'label' => 'initials',
+                'required' => false
+            ));
+
+        if ($options['admin']) {
+            $builder
+                ->add('description', null, array(
+                    'property_path' => 'person.description',
+                    'label' => 'description',
+                    'required' => false
+                ));
+        }
+
+        $builder
             ->add('email', EmailType::class, [
-                'label' => 'Correo electrónico',
+                'label' => 'email',
                 'required' => true
             ]);
 
         if ($options['admin']) {
             $builder
                 ->add('enabled', null, [
-                    'label' => 'El usuario está activo',
+                    'label' => 'enabled',
                     'required' => false
                 ])
                 ->add('globalAdministrator', null, [
-                    'label' => 'Es administrador global',
+                    'label' => 'globalAdministrator',
                     'required' => false,
                     'disabled' => $options['me']
                 ]);
@@ -65,7 +112,7 @@ class UserType extends AbstractType
         if (!$options['new']) {
             $builder
                 ->add('submit', SubmitType::class, [
-                    'label' => 'Guardar cambios',
+                    'label' => 'submit',
                     'attr' => ['class' => 'btn btn-success']
                 ]);
 
@@ -84,13 +131,13 @@ class UserType extends AbstractType
 
         $builder
             ->add('newPassword', RepeatedType::class, [
-                'label' => 'Nueva contraseña',
+                'label' => 'newPassword',
                 'required' => false,
                 'type' => PasswordType::class,
                 'mapped' => false,
                 'invalid_message' => 'password.no_match',
                 'first_options' => [
-                    'label' => 'Nueva contraseña',
+                    'label' => 'newPassword',
                     'constraints' => [
                         new Length([
                             'min' => 7,
@@ -103,11 +150,11 @@ class UserType extends AbstractType
                     ]
                 ],
                 'second_options' => [
-                    'label' => 'Repita nueva contraseña'
+                    'label' => 'newPassword.repeat'
                 ]
             ])
             ->add('changePassword', SubmitType::class, array(
-                'label' => 'Guardar los cambios y cambiar la contraseña',
+                'label' => 'changePassword',
                 'attr' => array('class' => 'btn btn-success'),
                 'validation_groups' => array('Default', 'password')
             ));
@@ -120,6 +167,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'translation_domain' => 'user',
             'admin' => false,
             'new' => false,
             'me' => false

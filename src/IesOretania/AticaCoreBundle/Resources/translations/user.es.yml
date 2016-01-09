@@ -1,0 +1,18 @@
+reference: Referencia
+firstName: Nombre
+lastName: Apellidos
+displayName: Nombre mostrado
+gender: Sexo
+gender.unknown: Desconocido
+gender.male: Hombre
+gender.female: Mujer
+initials: Iniciales
+description: Descripción
+email: Correo electrónico
+enabled: El usuario está activo
+globalAdministrator: Es administrador global
+submit: Guardar cambios
+oldPassword: Contraseña antigua
+newPassword: Nueva contraseña
+newPassword.repeat: Repita nueva contraseña
+changePassword: Guardar los cambios y cambiar la contraseña

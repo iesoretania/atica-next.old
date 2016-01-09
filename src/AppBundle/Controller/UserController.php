@@ -67,7 +67,11 @@ class UserController extends Controller
         }
 
         return $this->render('user/form.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'breadcrumb' => [
+                ['caption' => 'menu.personal_form', 'icon' => 'cog']
+            ],
+            'title' => 'menu.personal_form'
         ]);
     }
 }
