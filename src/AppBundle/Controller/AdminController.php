@@ -32,6 +32,11 @@ class AdminController extends Controller
      */
     public function adminIndexAction()
     {
-        return $this->render('admin/menu.html.twig');
+        return $this->render('admin/menu.html.twig',
+            [
+                'breadcrumb' => [
+                    ['caption' => 'menu.manage', 'icon' => 'wrench']
+                ]
+            ]);
     }
 }

@@ -5,6 +5,21 @@ menu.manage.detail: Permite realizar cambios en la configuración
 menu.logout: Desconectar
 menu.logout.detail: Sale de la aplicación
 
+menu.admin.stats: Visualizar estadísticas y registros
+menu.admin.stats.detail: Muestra el estado global de la plataforma
+menu.admin.manage.orgs: Gestionar organizaciones
+menu.admin.manage.orgs.detail: Permite crear, modificar o eliminar organizaciones
+menu.admin.manage.users: Gestionar usuarios
+menu.admin.manage.users.detail: Permite crear, modificar o eliminar usuarios
+menu.admin.manage.profiles: Gestionar perfiles
+menu.admin.manage.profiles.detail: Permite crear, modificar o eliminar perfiles
+menu.admin.manage.lists: Gestionar listas
+menu.admin.manage.lists.detail: Permite crear, modificar o eliminar listas de elementos
+menu.admin.manage.modules: Gestionar módulos
+menu.admin.manage.modules.detail: Permite activar o desactivar módulos a nivel global
+menu.back: Volver
+menu.back.detail: Muestra el menú principal
+
 navbar.expand: Desplegar navegación
 navbar.logged.as: Conectado como {{ user }}
 menu.impersonate: Acceder como el usuario

@@ -1,3 +1,4 @@
+{% trans_default_domain 'menu' %}
 {% extends 'layout.html.twig' %}
 
 {% block content %}
@@ -8,8 +9,8 @@
                     <i class="fa fa-pie-chart fa-4x"></i>
                 </div>
                 <div class="text-holder">
-                    <h4>Visualizar estadísticas y registros</h4>
-                    <p>Muestra el estado global de la plataforma</p>
+                    <h4>{{ 'menu.admin.stats'|trans }}</h4>
+                    <p>{{ 'menu.admin.stats.detail'|trans }}</p>
                 </div>
             </a>
         </article>
@@ -19,8 +20,8 @@
                     <i class="fa fa-bank fa-4x"></i>
                 </div>
                 <div class="text-holder">
-                    <h4>Gestionar organizaciones</h4>
-                    <p>Permite crear, modificar o eliminar organizaciones</p>
+                    <h4>{{ 'menu.admin.manage.orgs'|trans }}</h4>
+                    <p>{{ 'menu.admin.manage.orgs.detail'|trans }}</p>
                 </div>
             </a>
         </article>
@@ -30,8 +31,8 @@
                     <i class="fa fa-users fa-4x"></i>
                 </div>
                 <div class="text-holder">
-                    <h4>Gestionar usuarios</h4>
-                    <p>Permite crear, modificar o eliminar usuarios</p>
+                    <h4>{{ 'menu.admin.manage.users'|trans }}</h4>
+                    <p>{{ 'menu.admin.manage.users.detail'|trans }}</p>
                 </div>
             </a>
         </article>
@@ -41,8 +42,8 @@
                     <i class="fa fa-street-view fa-4x"></i>
                 </div>
                 <div class="text-holder">
-                    <h4>Gestionar perfiles</h4>
-                    <p>Permite crear, modificar o eliminar perfiles</p>
+                    <h4>{{ 'menu.admin.manage.profiles'|trans }}</h4>
+                    <p>{{ 'menu.admin.manage.profiles.detail'|trans }}</p>
                 </div>
             </a>
         </article>
@@ -52,8 +53,8 @@
                     <i class="fa fa-list-ol fa-4x"></i>
                 </div>
                 <div class="text-holder">
-                    <h4>Gestionar listas</h4>
-                    <p>Permite crear, modificar o eliminar listas de elementos</p>
+                    <h4>{{ 'menu.admin.manage.lists'|trans }}</h4>
+                    <p>{{ 'menu.admin.manage.lists.detail'|trans }}</p>
                 </div>
             </a>
         </article>
@@ -63,8 +64,8 @@
                     <i class="fa fa-cubes fa-4x"></i>
                 </div>
                 <div class="text-holder">
-                    <h4>Gestionar módulos</h4>
-                    <p>Permite activar o desactivar módulos a nivel global</p>
+                    <h4>{{ 'menu.admin.manage.modules'|trans }}</h4>
+                    <p>{{ 'menu.admin.manage.modules.detail'|trans }}</p>
                 </div>
             </a>
         </article>
@@ -74,8 +75,8 @@
                     <i class="fa fa-home fa-4x"></i>
                 </div>
                 <div class="text-holder">
-                    <h4>Volver</h4>
-                    <p>Muestra el menú principal</p>
+                    <h4>{{ 'menu.back'|trans }}</h4>
+                    <p>{{ 'menu.back.detail'|trans }}</p>
                 </div>
             </a>
         </article>

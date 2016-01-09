@@ -59,7 +59,6 @@
                 <li><a href="{{ path('frontpage') }}"><i class="fa fa-home fa-2x"></i></a></li>
                 {% for item in breadcrumb %}
                     <li>
-                        {% dump(item) %}
                         {% if item.path is defined %}<a href="{{ path(item.path) }}">{% endif %}
                             {% if item.icon is defined %}<i class="fa fa-{{ item.icon }}"></i> {% endif %}{{ item.caption | trans }}
                         {% if item.path is defined %}</a>{% endif %}
@@ -68,7 +67,7 @@
             </ol>
         {% endif %}
         {% if title is defined %}
-            <h1 class="well">{{ title | trans }}</h1>
+            <h1 class="well">{{ ((title is null) ? (breadcrumb|last).caption : title) | trans }}</h1>
         {% endif %}
         {% block content %}{% endblock %}
     </div>
