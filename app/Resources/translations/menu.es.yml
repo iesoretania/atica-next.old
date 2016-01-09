@@ -1,0 +1,11 @@
+menu.personal: Modificar mis datos
+menu.personal.detail: Cambia los datos propios
+menu.manage: Administrar la plataforma
+menu.manage.detail: Permite realizar cambios en la configuración
+menu.logout: Desconectar
+menu.logout.detail: Sale de la aplicación
+
+navbar.expand: Desplegar navegación
+navbar.logged.as: Conectado como {{ user }}
+menu.impersonate: Acceder como el usuario
+menu.impersonate.exit: Volver al usuario normal

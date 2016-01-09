@@ -1,1 +1,10 @@
-atica.security.no_membership: El usuario no pertenece a ninguna organización.
+form.login.submit: ACCEDER A LA APLICACIÓN
+form.login.title: Introduzca sus credenciales de acceso
+form.login.email: Correo electrónico
+form.login.register: Solicitar el alta
+form.login.password: Contraseña
+form.login.password.recover: ¿Olvidó la contraseña?
+form.login.footer: Esta aplicación es {{ link }} con licencia AGPL3
+form.login.footer.link.caption: software libre
+
+form.login.error.no_membership: El usuario no pertenece a ninguna organización.
