@@ -49,3 +49,12 @@ $breadcrumb-separator: ">";
     }
   }
 }
+
+/* Cambiar iconos de Glyphicons por sus equivalentes en Fontawesome */
+.glyphicon {
+  @extend .fa;
+
+  &.glyphicon-exclamation-sign {
+    @extend .fa-exclamation-triangle;
+  }
+}
