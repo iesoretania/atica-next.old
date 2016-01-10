@@ -17,7 +17,7 @@ menu.admin.manage.lists: Gestionar listas
 menu.admin.manage.lists.detail: Permite crear, modificar o eliminar listas de elementos
 menu.admin.manage.modules: Gestionar módulos
 menu.admin.manage.modules.detail: Permite activar o desactivar módulos a nivel global
-menu.back: Volver
+menu.back: Volver a la portada
 menu.back.detail: Muestra el menú principal
 
 navbar.expand: Desplegar navegación

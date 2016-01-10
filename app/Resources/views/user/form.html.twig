@@ -4,4 +4,5 @@
     {{ form_start(form) }}
         {{ form_widget(form) }}
     {{ form_end(form) }}
+    <a href="{{ path('frontpage') }}" class="btn btn-default"><i class="fa fa-home"></i> {{ "menu.back"|trans({}, 'menu') }}</a>
 {% endblock %}
