@@ -56,14 +56,16 @@
         {% endfor %}
         {% if breadcrumb is defined %}
             <ol class="breadcrumb">
-                <li><a href="{{ path('frontpage') }}"><i class="fa fa-home fa-2x"></i></a></li>
-                {% for item in breadcrumb %}
-                    <li>
-                        {% if item.path is defined %}<a href="{{ path(item.path) }}">{% endif %}
-                            {% if item.icon is defined %}<i class="fa fa-{{ item.icon }}"></i> {% endif %}{{ item.caption | trans }}
-                        {% if item.path is defined %}</a>{% endif %}
-                    </li>
-                {% endfor %}
+                {% spaceless %}
+                    <li><a href="{{ path('frontpage') }}"><i class="fa fa-home fa-2x"></i></a></li>
+                    {% for item in breadcrumb %}
+                        <li>
+                            {% if item.path is defined %}<a href="{{ path(item.path) }}">{% endif %}
+                                {% if item.icon is defined %}<i class="fa fa-{{ item.icon }}"></i> {% endif %}{{ item.caption | trans }}
+                            {% if item.path is defined %}</a>{% endif %}
+                        </li>
+                    {% endfor %}
+                {% endspaceless %}
             </ol>
         {% endif %}
         {% if title is defined %}
