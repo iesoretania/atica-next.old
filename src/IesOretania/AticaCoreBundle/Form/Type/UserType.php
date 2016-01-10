@@ -21,13 +21,7 @@
 namespace IesOretania\AticaCoreBundle\Form\Type;
 
 use IesOretania\AticaCoreBundle\Entity\Person;
-use IesOretania\AticaCoreBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
@@ -62,7 +56,7 @@ class UserType extends AbstractType
                 'label' => 'displayName',
                 'required' => true
             ))
-            ->add('gender', ChoiceType::class, array(
+            ->add('gender', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
                 'property_path' => 'person.gender',
                 'label' => 'gender',
                 'choices_as_values' => true,
@@ -91,7 +85,7 @@ class UserType extends AbstractType
         }
 
         $builder
-            ->add('email', EmailType::class, [
+            ->add('email', 'Symfony\Component\Form\Extension\Core\Type\EmailType', [
                 'label' => 'email',
                 'required' => true
             ]);
@@ -111,14 +105,14 @@ class UserType extends AbstractType
 
         if (!$options['new']) {
             $builder
-                ->add('submit', SubmitType::class, [
+                ->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
                     'label' => 'submit',
                     'attr' => ['class' => 'btn btn-success']
                 ]);
 
             if (!$options['admin']) {
                 $builder
-                    ->add('oldPassword', PasswordType::class, [
+                    ->add('oldPassword', 'Symfony\Component\Form\Extension\Core\Type\PasswordType', [
                         'label' => 'Contraseña antigua',
                         'required' => false,
                         'mapped' => false,
@@ -130,10 +124,10 @@ class UserType extends AbstractType
         }
 
         $builder
-            ->add('newPassword', RepeatedType::class, [
+            ->add('newPassword', 'Symfony\Component\Form\Extension\Core\Type\RepeatedType', [
                 'label' => 'newPassword',
                 'required' => false,
-                'type' => PasswordType::class,
+                'type' => 'Symfony\Component\Form\Extension\Core\Type\PasswordType',
                 'mapped' => false,
                 'invalid_message' => 'password.no_match',
                 'first_options' => [
@@ -153,7 +147,7 @@ class UserType extends AbstractType
                     'label' => 'newPassword.repeat'
                 ]
             ])
-            ->add('changePassword', SubmitType::class, array(
+            ->add('changePassword', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array(
                 'label' => 'changePassword',
                 'attr' => array('class' => 'btn btn-success'),
                 'validation_groups' => array('Default', 'password')
@@ -166,7 +160,7 @@ class UserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => 'IesOretania\AticaCoreBundle\Entity\User',
             'translation_domain' => 'user',
             'admin' => false,
             'new' => false,

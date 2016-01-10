@@ -21,7 +21,6 @@
 namespace AppBundle\Controller;
 
 use IesOretania\AticaCoreBundle\Entity\User;
-use IesOretania\AticaCoreBundle\Form\Type\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\SubmitButton;
@@ -37,7 +36,7 @@ class UserController extends Controller
     {
         /** @var User $user */
         $user = $this->getUser();
-        $form = $this->createForm(UserType::class, $user, [
+        $form = $this->createForm('IesOretania\AticaCoreBundle\Form\Type\UserType', $user, [
             'admin' => $this->isGranted('ROLE_ADMIN'),
             'me' => true
         ]);
