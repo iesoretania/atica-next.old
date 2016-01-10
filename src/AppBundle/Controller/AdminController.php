@@ -20,17 +20,22 @@
 
 namespace AppBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @Route("/admin")
+ * @Security("has_role('ROLE_ADMIN')")
+ */
 class AdminController extends Controller
 {
     /**
-     * @Route("/admin", name="admin_menu")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Route("/", name="admin_menu")
      */
-    public function adminIndexAction()
+    public function indexAction()
     {
         return $this->render('admin/menu.html.twig',
             [
@@ -39,4 +44,36 @@ class AdminController extends Controller
                 ]
             ]);
     }
+
+    /**
+     * @Route("/organizaciones", name="admin_organizations")
+     */
+    public function organizationsIndexAction(Request $request)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $orgsQuery = $em->createQuery('SELECT o FROM AticaCoreBundle:Organization o');
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $orgsQuery,
+            $request->query->getInt('page', 1),
+            20,
+            [
+                'defaultSortFieldName' => 'o.name',
+                'defaultSortDirection' => 'asc'
+            ]
+        );
+
+        return $this->render('admin/manage_organizations.html.twig',
+            [
+                'breadcrumb' => [
+                    ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
+                    ['caption' => 'menu.admin.manage.orgs', 'icon' => 'bank']
+                ],
+                'title' => null,
+                'pagination' => $pagination
+            ]);
+    }
+
 }

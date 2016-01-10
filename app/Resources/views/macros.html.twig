@@ -1,0 +1,7 @@
+{% macro paginator_th(pagination, class, field, caption) %}
+    <th class="{{ class }} {% if pagination.isSorted(field) %}sorted{% endif %}">{{ knp_pagination_sortable(pagination, caption, field) }}</th>
+{% endmacro %}
+
+{% macro paginator_stats(pagination) %}
+    Mostrando elementos {{ (pagination.getCurrentPageNumber-1)*pagination.getItemNumberPerPage+1 }}-{{ min((pagination.getCurrentPageNumber)*pagination.getItemNumberPerPage, pagination.getTotalItemCount) }} de {{ pagination.getTotalItemCount }}
+{% endmacro %}

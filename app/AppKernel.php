@@ -17,6 +17,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new IesOretania\AticaCoreBundle\AticaCoreBundle(),
             new AppBundle\AppBundle(),
         );

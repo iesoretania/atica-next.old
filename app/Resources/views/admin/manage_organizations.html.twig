@@ -1,0 +1,39 @@
+{% trans_default_domain 'admin' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+{% block title 'Gestionar organizaciones' %}
+{% block content %}
+    <table class="table table-bordered table-condensed table-hover table-responsive">
+        <thead>
+            <tr>
+                {{ m.paginator_th(pagination, 'col-md-3', 'o.name', 'org.name'|trans) }}
+                {{ m.paginator_th(pagination, 'col-md-2', 'o.code', 'org.code'|trans) }}
+                {{ m.paginator_th(pagination, 'col-md-2', 'o.city', 'org.city'|trans) }}
+                <th class="col-md-4">{{ 'org.description'|trans }}</th>
+                <th class="col-md-1"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for org in pagination %}
+            <tr>
+                <td>{{ org.name }}</td>
+                <td>{{ org.code }}</td>
+                <td>{{ org.city }}</td>
+                <td>{{ org.description | nl2br }}</td>
+                <td class="text-center">
+                    <a href="{{ path('admin_menu') }}" title="{{ 'form.edit' | trans }}"><i class="fa fa-pencil"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="5">{{ m.paginator_stats(pagination) }}</th>
+            </tr>
+        </tfoot>
+    </table>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+    <a href="{{ path('admin_menu') }}" class="btn btn-default"><i class="fa fa-wrench"></i> {{ "form.back"|trans }}</a>
+{% endblock %}

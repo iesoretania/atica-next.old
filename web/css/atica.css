@@ -415,3 +415,13 @@ form[role=login] button {
         display: none !important;
     }
 }
+
+.sorted > .asc:after {
+    content: " \f0dd";
+    font-family: FontAwesome;
+}
+
+.sorted > .desc:after {
+    content: " \f0de";
+    font-family: FontAwesome;
+}
