@@ -5,6 +5,7 @@ menu.manage.detail: Permite realizar cambios en la configuración
 menu.logout: Desconectar
 menu.logout.detail: Sale de la aplicación
 
+menu.title: Menú principal
 menu.admin.stats: Visualizar estadísticas y registros
 menu.admin.stats.detail: Muestra el estado global de la plataforma
 menu.admin.manage.orgs: Gestionar organizaciones
