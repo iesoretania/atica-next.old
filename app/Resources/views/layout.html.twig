@@ -70,6 +70,7 @@
         {% endif %}
         {% if title is defined %}
             <h1 class="well">{{ ((title is null) ? (breadcrumb|last).caption : title) | trans }}</h1>
+            {% block title %}{{ ((title is null) ? (breadcrumb|last).caption : title) | trans }}{% endblock %}
         {% endif %}
         {% block content %}{% endblock %}
     </div>
