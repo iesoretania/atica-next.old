@@ -18,10 +18,10 @@
   along with this program.  If not, see [http://www.gnu.org/licenses/].
 */
 
-
 namespace AppBundle\Listener;
 
 use Doctrine\ORM\EntityManager;
+use IesOretania\AticaCoreBundle\Entity\Membership;
 use IesOretania\AticaCoreBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
@@ -43,23 +43,40 @@ class SecurityListener
     {
         /** @var User $user */
         $user = $this->token->getToken()->getUser();
-        $organizations = $user->getOrganizations();
-
-        if (0 === count($organizations)) {
-            throw new CustomUserMessageAuthenticationException('form.login.error.no_membership');
-        }
-
         $defaultOrganization = $user->getDefaultOrganization();
 
-        if ($defaultOrganization && in_array($defaultOrganization, $organizations)) {
-            $currentOrganization = $defaultOrganization;
-        }
-        else {
-            $currentOrganization = $organizations[0];
+        $membership = $this->em->getRepository('AticaCoreBundle:Membership')
+            ->createQueryBuilder('m')
+            ->select('m')
+            ->andWhere('m.user = :user')
+            ->andWhere('m.organization = :org')
+            ->setParameter('user', $user)
+            ->setParameter('org', $defaultOrganization)
+            ->getQuery()
+            ->getFirstResult();
+
+        if (null === $membership) {
+            $memberships = $this->em->getRepository('AticaCoreBundle:Membership')
+                ->createQueryBuilder('m')
+                ->select('m')
+                ->andWhere('m.user = :user')
+                ->setParameter('user', $user)
+                ->getQuery()
+                ->getResult();
+
+            if (0 === count($memberships)) {
+                throw new CustomUserMessageAuthenticationException('form.login.error.no_membership');
+            }
+
+            // Si no hay organización por defecto o es incorrecta, coger la primera en la lista
+            /** @var Membership $membership */
+            $membership = $memberships[0];
+            $currentOrganization = $membership->getOrganization();
             $user->setDefaultOrganization($currentOrganization);
             $this->em->flush($user);
         }
 
-        $this->session->set('organization_id', $currentOrganization->getId());
+        $this->session->set('organization_id', $membership->getOrganization()->getId());
+        $this->session->set('organization', $membership->getOrganization()->getName());
     }
 }

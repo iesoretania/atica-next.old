@@ -7,8 +7,8 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
-    account.security_listener:
-            class: AppBundle\Listener\SecurityListener
-            autowire: true
-            tags:
-                - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin }
+    app.account.security_listener:
+        class: AppBundle\Listener\SecurityListener
+        autowire: true
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin }

@@ -1,18 +1,27 @@
 {% trans_default_domain 'menu' %}
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    {% if title is defined and title is not empty %}
+        {{ title|trans }} -
+    {% elseif breadcrumb is defined %}
+        {{ ((breadcrumb|last).caption)|trans }} -
+    {% endif %}
+    {{- app.session.get('organization') }}
+{%- endblock %}
+
 {% block body %}
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main">
-                    <span class="sr-only">{{ 'navbar.expand' | trans }}</span>
+                    <span class="sr-only">{{ 'navbar.expand'|trans }}</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="{{ path('frontpage') }}">
-                    {% block navbartitle %}{{ app_name }}{% endblock %}
+                    {% block navbartitle %}{{ app.session.get('organization', app_name) }}{% endblock %}
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-main">
@@ -21,19 +30,19 @@
                 {% else %}
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-user"></i> {{ 'navbar.logged.as' | trans({'{{ user }}': app.user.person }) }}<span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-user"></i> {{ 'navbar.logged.as'|trans({'{{ user }}': app.user.person }) }}<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ path('personal_form') }}"><i class="fa fa-cog"></i> {{ 'menu.personal' | trans }}</a></li>
+                                <li><a href="{{ path('personal_form') }}"><i class="fa fa-cog"></i> {{ 'menu.personal'|trans }}</a></li>
                                 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                                     <li class="divider"></li>
-                                    <li><a href="{{ path('frontpage', {'_switch_to': '_exit'}) }}"><i class="fa fa-user-secret"></i> {{ 'menu.impersonate.exit' | trans }}</a></li>
+                                    <li><a href="{{ path('frontpage', {'_switch_to': '_exit'}) }}"><i class="fa fa-user-secret"></i> {{ 'menu.impersonate.exit'|trans }}</a></li>
                                 {% endif %}
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <li class="divider"></li>
-                                    <li><a href="{{ path('admin_menu') }}"><i class="fa fa-wrench"></i> {{ 'menu.manage' | trans }}</a></li>
+                                    <li><a href="{{ path('admin_menu') }}"><i class="fa fa-wrench"></i> {{ 'menu.manage'|trans }}</a></li>
                                 {% endif %}
                                 <li class="divider"></li>
-                                <li><a href="{{ path('logout') }}"><i class="fa fa-power-off"></i> {{ 'menu.logout' | trans }}</a></li>
+                                <li><a href="{{ path('logout') }}"><i class="fa fa-power-off"></i> {{ 'menu.logout'|trans }}</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -61,7 +70,7 @@
                     {% for item in breadcrumb %}
                         <li>
                             {% if item.path is defined %}<a href="{{ path(item.path) }}">{% endif %}
-                                {% if item.icon is defined %}<i class="fa fa-{{ item.icon }}"></i> {% endif %}{{ item.caption | trans }}
+                                {% if item.icon is defined %}<i class="fa fa-{{ item.icon }}"></i> {% endif %}{{ item.caption|trans }}
                             {% if item.path is defined %}</a>{% endif %}
                         </li>
                     {% endfor %}
@@ -69,8 +78,7 @@
             </ol>
         {% endif %}
         {% if title is defined %}
-            <h1 class="well">{{ ((title is null) ? (breadcrumb|last).caption : title) | trans }}</h1>
-            {% block title %}{{ ((title is null) ? (breadcrumb|last).caption : title) | trans }}{% endblock %}
+            <h1 class="well">{{ ((title is null and breadcrumb is defined) ? (breadcrumb|last).caption : title)|trans }}</h1>
         {% endif %}
         {% block content %}{% endblock %}
     </div>
