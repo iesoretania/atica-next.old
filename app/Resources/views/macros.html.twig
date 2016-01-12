@@ -3,5 +3,8 @@
 {% endmacro %}
 
 {% macro paginator_stats(pagination) %}
-    Mostrando elementos {{ (pagination.getCurrentPageNumber-1)*pagination.getItemNumberPerPage+1 }}-{{ min((pagination.getCurrentPageNumber)*pagination.getItemNumberPerPage, pagination.getTotalItemCount) }} de {{ pagination.getTotalItemCount }}
+    {{ 'showing'|trans({
+        '%first%': (pagination.getCurrentPageNumber-1)*pagination.getItemNumberPerPage+1,
+        '%last%': min((pagination.getCurrentPageNumber)*pagination.getItemNumberPerPage, pagination.getTotalItemCount),
+        '%total%': pagination.getTotalItemCount }, 'messages') }}
 {% endmacro %}
