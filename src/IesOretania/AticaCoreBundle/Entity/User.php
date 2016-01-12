@@ -47,7 +47,7 @@ class User implements UserInterface, \Serializable
     protected $person;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
      * @var string
      */
     protected $email;
