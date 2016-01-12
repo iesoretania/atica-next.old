@@ -47,22 +47,29 @@ class UserController extends Controller
 
             // Guardar el usuario en la base de datos
 
+
             // Si es solicitado, cambiar la contraseña
             $passwordSubmit = $form->get('changePassword');
             if (($passwordSubmit instanceof SubmitButton) && $passwordSubmit->isClicked()) {
                 $password = $this->container->get('security.password_encoder')
                     ->encodePassword($user, $form->get('newPassword')->get('first')->getData());
                 $user->setPassword($password);
-                $this->addFlash('success', 'Datos guardados correctamente y contraseña cambiada');
+                $message = $this->get('translator')->trans('passwordChanged', [], 'user');
+            } else {
+                $message = $this->get('translator')->trans('dataSaved', [], 'user');
             }
-            else {
-                $this->addFlash('success', 'Datos guardados correctamente');
-            }
-            $this->getDoctrine()->getManager()->flush();
 
-            return new RedirectResponse(
-                $this->generateUrl('frontpage')
-            );
+            // Probar a guardar los cambios
+            try {
+                $this->getDoctrine()->getManager()->flush();
+                $this->addFlash('success', $message);
+                return new RedirectResponse(
+                    $this->generateUrl('frontpage')
+                );
+            }
+            catch (\Exception $e) {
+                $this->addFlash('error', $this->get('translator')->trans('saveFailed', [], 'user'));
+            }
         }
 
         return $this->render('user/form.html.twig', [

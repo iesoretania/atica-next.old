@@ -16,3 +16,7 @@ oldPassword: Contraseña antigua
 newPassword: Nueva contraseña
 newPassword.repeat: Repita nueva contraseña
 changePassword: Guardar los cambios y cambiar la contraseña
+
+passwordChanged: Datos guardados correctamente y contraseña cambiada
+dataSaved: Datos guardados correctamente
+saveFailed: No se han podido guardar los cambios
