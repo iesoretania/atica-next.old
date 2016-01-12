@@ -17,12 +17,15 @@
                     <div class="form-group">
                         <div class="pull-right"><a href="#" tabindex="1">{{ 'form.login.register'|trans }}</a></div>
                         <label for="email">{{ 'form.login.email'|trans }}</label>
-                        <input type="email" name="_username" id="email" required="" class="form-control" autofocus="" tabindex="2">
+                        <input type="email" name="_username" id="email" required="" class="form-control" tabindex="2"
+                               autocorrect="off" autocapitalize="none" value="{{ last_username | default('') }}"
+                               {% if not last_username %}autofocus="" {% endif %}>
                     </div>
                     <div class="form-group">
                         <div class="pull-right"><a href="#" tabindex="5">{{ 'form.login.password.recover'|trans }}</a></div>
                         <label for="password">{{ 'form.login.password'|trans }}</label>
-                        <input type="password" name="_password" id="password" required="" class="form-control" tabindex="3">
+                        <input type="password" name="_password" id="password" required="" class="form-control" tabindex="3"
+                            {% if last_username %}autofocus="" {% endif %}>
                     </div>
                     <div class="form-group">
                         <button type="submit" name="login" class="btn btn-lg btn-info btn-block" tabindex="4">{{ 'form.login.submit'|trans }}</button>
