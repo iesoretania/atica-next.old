@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class SecurityController extends Controller
 {
     /**
-     * @Route("/entrar", name="login")
+     * @Route("/entrar", name="login", methods={"GET"})
      */
     public function loginAction()
     {
@@ -30,7 +30,7 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/organizacion", name="login_organization")
+     * @Route("/organizacion", name="login_organization", methods={"GET", "POST"})
      */
     public function organizationAction()
     {
@@ -41,15 +41,9 @@ class SecurityController extends Controller
 
     /**
      * @Route("/comprobar", name="login_check")
-     */
-    public function loginCheckAction()
-    {
-    }
-
-    /**
      * @Route("/salir", name="logout")
      */
-    public function logoutCheckAction()
+    public function logInOutCheckAction()
     {
     }
 }
