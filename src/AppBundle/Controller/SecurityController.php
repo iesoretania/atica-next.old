@@ -4,6 +4,9 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class SecurityController extends Controller
 {
@@ -32,8 +35,35 @@ class SecurityController extends Controller
     /**
      * @Route("/organizacion", name="login_organization", methods={"GET", "POST"})
      */
-    public function organizationAction()
+    public function organizationAction(Request $request)
     {
+        /** @var Session $session */
+        $session = $this->get('session');
+
+        // ¿se ha seleccionado una organización?
+        if ($request->isMethod('POST')) {
+
+            // comprobar que está asociada al usuario
+            $em = $this->getDoctrine()->getManager();
+
+            $membership = $em->getRepository('AticaCoreBundle:Membership')->findOneBy(
+                [
+                    'user' => $this->getUser(),
+                    'organization' => $em->getRepository('AticaCoreBundle:Organization')->find($request->get('organization'))
+                ]
+            );
+
+            // ¿es correcta?
+            if ($membership) {
+                $session->set('organization_id', $membership->getOrganization()->getId());
+                $session->set('organization', $membership->getOrganization()->getName());
+
+                $url = $session->get('_security.organization.target_path', $this->generateUrl('frontpage'));
+                $session->remove('_security.organization.target_path');
+                return new RedirectResponse($url);
+            }
+        }
+
         return $this->render(
             'security/organization.html.twig'
         );

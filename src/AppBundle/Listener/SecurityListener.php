@@ -43,40 +43,33 @@ class SecurityListener
     {
         /** @var User $user */
         $user = $this->token->getToken()->getUser();
-        $defaultOrganization = $user->getDefaultOrganization();
 
-        $membership = $this->em->getRepository('AticaCoreBundle:Membership')
+        $membershipCount = $this->em->getRepository('AticaCoreBundle:Membership')
             ->createQueryBuilder('m')
-            ->select('m')
+            ->select('count(m.organization)')
             ->andWhere('m.user = :user')
-            ->andWhere('m.organization = :org')
             ->setParameter('user', $user)
-            ->setParameter('org', $defaultOrganization)
             ->getQuery()
-            ->getFirstResult();
+            ->getScalarResult();
 
-        if (null === $membership) {
-            $memberships = $this->em->getRepository('AticaCoreBundle:Membership')
-                ->createQueryBuilder('m')
-                ->select('m')
-                ->andWhere('m.user = :user')
-                ->setParameter('user', $user)
-                ->getQuery()
-                ->getResult();
-
-            if (0 === count($memberships)) {
+        switch($membershipCount) {
+            case 0:
                 throw new CustomUserMessageAuthenticationException('form.login.error.no_membership');
-            }
+            case 1:
+                /** @var Membership $membership */
+                $membership = $this->em->getRepository('AticaCoreBundle:Membership')
+                    ->createQueryBuilder('m')
+                    ->select('m')
+                    ->andWhere('m.user = :user')
+                    ->setParameter('user', $user)
+                    ->getQuery()
+                    ->getFirstResult();
 
-            // Si no hay organización por defecto o es incorrecta, coger la primera en la lista
-            /** @var Membership $membership */
-            $membership = $memberships[0];
-            $currentOrganization = $membership->getOrganization();
-            $user->setDefaultOrganization($currentOrganization);
-            $this->em->flush($user);
+                $this->session->set('organization_id', $membership->getOrganization()->getId());
+                $this->session->set('organization', $membership->getOrganization()->getName());
+                break;
+            default:
+                $this->session->set('_security.organization.target_path', $this->session->get('_security.main.target_path'));
         }
-
-        $this->session->set('organization_id', $membership->getOrganization()->getId());
-        $this->session->set('organization', $membership->getOrganization()->getName());
     }
 }
