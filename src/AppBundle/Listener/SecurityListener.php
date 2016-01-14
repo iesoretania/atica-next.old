@@ -50,21 +50,14 @@ class SecurityListener
             ->andWhere('m.user = :user')
             ->setParameter('user', $user)
             ->getQuery()
-            ->getScalarResult();
+            ->getSingleScalarResult();
 
         switch($membershipCount) {
             case 0:
                 throw new CustomUserMessageAuthenticationException('form.login.error.no_membership');
             case 1:
                 /** @var Membership $membership */
-                $membership = $this->em->getRepository('AticaCoreBundle:Membership')
-                    ->createQueryBuilder('m')
-                    ->select('m')
-                    ->andWhere('m.user = :user')
-                    ->setParameter('user', $user)
-                    ->getQuery()
-                    ->getFirstResult();
-
+                $membership = $this->em->getRepository('AticaCoreBundle:Membership')->findOneBy(['user' => $user]);
                 $this->session->set('organization_id', $membership->getOrganization()->getId());
                 $this->session->set('organization', $membership->getOrganization()->getName());
                 break;
