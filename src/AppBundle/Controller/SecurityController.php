@@ -14,19 +14,28 @@ class SecurityController extends Controller
     {
         $authenticationUtils = $this->get('security.authentication_utils');
 
-        // get the login error if there is one
+        // obtener el error de entrada, si existe alguno
         $error = $authenticationUtils->getLastAuthenticationError();
 
-        // last username entered by the user
+        // último nombre de usuario introducido
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render(
             'security/login.html.twig',
             array(
-                // last username entered by the user
                 'last_username' => $lastUsername,
                 'error' => $error,
             )
+        );
+    }
+
+    /**
+     * @Route("/organizacion", name="login_organization")
+     */
+    public function organizationAction()
+    {
+        return $this->render(
+            'security/organization.html.twig'
         );
     }
 

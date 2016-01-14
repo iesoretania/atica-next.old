@@ -8,3 +8,6 @@ form.login.footer: Esta aplicación es {{ link }} con licencia AGPL3
 form.login.footer.link.caption: software libre
 
 form.login.error.no_membership: El usuario no pertenece a ninguna organización.
+
+form.organization.title: Seleccione organización
+form.organization.submit: SELECCIONAR ORGANIZACIÓN
