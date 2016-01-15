@@ -41,11 +41,7 @@ class OrganizationType extends AbstractType
             ->add('phoneNumber', null)
             ->add('faxNumber', null)
             ->add('email', null)
-            ->add('description', null)
-            ->add('save' ,'submit', [
-                'label' => 'form.submit',
-                'attr' => ['class' => 'btn-success']
-            ]);
+            ->add('description', null);
     }
 
     /**
