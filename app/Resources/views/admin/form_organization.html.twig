@@ -1,0 +1,9 @@
+{% trans_default_domain 'organization' %}
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+    <a href="{{ path('admin_organizations') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> {{ 'menu.back'|trans }}</a>
+{% endblock %}

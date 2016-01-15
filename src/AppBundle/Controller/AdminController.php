@@ -21,9 +21,11 @@
 namespace AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use IesOretania\AticaCoreBundle\Entity\Organization;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -76,4 +78,33 @@ class AdminController extends Controller
             ]);
     }
 
+    /**
+     * @Route("/organizacion/{organization}", name="admin_edit_organization")
+     */
+    public function editOrganizationAction(Request $request, Organization $organization)
+    {
+        $form = $this->createForm('IesOretania\AticaCoreBundle\Form\Type\OrganizationType', $organization);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // Guardar el usuario en la base de datos
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', $this->get('translator')->trans('menu.saved', [], 'organization'));
+            return new RedirectResponse(
+                $this->generateUrl('admin_organizations')
+            );
+        }
+
+        return $this->render('admin/form_organization.html.twig', [
+            'form' => $form->createView(),
+            'breadcrumb' => [
+                ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
+                ['caption' => 'menu.admin.manage.orgs', 'icon' => 'bank', 'path' => 'admin_organizations'],
+                ['fixed' => $organization->getName()]
+            ],
+            'title' => $this->get('translator')->trans('form.title', [], 'organization')
+        ]);
+    }
 }

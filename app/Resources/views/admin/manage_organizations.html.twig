@@ -20,7 +20,7 @@
                 <td>{{ org.city }}</td>
                 <td>{{ org.description | nl2br }}</td>
                 <td class="text-center">
-                    <a href="{{ path('admin_menu') }}" title="{{ 'form.edit' | trans }}"><i class="fa fa-pencil"></i></a>
+                    <a href="{{ path('admin_edit_organization', {'organization': org.id }) }}" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i> {{ 'form.edit' | trans }}</a>
                 </td>
             </tr>
             {% endfor %}

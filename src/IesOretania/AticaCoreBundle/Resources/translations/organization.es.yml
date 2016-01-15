@@ -1,0 +1,13 @@
+Name: Nombre
+Code: Código
+Address: Dirección postal
+City: Ciudad
+Phone number: Teléfono
+Fax number: FAX
+Email: Correo-e
+Description: Descripción
+
+form.title: Modificar organización
+form.submit: Guardar cambios
+menu.back: Volver a la lista de organizaciones
+menu.saved: Datos guardados correctamente
