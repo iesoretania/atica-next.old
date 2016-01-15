@@ -1,21 +1,21 @@
-reference: Referencia
-firstName: Nombre
-lastName: Apellidos
-displayName: Nombre mostrado
-gender: Sexo
+Reference: Referencia
+First name: Nombre
+Last name: Apellidos
+Display name: Nombre mostrado
+Gender: Sexo
 gender.unknown: Desconocido
 gender.male: Hombre
 gender.female: Mujer
-initials: Iniciales
-description: Descripción
-email: Correo electrónico
+Initials: Iniciales
+Description: Descripción
+Email: Correo electrónico
 enabled: El usuario está activo
-globalAdministrator: Es administrador global
-submit: Guardar cambios
-oldPassword: Contraseña antigua
-newPassword: Nueva contraseña
+Global administrator: Es administrador global
+Submit: Guardar cambios
+Old password: Contraseña antigua
+New password: Nueva contraseña
 newPassword.repeat: Repita nueva contraseña
-changePassword: Guardar los cambios y cambiar la contraseña
+Change password: Guardar los cambios y cambiar la contraseña
 
 passwordChanged: Datos guardados correctamente y contraseña cambiada
 dataSaved: Datos guardados correctamente

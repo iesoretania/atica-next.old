@@ -38,27 +38,22 @@ class UserType extends AbstractType
         $builder
             ->add('reference', null, array(
                 'property_path' => 'person.reference',
-                'label' => 'reference',
                 'disabled' => !$options['admin']
             ))
             ->add('firstName', null, array(
                 'property_path' => 'person.firstName',
-                'label' => 'firstName',
                 'required' => true
             ))
             ->add('lastName', null, array(
                 'property_path' => 'person.lastName',
-                'label' => 'lastName',
                 'required' => true
             ))
             ->add('displayName', null, array(
                 'property_path' => 'person.displayName',
-                'label' => 'displayName',
                 'required' => true
             ))
             ->add('gender', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
                 'property_path' => 'person.gender',
-                'label' => 'gender',
                 'choices_as_values' => true,
                 'choices' => [
                     'gender.unknown' => Person::GENDER_UNKNOWN,
@@ -71,7 +66,6 @@ class UserType extends AbstractType
             ))
             ->add('initials', null, array(
                 'property_path' => 'person.initials',
-                'label' => 'initials',
                 'required' => false
             ));
 
@@ -79,14 +73,12 @@ class UserType extends AbstractType
             $builder
                 ->add('description', null, array(
                     'property_path' => 'person.description',
-                    'label' => 'description',
                     'required' => false
                 ));
         }
 
         $builder
             ->add('email', 'Symfony\Component\Form\Extension\Core\Type\EmailType', [
-                'label' => 'email',
                 'required' => true
             ]);
 
@@ -94,10 +86,10 @@ class UserType extends AbstractType
             $builder
                 ->add('enabled', null, [
                     'label' => 'enabled',
+                    'disabled' => $options['me'],
                     'required' => false
                 ])
                 ->add('globalAdministrator', null, [
-                    'label' => 'globalAdministrator',
                     'required' => false,
                     'disabled' => $options['me']
                 ]);
@@ -106,14 +98,12 @@ class UserType extends AbstractType
         if (!$options['new']) {
             $builder
                 ->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
-                    'label' => 'submit',
                     'attr' => ['class' => 'btn btn-success']
                 ]);
 
             if (!$options['admin']) {
                 $builder
                     ->add('oldPassword', 'Symfony\Component\Form\Extension\Core\Type\PasswordType', [
-                        'label' => 'Contraseña antigua',
                         'required' => false,
                         'mapped' => false,
                         'constraints' => new UserPassword([
@@ -125,13 +115,12 @@ class UserType extends AbstractType
 
         $builder
             ->add('newPassword', 'Symfony\Component\Form\Extension\Core\Type\RepeatedType', [
-                'label' => 'newPassword',
                 'required' => false,
                 'type' => 'Symfony\Component\Form\Extension\Core\Type\PasswordType',
                 'mapped' => false,
                 'invalid_message' => 'password.no_match',
                 'first_options' => [
-                    'label' => 'newPassword',
+                    'label' => 'New password',
                     'constraints' => [
                         new Length([
                             'min' => 7,
@@ -148,7 +137,6 @@ class UserType extends AbstractType
                 ]
             ])
             ->add('changePassword', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array(
-                'label' => 'changePassword',
                 'attr' => array('class' => 'btn btn-success'),
                 'validation_groups' => array('Default', 'password')
             ));
