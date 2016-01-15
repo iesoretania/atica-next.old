@@ -5,7 +5,11 @@
 {% block content %}
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        {{ m.submit_button('form.submit'|trans, 'check') }}
+        {% if not new %}
+            {{ m.submit_button('form.submit'|trans, 'check') }}
+        {% else %}
+            {{ m.submit_button('form.create'|trans, 'plus') }}
+        {% endif %}
     {{ form_end(form) }}
     <a href="{{ path('admin_organizations') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> {{ 'menu.back'|trans }}</a>
 {% endblock %}

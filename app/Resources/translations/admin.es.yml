@@ -1,5 +1,7 @@
 form.edit: Modificar
 form.back: Volver al menú de administración
+form.new: Nuevo elemento
+form.create: Crear elemento
 
 org.name: Organización
 org.code: Código

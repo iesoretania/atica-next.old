@@ -79,7 +79,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/organizacion/{organization}", name="admin_edit_organization")
+     * @Route("/organizacion/{organization}", name="admin_edit_organization", requirements={"organization": "\d+"} )
      */
     public function editOrganizationAction(Request $request, Organization $organization)
     {
@@ -88,8 +88,7 @@ class AdminController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            // Guardar el usuario en la base de datos
+            // Guardar la organización en la base de datos
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', $this->get('translator')->trans('menu.saved', [], 'organization'));
             return new RedirectResponse(
@@ -104,7 +103,42 @@ class AdminController extends Controller
                 ['caption' => 'menu.admin.manage.orgs', 'icon' => 'bank', 'path' => 'admin_organizations'],
                 ['fixed' => $organization->getName()]
             ],
-            'title' => $this->get('translator')->trans('form.title', [], 'organization')
+            'title' => $this->get('translator')->trans('form.title', [], 'organization'),
+            'new' => false
+        ]);
+    }
+
+
+    /**
+     * @Route("/organizacion/nueva", name="admin_new_organization")
+     */
+    public function newOrganizationAction(Request $request)
+    {
+        $organization = new Organization();
+
+        $form = $this->createForm('IesOretania\AticaCoreBundle\Form\Type\OrganizationType', $organization);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Guardar la organización en la base de datos
+            $this->getDoctrine()->getManager()->persist($organization);
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', $this->get('translator')->trans('menu.saved', [], 'organization'));
+            return new RedirectResponse(
+                $this->generateUrl('admin_organizations')
+            );
+        }
+
+        return $this->render('admin/form_organization.html.twig', [
+            'form' => $form->createView(),
+            'breadcrumb' => [
+                ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
+                ['caption' => 'menu.admin.manage.orgs', 'icon' => 'bank', 'path' => 'admin_organizations'],
+                ['caption' => 'menu.new']
+            ],
+            'title' => null,
+            'new' => true
         ]);
     }
 }

@@ -62,12 +62,6 @@ class Organization
     protected $city;
 
     /**
-     * @ORM\Column(type="string")
-     * @var string
-     */
-    protected $slug;
-
-    /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
      */
@@ -226,30 +220,6 @@ class Organization
     public function getCity()
     {
         return $this->city;
-    }
-
-    /**
-     * Set slug
-     *
-     * @param string $slug
-     *
-     * @return Organization
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * Get slug
-     *
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
     }
 
     /**
