@@ -34,6 +34,6 @@
     <div class="navigation">
         {{ knp_pagination_render(pagination) }}
     </div>
-    <a href="{{ path('admin_menu') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> {{ "form.back"|trans }}</a>
-    <a href="{{ path('admin_new_organization') }}" class="btn btn-success"><i class="fa fa-plus"></i> {{ "form.new"|trans }}</a>
+    {{ m.link_button(path('admin_menu'), 'form.back'|trans, 'arrow-left', 'btn-default') }}
+    {{ m.link_button(path('admin_new_organization'), 'form.new'|trans, 'plus', 'btn-success') }}
 {% endblock %}

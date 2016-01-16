@@ -9,12 +9,21 @@
         '%total%': pagination.getTotalItemCount }, 'messages') }}
 {% endmacro %}
 
-{% macro submit_button(caption, icon = null, class = 'btn-success') %}
+{% macro start_button() %}
     <div class="form-group">
         <div class="col-sm-2"></div>
         <div class="col-sm-10">
-            <button type="submit" class="btn {{ class }}">{% if icon %}<i class="fa fa-{{ icon }}"></i> {% endif %}{{ caption }}
-            </button>
+{% endmacro %}
+
+{% macro end_button() %}
         </div>
     </div>
+{% endmacro %}
+
+{% macro submit_button(caption, icon = null, class = 'btn-success') %}
+    <button type="submit" class="btn {{ class }}">{% if icon %}<i class="fa fa-{{ icon }}"></i> {% endif %}{{ caption }}</button>
+{% endmacro %}
+
+{% macro link_button(href, caption, icon = null, class = 'btn-success') %}
+    <a href="{{ href }}" class="btn {{ class }}">{% if icon %}<i class="fa fa-{{ icon }}"></i> {% endif %}{{ caption }}</a>
 {% endmacro %}

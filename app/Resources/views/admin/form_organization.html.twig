@@ -5,11 +5,14 @@
 {% block content %}
     {{ form_start(form) }}
         {{ form_widget(form) }}
+        {{ m.start_button }}
         {% if not new %}
             {{ m.submit_button('form.submit'|trans, 'check') }}
         {% else %}
             {{ m.submit_button('form.create'|trans, 'plus') }}
         {% endif %}
+        {{ m.link_button(path('admin_organizations'), 'menu.delete'|trans, 'trash', 'btn-danger') }}
+        {{ m.end_button }}
     {{ form_end(form) }}
-    <a href="{{ path('admin_organizations') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> {{ 'menu.back'|trans }}</a>
+    {{ m.link_button(path('admin_organizations'), 'menu.back'|trans, 'arrow-left', 'btn-default') }}
 {% endblock %}
