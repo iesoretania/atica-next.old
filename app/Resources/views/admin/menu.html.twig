@@ -3,17 +3,6 @@
 
 {% block content %}
     <section class="row tile-row">
-        <article class="col-md-4 tile tile-col-4 tile-orange">
-            <a class="tile-link" href="{{ path('frontpage') }}">
-                <div class="tile-icon-holder">
-                    <i class="fa fa-pie-chart fa-4x"></i>
-                </div>
-                <div class="text-holder">
-                    <h4>{{ 'menu.admin.stats'|trans }}</h4>
-                    <p>{{ 'menu.admin.stats.detail'|trans }}</p>
-                </div>
-            </a>
-        </article>
         <article class="col-md-4 tile tile-col-4 tile-amber">
             <a class="tile-link" href="{{ is_granted('ROLE_ADMIN') ? path('admin_organizations') : path('admin_edit_organization', {'organization': user_extension.currentOrganization.id}) }}">
                 <div class="tile-icon-holder">
@@ -27,6 +16,17 @@
                         <h4>{{ 'menu.admin.manage.org'|trans }}</h4>
                         <p>{{ 'menu.admin.manage.org.detail'|trans }}</p>
                     {% endif %}
+                </div>
+            </a>
+        </article>
+        <article class="col-md-4 tile tile-col-4 tile-orange">
+            <a class="tile-link" href="{{ path('frontpage') }}">
+                <div class="tile-icon-holder">
+                    <i class="fa fa-pie-chart fa-4x"></i>
+                </div>
+                <div class="text-holder">
+                    <h4>{{ 'menu.admin.stats'|trans }}</h4>
+                    <p>{{ 'menu.admin.stats.detail'|trans }}</p>
                 </div>
             </a>
         </article>
