@@ -23,6 +23,7 @@ namespace AppBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class UserExtensionService
 {
@@ -36,10 +37,16 @@ class UserExtensionService
      */
     private $session;
 
-    public function __construct(EntityManager $em, Session $session)
+    /**
+     * @var AuthorizationChecker
+     */
+    private $authorizationChecker;
+
+    public function __construct(EntityManager $em, Session $session, AuthorizationChecker $authorizationChecker)
     {
         $this->em = $em;
         $this->session = $session;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     public function getCurrentOrganization()
@@ -50,5 +57,10 @@ class UserExtensionService
         else {
             return null;
         }
+    }
+
+    public function isUserLocalAdministrator()
+    {
+        return $this->authorizationChecker->isGranted('manage', $this->getCurrentOrganization());
     }
 }

@@ -10,7 +10,6 @@ services:
     app.user.extension:
         class: AppBundle\Service\UserExtensionService
         autowire: true
-        public: false
 
     app.account.security_listener:
         class: AppBundle\Listener\SecurityListener
@@ -23,3 +22,10 @@ services:
         autowire: true
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    app.entity.organization_voter:
+        class: AppBundle\Security\OrganizationVoter
+        autowire: true
+        public: false
+        tags:
+            - { name: security.voter }

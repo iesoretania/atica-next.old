@@ -8,11 +8,15 @@
         {{ m.start_button }}
         {% if not new %}
             {{ m.submit_button('submit', 'form.submit'|trans, 'check') }}
-            {{ m.link_button(path('admin_delete_organization', {'organization': organization.id}), 'menu.delete'|trans, 'trash', 'btn-danger') }}
+            {% if is_granted('ROLE_ADMIN') %}{{ m.link_button(path('admin_delete_organization', {'organization': organization.id}), 'menu.delete'|trans, 'trash', 'btn-danger') }}{% endif %}
         {% else %}
             {{ m.submit_button('submit', 'form.create'|trans, 'plus') }}
         {% endif %}
         {{ m.end_button }}
     {{ form_end(form) }}
-    {{ m.link_button(path('admin_organizations'), 'menu.back'|trans, 'arrow-left', 'btn-default') }}
+    {% if is_granted('ROLE_ADMIN') %}
+        {{ m.link_button(path('admin_organizations'), 'menu.back'|trans, 'arrow-left', 'btn-default') }}
+    {% else %}
+        {{ m.link_button(path('admin_menu'), 'menu.back'|trans, 'arrow-left', 'btn-default') }}
+    {% endif %}
 {% endblock %}

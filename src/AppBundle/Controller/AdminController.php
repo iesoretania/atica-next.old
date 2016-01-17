@@ -30,7 +30,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/admin")
- * @Security("has_role('ROLE_ADMIN')")
  */
 class AdminController extends Controller
 {
@@ -39,6 +38,10 @@ class AdminController extends Controller
      */
     public function indexAction()
     {
+        // permitir acceso si es administrador local o si es administrador global
+        if (!$this->get('app.user.extension')->isUserLocalAdministrator()) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        }
         return $this->render('admin/menu.html.twig',
             [
                 'breadcrumb' => [
@@ -49,6 +52,7 @@ class AdminController extends Controller
 
     /**
      * @Route("/organizaciones", name="admin_organizations")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function organizationsIndexAction(Request $request)
     {
@@ -80,6 +84,7 @@ class AdminController extends Controller
 
     /**
      * @Route("/organizacion/{organization}", name="admin_edit_organization", requirements={"organization": "\d+"} )
+     * @Security("has_role('ROLE_ADMIN') or is_granted('manage', organization)")
      */
     public function editOrganizationAction(Request $request, Organization $organization)
     {
@@ -105,17 +110,21 @@ class AdminController extends Controller
                 $this->addFlash('success', $this->get('translator')->trans('menu.saved', [], 'organization'));
             }
             return new RedirectResponse(
-                $this->generateUrl('admin_organizations')
+                $this->generateUrl($this->isGranted('ROLE_ADMIN') ? 'admin_organizations' : 'admin_menu')
             );
         }
 
+        $breadcrumb = [['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu']];
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $breadcrumb[] = ['caption' => 'menu.admin.manage.orgs', 'icon' => 'bank', 'path' => 'admin_organizations'];
+        } else {
+            $breadcrumb[] = ['caption' => 'menu.admin.manage.org', 'icon' => 'bank'];
+        }
+        $breadcrumb[]= ['fixed' => $organization->getName()];
         return $this->render('admin/form_organization.html.twig', [
             'form' => $form->createView(),
-            'breadcrumb' => [
-                ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
-                ['caption' => 'menu.admin.manage.orgs', 'icon' => 'bank', 'path' => 'admin_organizations'],
-                ['fixed' => $organization->getName()]
-            ],
+            'breadcrumb' => $breadcrumb,
             'title' => $this->get('translator')->trans('form.title', [], 'organization'),
             'new' => false,
             'organization' => $organization
@@ -124,6 +133,7 @@ class AdminController extends Controller
 
     /**
      * @Route("/organizacion/nueva", name="admin_new_organization")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function newOrganizationAction(Request $request)
     {
@@ -157,6 +167,7 @@ class AdminController extends Controller
 
     /**
      * @Route("/organizacion/borrar/{organization}", name="admin_delete_organization")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteOrganizationAction(Request $request, Organization $organization)
     {

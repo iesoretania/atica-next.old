@@ -10,6 +10,8 @@ menu.admin.stats: Visualizar estadísticas y registros
 menu.admin.stats.detail: Muestra el estado global de la plataforma
 menu.admin.manage.orgs: Gestionar organizaciones
 menu.admin.manage.orgs.detail: Permite crear, modificar o eliminar organizaciones
+menu.admin.manage.org: Gestionar organización
+menu.admin.manage.org.detail: Permite modificar los datos de la organización
 menu.admin.manage.users: Gestionar usuarios
 menu.admin.manage.users.detail: Permite crear, modificar o eliminar usuarios
 menu.admin.manage.profiles: Gestionar perfiles

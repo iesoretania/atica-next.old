@@ -15,13 +15,18 @@
             </a>
         </article>
         <article class="col-md-4 tile tile-col-4 tile-amber">
-            <a class="tile-link" href="{{ path('admin_organizations') }}">
+            <a class="tile-link" href="{{ is_granted('ROLE_ADMIN') ? path('admin_organizations') : path('admin_edit_organization', {'organization': user_extension.currentOrganization.id}) }}">
                 <div class="tile-icon-holder">
                     <i class="fa fa-bank fa-4x"></i>
                 </div>
                 <div class="text-holder">
-                    <h4>{{ 'menu.admin.manage.orgs'|trans }}</h4>
-                    <p>{{ 'menu.admin.manage.orgs.detail'|trans }}</p>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <h4>{{ 'menu.admin.manage.orgs'|trans }}</h4>
+                        <p>{{ 'menu.admin.manage.orgs.detail'|trans }}</p>
+                    {% else %}
+                        <h4>{{ 'menu.admin.manage.org'|trans }}</h4>
+                        <p>{{ 'menu.admin.manage.org.detail'|trans }}</p>
+                    {% endif %}
                 </div>
             </a>
         </article>
