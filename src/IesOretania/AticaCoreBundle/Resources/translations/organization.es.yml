@@ -13,3 +13,9 @@ form.create: Crear organización
 menu.back: Volver a la lista de organizaciones
 menu.saved: Datos guardados correctamente
 menu.delete: Eliminar organización
+menu.deleted: Organización eliminada con éxito
+menu.not_deleted: No se ha podido eliminar la organización. Compruebe que no tenga datos asociados.
+menu.delete_back: Volver a la organización
+
+text.delete_confirm: >
+    ¡ATENCIÓN! La organización sólo podrá ser eliminada si no contiene datos asociados.

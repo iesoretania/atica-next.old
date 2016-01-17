@@ -20,8 +20,8 @@
     </div>
 {% endmacro %}
 
-{% macro submit_button(caption, icon = null, class = 'btn-success') %}
-    <button type="submit" class="btn {{ class }}">{% if icon %}<i class="fa fa-{{ icon }}"></i> {% endif %}{{ caption }}</button>
+{% macro submit_button(name, caption, icon = null, class = 'btn-success') %}
+    <button type="submit" name="{{ name }}" class="btn {{ class }}">{% if icon %}<i class="fa fa-{{ icon }}"></i> {% endif %}{{ caption }}</button>
 {% endmacro %}
 
 {% macro link_button(href, caption, icon = null, class = 'btn-success') %}

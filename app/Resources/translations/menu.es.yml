@@ -21,6 +21,7 @@ menu.admin.manage.modules.detail: Permite activar o desactivar módulos a nivel 
 menu.back: Volver a la portada
 menu.back.detail: Muestra el menú principal
 menu.new: Nuevo elemento
+menu.delete: Eliminar elemento
 
 navbar.expand: Desplegar navegación
 navbar.logged.as: Conectado como {{ user }}

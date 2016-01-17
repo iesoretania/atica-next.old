@@ -88,9 +88,22 @@ class AdminController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Guardar la organización en la base de datos
-            $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('success', $this->get('translator')->trans('menu.saved', [], 'organization'));
+
+            if ($request->request->has('delete')) {
+                // Eliminar la organización de la base de datos
+                $this->getDoctrine()->getManager()->remove($organization);
+                try {
+                    $this->getDoctrine()->getManager()->flush();
+                    $this->addFlash('success', $this->get('translator')->trans('menu.deleted', [], 'organization'));
+                }
+                catch(\Exception $e) {
+                    $this->addFlash('error', $this->get('translator')->trans('menu.not_deleted', [], 'organization'));
+                }
+            } else {
+                // Guardar la organización en la base de datos
+                $this->getDoctrine()->getManager()->flush();
+                $this->addFlash('success', $this->get('translator')->trans('menu.saved', [], 'organization'));
+            }
             return new RedirectResponse(
                 $this->generateUrl('admin_organizations')
             );
@@ -104,10 +117,10 @@ class AdminController extends Controller
                 ['fixed' => $organization->getName()]
             ],
             'title' => $this->get('translator')->trans('form.title', [], 'organization'),
-            'new' => false
+            'new' => false,
+            'organization' => $organization
         ]);
     }
-
 
     /**
      * @Route("/organizacion/nueva", name="admin_new_organization")
@@ -139,6 +152,38 @@ class AdminController extends Controller
             ],
             'title' => null,
             'new' => true
+        ]);
+    }
+
+    /**
+     * @Route("/organizacion/borrar/{organization}", name="admin_delete_organization")
+     */
+    public function deleteOrganizationAction(Request $request, Organization $organization)
+    {
+        if ('POST' === $request->getMethod() && $request->request->has('delete')) {
+            // Eliminar la organización de la base de datos
+            $this->getDoctrine()->getManager()->remove($organization);
+            try {
+                $this->getDoctrine()->getManager()->flush();
+                $this->addFlash('success', $this->get('translator')->trans('menu.deleted', [], 'organization'));
+                $url = $this->generateUrl('admin_organizations');
+            }
+            catch(\Exception $e) {
+                $this->addFlash('error', $this->get('translator')->trans('menu.not_deleted', [], 'organization'));
+                $url = $this->generateUrl('admin_edit_organization', ['organization' => $organization->getId()]);
+            }
+            return new RedirectResponse($url);
+        }
+
+        return $this->render('admin/delete_organization.html.twig', [
+            'breadcrumb' => [
+                ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
+                ['caption' => 'menu.admin.manage.orgs', 'icon' => 'bank', 'path' => 'admin_organizations'],
+                ['fixed' => $organization->getName()],
+                ['caption' => 'menu.delete']
+            ],
+            'title' => $this->get('translator')->trans('menu.delete', [], 'organization'),
+            'organization' => $organization
         ]);
     }
 }

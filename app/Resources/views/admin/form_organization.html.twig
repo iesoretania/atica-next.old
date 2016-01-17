@@ -7,10 +7,10 @@
         {{ form_widget(form) }}
         {{ m.start_button }}
         {% if not new %}
-            {{ m.submit_button('form.submit'|trans, 'check') }}
-            {{ m.link_button(path('admin_organizations'), 'menu.delete'|trans, 'trash', 'btn-danger') }}
+            {{ m.submit_button('submit', 'form.submit'|trans, 'check') }}
+            {{ m.link_button(path('admin_delete_organization', {'organization': organization.id}), 'menu.delete'|trans, 'trash', 'btn-danger') }}
         {% else %}
-            {{ m.submit_button('form.create'|trans, 'plus') }}
+            {{ m.submit_button('submit', 'form.create'|trans, 'plus') }}
         {% endif %}
         {{ m.end_button }}
     {{ form_end(form) }}
