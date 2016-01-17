@@ -38,8 +38,7 @@ class LoadOrganizationData extends AbstractFixture implements OrderedFixtureInte
     {
         $organization = new Organization();
         $organization
-            ->setName('I.E.S. Test')
-            ->setSlug('iestest');
+            ->setName('I.E.S. Test');
 
         $manager->persist($organization);
         $this->setReference('test-org', $organization);
