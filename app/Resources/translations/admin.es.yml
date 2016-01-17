@@ -1,4 +1,5 @@
 form.edit: Modificar
+form.unlink: Desasociar
 form.back: Volver al menú de administración
 form.new: Nuevo elemento
 form.create: Crear elemento
@@ -11,6 +12,5 @@ org.description: Descripción
 user.lastName: Apellidos
 user.firstName: Nombre
 user.email: Correo-e
-user.description: Descripción
 user.invite: Invitar a un usuario
 user.title: Usuarios de la organización

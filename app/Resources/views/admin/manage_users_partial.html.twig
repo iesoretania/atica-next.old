@@ -2,11 +2,10 @@
 <table class="table table-bordered table-condensed table-hover table-responsive">
     <thead>
     <tr>
-        {{ m.paginator_th(pagination, 'col-md-3', 'p.lastName', 'user.lastName'|trans) }}
+        {{ m.paginator_th(pagination, 'col-md-4', 'p.lastName', 'user.lastName'|trans) }}
         {{ m.paginator_th(pagination, 'col-md-2', 'p.firstName', 'user.firstName'|trans) }}
-        {{ m.paginator_th(pagination, 'col-md-2', 'u.email', 'user.email'|trans) }}
-        <th class="col-md-4">{{ 'user.description'|trans }}</th>
-        <th class="col-md-1"></th>
+        {{ m.paginator_th(pagination, 'col-md-3', 'u.email', 'user.email'|trans) }}
+        <th class="col-md-3"></th>
     </tr>
     </thead>
     <tbody>
@@ -15,9 +14,9 @@
             <td>{{ user.person.lastName }}</td>
             <td>{{ user.person.firstName }}</td>
             <td>{{ user.email }}</td>
-            <td>{{ user.person.description | nl2br }}</td>
             <td class="text-center">
                 <a href="" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i> {{ 'form.edit' | trans }}</a>
+                <a href="" class="btn btn-danger btn-xs"><i class="fa fa-sign-out"></i> {{ 'form.unlink' | trans }}</a>
             </td>
         </tr>
     {% endfor %}

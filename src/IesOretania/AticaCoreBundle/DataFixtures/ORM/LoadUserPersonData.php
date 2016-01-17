@@ -41,7 +41,6 @@ class LoadUserPersonData extends AbstractFixture implements OrderedFixtureInterf
     {
         $personAdmin = new Person();
         $personAdmin
-            ->setDescription('Administrador')
             ->setDisplayName('Admin')
             ->setFirstName('Admin')
             ->setLastName('Admin')

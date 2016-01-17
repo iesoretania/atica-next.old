@@ -7,7 +7,6 @@ gender.unknown: Desconocido
 gender.male: Hombre
 gender.female: Mujer
 Initials: Iniciales
-Description: Descripción
 Email: Correo electrónico
 enabled: El usuario está activo
 Global administrator: Es administrador global

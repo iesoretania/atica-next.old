@@ -76,12 +76,6 @@ class Person
     protected $initials;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     * @var string
-     */
-    protected $description;
-
-    /**
      * @ORM\OneToOne(targetEntity="User", mappedBy="person")
      * @var User
      */

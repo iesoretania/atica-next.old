@@ -67,17 +67,7 @@ class UserType extends AbstractType
             ->add('initials', null, array(
                 'property_path' => 'person.initials',
                 'required' => false
-            ));
-
-        if ($options['admin']) {
-            $builder
-                ->add('description', null, array(
-                    'property_path' => 'person.description',
-                    'required' => false
-                ));
-        }
-
-        $builder
+            ))
             ->add('email', 'Symfony\Component\Form\Extension\Core\Type\EmailType', [
                 'required' => true
             ]);
