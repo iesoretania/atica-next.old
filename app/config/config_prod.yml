@@ -25,3 +25,22 @@ monolog:
             level: debug
         console:
             type:  console
+
+#        mail:
+#            type:         fingers_crossed
+#            # 500 errors are logged at the critical level
+#            action_level: error
+#            excluded_404s:
+#                 - ^/
+#            handler:      buffered
+#        buffered:
+#            type:    buffer
+#            handler: swift
+#        swift:
+#            type:       swift_mailer
+#            from_email: 'error@example.com'
+#            to_email:   'error@example.com'
+#            # or list of recipients
+#            # to_email:   ['dev1@example.com', 'dev2@example.com', ...]
+#            subject:    '[ATICA] Se ha registrado un error'
+#            level:      debug
