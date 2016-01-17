@@ -59,7 +59,6 @@ class SecurityListener
                 /** @var Membership $membership */
                 $membership = $this->em->getRepository('AticaCoreBundle:Membership')->findOneBy(['user' => $user]);
                 $this->session->set('organization_id', $membership->getOrganization()->getId());
-                $this->session->set('organization', $membership->getOrganization()->getName());
                 break;
             default:
                 $this->session->set('_security.organization.target_path', $this->session->get('_security.main.target_path'));

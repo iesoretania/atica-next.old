@@ -56,7 +56,6 @@ class SecurityController extends Controller
             // ¿es correcta?
             if ($membership) {
                 $session->set('organization_id', $membership->getOrganization()->getId());
-                $session->set('organization', $membership->getOrganization()->getName());
 
                 $url = $session->get('_security.organization.target_path', $this->generateUrl('frontpage'));
                 $session->remove('_security.organization.target_path');
