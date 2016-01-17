@@ -7,3 +7,10 @@ org.name: Organización
 org.code: Código
 org.city: Ciudad
 org.description: Descripción
+
+user.lastName: Apellidos
+user.firstName: Nombre
+user.email: Correo-e
+user.description: Descripción
+user.invite: Invitar a un usuario
+user.title: Usuarios de la organización

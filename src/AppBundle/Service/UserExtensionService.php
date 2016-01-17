@@ -61,6 +61,7 @@ class UserExtensionService
 
     public function isUserLocalAdministrator()
     {
-        return $this->authorizationChecker->isGranted('manage', $this->getCurrentOrganization());
+        return $this->authorizationChecker->isGranted('ROLE_ADMIN')
+            || $this->authorizationChecker->isGranted('manage', $this->getCurrentOrganization());
     }
 }
