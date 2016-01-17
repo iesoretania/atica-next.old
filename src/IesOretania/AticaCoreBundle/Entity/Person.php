@@ -21,6 +21,7 @@
 namespace IesOretania\AticaCoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @ORM\Entity
@@ -40,19 +41,22 @@ class Person
     protected $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
+     * @NotBlank()
      * @var string
      */
     protected $reference;
 
     /**
      * @ORM\Column(type="string")
+     * @NotBlank()
      * @var string
      */
     protected $firstName;
 
     /**
      * @ORM\Column(type="string")
+     * @NotBlank()
      * @var string
      */
     protected $lastName;
