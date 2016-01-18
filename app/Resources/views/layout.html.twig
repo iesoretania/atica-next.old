@@ -7,7 +7,7 @@
     {% elseif breadcrumb is defined %}
         {{ ((breadcrumb|last).caption)|trans }} -
     {% endif %}
-    {{- app.session.get('organization') }}
+    {{- user_extension.currentOrganization ? user_extension.currentOrganization.name }}
 {%- endblock %}
 
 {% block body %}
