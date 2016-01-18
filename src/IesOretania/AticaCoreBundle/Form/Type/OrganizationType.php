@@ -40,7 +40,9 @@ class OrganizationType extends AbstractType
             ->add('city', null)
             ->add('phoneNumber', null)
             ->add('faxNumber', null)
-            ->add('email', 'Symfony\Component\Form\Extension\Core\Type\EmailType')
+            ->add('email', 'Symfony\Component\Form\Extension\Core\Type\EmailType', [
+                'required' => false
+            ])
             ->add('description', null);
     }
 
