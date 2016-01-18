@@ -15,3 +15,4 @@ user.firstName: Nombre
 user.email: Correo-e
 user.invite: Invitar a un usuario
 user.title: Usuarios de la organización
+user.back: Volver a la lista de usuarios

@@ -103,33 +103,35 @@ class UserType extends AbstractType
             }
         }
 
-        $builder
-            ->add('newPassword', 'Symfony\Component\Form\Extension\Core\Type\RepeatedType', [
-                'required' => false,
-                'type' => 'Symfony\Component\Form\Extension\Core\Type\PasswordType',
-                'mapped' => false,
-                'invalid_message' => 'password.no_match',
-                'first_options' => [
-                    'label' => 'New password',
-                    'constraints' => [
-                        new Length([
-                            'min' => 7,
-                            'minMessage' => 'password.min_length',
-                            'groups' => ['password']
-                        ]),
-                        new NotNull([
-                            'groups' => ['password']
-                        ])
+        if ($options['admin'] || $options['me']) {
+            $builder
+                ->add('newPassword', 'Symfony\Component\Form\Extension\Core\Type\RepeatedType', [
+                    'required' => false,
+                    'type' => 'Symfony\Component\Form\Extension\Core\Type\PasswordType',
+                    'mapped' => false,
+                    'invalid_message' => 'password.no_match',
+                    'first_options' => [
+                        'label' => 'New password',
+                        'constraints' => [
+                            new Length([
+                                'min' => 7,
+                                'minMessage' => 'password.min_length',
+                                'groups' => ['password']
+                            ]),
+                            new NotNull([
+                                'groups' => ['password']
+                            ])
+                        ]
+                    ],
+                    'second_options' => [
+                        'label' => 'newPassword.repeat'
                     ]
-                ],
-                'second_options' => [
-                    'label' => 'newPassword.repeat'
-                ]
-            ])
-            ->add('changePassword', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array(
-                'attr' => array('class' => 'btn btn-success'),
-                'validation_groups' => array('Default', 'password')
-            ));
+                ])
+                ->add('changePassword', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array(
+                    'attr' => array('class' => 'btn btn-success'),
+                    'validation_groups' => array('Default', 'password')
+                ));
+        }
     }
 
     /**

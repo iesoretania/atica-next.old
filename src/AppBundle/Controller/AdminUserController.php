@@ -21,9 +21,12 @@
 namespace AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use IesOretania\AticaCoreBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\SubmitButton;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -64,5 +67,56 @@ class AdminUserController extends Controller
                 'title' => null,
                 'pagination' => $pagination
             ]);
+    }
+
+    /**
+     * @Route("/usuario/{user}", name="admin_user_form")
+     */
+    public function indexAction(User $user, Request $request)
+    {
+        $form = $this->createForm('IesOretania\AticaCoreBundle\Form\Type\UserType', $user, [
+            'admin' => $this->isGranted('ROLE_ADMIN'),
+            'me' => ($user->getId() === $this->getUser()->getId())
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // Guardar el usuario en la base de datos
+
+            // Si es solicitado, cambiar la contraseña
+            $passwordSubmit = $form->get('changePassword');
+            if (($passwordSubmit instanceof SubmitButton) && $passwordSubmit->isClicked()) {
+                $password = $this->container->get('security.password_encoder')
+                    ->encodePassword($user, $form->get('newPassword')->get('first')->getData());
+                $user->setPassword($password);
+                $message = $this->get('translator')->trans('passwordChanged', [], 'user');
+            } else {
+                $message = $this->get('translator')->trans('dataSaved', [], 'user');
+            }
+
+            // Probar a guardar los cambios
+            try {
+                $this->getDoctrine()->getManager()->flush();
+                $this->addFlash('success', $message);
+                return new RedirectResponse(
+                    $this->generateUrl('frontpage')
+                );
+            }
+            catch (\Exception $e) {
+                $this->addFlash('error', $this->get('translator')->trans('saveFailed', [], 'user'));
+            }
+        }
+
+        return $this->render('admin/form_user.html.twig', [
+            'form' => $form->createView(),
+            'breadcrumb' => [
+                ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
+                ['caption' => 'menu.admin.manage.users', 'icon' => 'users', 'path' => 'admin_users'],
+                ['fixed' => $user->__toString()]
+            ],
+            'title' => $user->__toString()
+        ]);
     }
 }

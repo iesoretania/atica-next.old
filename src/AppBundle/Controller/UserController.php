@@ -47,7 +47,6 @@ class UserController extends Controller
 
             // Guardar el usuario en la base de datos
 
-
             // Si es solicitado, cambiar la contraseña
             $passwordSubmit = $form->get('changePassword');
             if (($passwordSubmit instanceof SubmitButton) && $passwordSubmit->isClicked()) {
