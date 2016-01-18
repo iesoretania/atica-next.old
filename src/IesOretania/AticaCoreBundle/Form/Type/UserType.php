@@ -91,7 +91,7 @@ class UserType extends AbstractType
                     'attr' => ['class' => 'btn btn-success']
                 ]);
 
-            if (!$options['admin']) {
+            if (!$options['admin'] && $options['me']) {
                 $builder
                     ->add('oldPassword', 'Symfony\Component\Form\Extension\Core\Type\PasswordType', [
                         'required' => false,

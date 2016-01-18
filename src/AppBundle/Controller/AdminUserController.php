@@ -23,7 +23,6 @@ namespace AppBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use IesOretania\AticaCoreBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -36,10 +35,14 @@ class AdminUserController extends Controller
 {
     /**
      * @Route("/usuarios", name="admin_users")
-     * @Security("has_role('ROLE_ADMIN')")
      */
     public function usersIndexAction(Request $request)
     {
+        // permitir acceso si es administrador local o si es administrador global
+        if (!$this->get('app.user.extension')->isUserLocalAdministrator()) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        }
+
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
@@ -114,9 +117,9 @@ class AdminUserController extends Controller
             'breadcrumb' => [
                 ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
                 ['caption' => 'menu.admin.manage.users', 'icon' => 'users', 'path' => 'admin_users'],
-                ['fixed' => $user->__toString()]
+                ['fixed' => (string) $user]
             ],
-            'title' => $user->__toString()
+            'title' => (string) $user
         ]);
     }
 }
