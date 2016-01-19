@@ -34,6 +34,7 @@ body {
     text-align: center;
 }
 
+/* Formulario de entrada */
 .app-name {
     font-size: 200%;
     font-weight: bold;
@@ -98,7 +99,7 @@ form[role=login] input {
 form[role=login] button {
     margin-top: 2em;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 110%;
 }
 
 /* Baldosas para los menús */
