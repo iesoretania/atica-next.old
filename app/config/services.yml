@@ -13,8 +13,7 @@ services:
 
     app.mailer:
         class: AppBundle\Service\MailerService
-        arguments: ["%notification.prefix%", "%notification.email_from%"]
-        autowire: true
+        arguments: ["%notification.prefix%", "%notification.email_from%", "@mailer", "@translator"]
 
     app.account.security_listener:
         class: AppBundle\Listener\SecurityListener
