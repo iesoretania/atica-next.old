@@ -17,3 +17,12 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    # Prefijo de las notificaciones
+    notification.prefix:        "[ÁTICA] "
+
+    # Remitente de las notificaciones
+    notification.email_from:    %mailer_user%
+
+    # Caducidad de los restablecimientos de contraseña (en minutos)
+    password_reset.expire:      30

@@ -11,6 +11,11 @@ services:
         class: AppBundle\Service\UserExtensionService
         autowire: true
 
+    app.mailer:
+        class: AppBundle\Service\MailerService
+        arguments: ["%notification.prefix%", "%notification.email_from%"]
+        autowire: true
+
     app.account.security_listener:
         class: AppBundle\Listener\SecurityListener
         autowire: true
