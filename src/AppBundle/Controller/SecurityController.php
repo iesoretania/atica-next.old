@@ -69,6 +69,26 @@ class SecurityController extends Controller
     }
 
     /**
+     * @Route("/recuperacion", name="login_password_recovery", methods={"GET", "POST"})
+     */
+    public function passwordRecoveryAction(Request $request)
+    {
+        /** @var Session $session */
+        $session = $this->get('session');
+
+        // ¿se ha seleccionado una organización?
+        if ($request->isMethod('POST')) {
+
+            // comprobar que está asociada al usuario
+            $em = $this->getDoctrine()->getManager();
+        }
+
+        return $this->render(
+            ':security:login_password_recovery.html.twig'
+        );
+    }
+
+    /**
      * @Route("/comprobar", name="login_check")
      * @Route("/salir", name="logout")
      */

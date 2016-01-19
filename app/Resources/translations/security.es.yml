@@ -10,3 +10,6 @@ form.login.error.no_membership: El usuario no pertenece a ninguna organización.
 
 form.organization.title: Seleccione organización
 form.organization.submit: SELECCIONAR ORGANIZACIÓN
+
+form.recovery.title: Recuperación de contraseña
+form.recovery.submit: COMENZAR PROCESO
