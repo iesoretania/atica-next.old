@@ -15,7 +15,7 @@
                         {% for membership in app.user.memberships %}
                         <div class="radio">
                             <label>
-                                <input type="radio" name="organization" id="organization" value="{{ membership.organization.id }}" {% if loop.first or membership.organization == app.user.defaultOrganization %} checked=""{% endif %}>
+                                <input type="radio" name="organization" id="organization" value="{{ membership.organization.id }}" {% if loop.first or membership.organization == app.user.defaultOrganization %} checked="" autofocus=""{% endif %}>
                                 {{ membership.organization.name }}{% if membership.isLocalAdministrator %} <i class="fa fa-wrench"></i>{% endif %}
                             </label>
                         </div>
