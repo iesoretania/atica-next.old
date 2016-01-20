@@ -1,34 +1,24 @@
 {% trans_default_domain "security" %}
-{% extends 'base.html.twig' %}
+{% extends ':security:login_base.html.twig' %}
 
-{% block body %}
-    <section class="login-form">
-        <h1 class="text-center">
-            <span class="app-name">{{ app_name }} </span>
-            <span class="app-version">{{ app_version }}</span>
-        </h1>
-        <div class="panel panel-default">
-            <div class="panel-heading">{{ 'form.organization.title'|trans }}</div>
-            <div class="panel-body">
-                <form method="post" action="{{ path('login_organization') }}" role="form">
-                    <div class="form-group">
-                        {% for membership in app.user.memberships %}
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="organization" id="organization" value="{{ membership.organization.id }}" {% if loop.first or membership.organization == app.user.defaultOrganization %} checked="" autofocus=""{% endif %}>
-                                {{ membership.organization.name }}{% if membership.isLocalAdministrator %} <i class="fa fa-wrench"></i>{% endif %}
-                            </label>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" name="login" class="btn btn-info btn-block" tabindex="4">{{ 'form.organization.submit'|trans }}</button>
-                    </div>
-                </form>
+{% block title %}{{ 'form.organization.title'|trans }}{% endblock %}
+
+{% block login_title %}{{ 'form.organization.title'|trans }}{% endblock %}
+
+{% block login_action %}{{ path('login_organization') }}{% endblock %}
+
+{% block login_content %}
+    <div class="form-group">
+        {% for membership in app.user.memberships %}
+            <div class="radio">
+                <label>
+                    <input type="radio" name="organization" id="organization" value="{{ membership.organization.id }}" {% if loop.first or membership.organization == app.user.defaultOrganization %} checked="" autofocus=""{% endif %}>
+                    {{ membership.organization.name }}{% if membership.isLocalAdministrator %} <i class="fa fa-wrench"></i>{% endif %}
+                </label>
             </div>
-        </div>
-    </section>
-
-    <hr/>
-    <p class="text-muted text-center">{{ 'form.login.footer'|trans({'{{ link }}': '<a href="{{ app_repository }}">' ~ ('form.login.footer.link.caption'|trans) ~ '</a>'}) | raw }}</p>
+        {% endfor %}
+    </div>
+    <div class="form-group">
+        <button type="submit" name="login" class="btn btn-info btn-block" tabindex="4">{{ 'form.organization.submit'|trans }}</button>
+    </div>
 {% endblock %}
