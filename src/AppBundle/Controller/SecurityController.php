@@ -104,7 +104,7 @@ class SecurityController extends Controller
                 }
                 else {
                     // generar un nuevo token
-                    $user->setToken(sha1(random_bytes(32)));
+                    $user->setToken(base64_encode(random_bytes(30)));
 
                     // calcular fecha de expiración del token
                     $validity = new \DateTime();
