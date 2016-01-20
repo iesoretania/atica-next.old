@@ -6,6 +6,7 @@
 {% block login_action %}{{ path('login_check') }}{% endblock %}
 
 {% block login_content %}
+<form method="post" action="{{ path('login_check') }}" role="form">
     <div class="form-group">
         <label for="email">{{ 'form.login.email'|trans }}</label>
         <input type="email" name="_username" id="email" required="" class="form-control" tabindex="1"
@@ -21,4 +22,5 @@
     <div class="form-group">
         <button type="submit" name="login" class="btn btn-info btn-block" tabindex="4">{{ 'form.login.submit'|trans }}</button>
     </div>
+</form>
 {% endblock %}

@@ -22,12 +22,13 @@
                         {{ flashMessage }}
                     </div>
                 {% endfor %}
-                {% if error is defined and error %}
-                    <div class="alert alert-danger alert-dismissable">{{ error.messageKey|trans(error.messageData) }}</div>
+                {% if login_error is defined and login_error %}
+                    <div class="alert alert-danger alert-dismissable">{{ login_error.messageKey|trans(login_error.messageData) }}</div>
                 {% endif %}
-                <form method="post" action="{% block login_action %}{% endblock %}" role="form">
-                    {% block login_content %}{% endblock %}
-                </form>
+                {% if error is defined and error %}
+                    <div class="alert alert-danger alert-dismissable">{{ error }}</div>
+                {% endif %}
+                {% block login_content %}{% endblock %}
             </div>
         </div>
     </section>
