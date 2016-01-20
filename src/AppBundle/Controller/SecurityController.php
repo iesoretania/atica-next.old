@@ -70,7 +70,7 @@ class SecurityController extends Controller
         }
 
         return $this->render(
-            'security/organization.html.twig'
+            'security/login_organization.html.twig'
         );
     }
 
