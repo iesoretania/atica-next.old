@@ -48,7 +48,7 @@ class NewPasswordType extends AbstractType
                         ]),
                         new NotNull()
                     ],
-                    'attr' => ['tabindex' => 2]
+                    'attr' => ['tabindex' => 2, 'autofocus' => '']
                 ],
                 'second_options' => [
                     'label' => 'form.reset.password_repeat',
