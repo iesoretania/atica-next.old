@@ -79,11 +79,21 @@ class SecurityController extends Controller
      */
     public function passwordResetRequestAction(Request $request)
     {
+
+        $data = [
+            'email' => ''
+        ];
+
+        $form = $this->createForm('AppBundle\Form\Type\PasswordResetType', $data);
+
+        $form->handleRequest($request);
+
+        $data = $form->getData();
+        $email = $data['email'];
         $error = '';
-        $email = $request->get('email');
 
         // ¿se ha enviado una dirección?
-        if ($email && $request->isMethod('POST')) {
+        if ($form->isSubmitted() && $form->isValid()) {
             // comprobar que está asociada a un usuario
             /**
              * @var User|null
@@ -141,6 +151,7 @@ class SecurityController extends Controller
         return $this->render(
             ':security:login_password_reset.html.twig', [
                 'last_username' => $this->get('session')->get('_security.last_username', ''),
+                'form' => $form->createView(),
                 'error' => $error
             ]
         );
