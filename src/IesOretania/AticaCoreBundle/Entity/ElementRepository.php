@@ -37,7 +37,7 @@ class ElementRepository extends ClosureTreeRepository
         if ($node !== null) {
             if ($node instanceof $meta->name) {
                 if (!$this->_em->getUnitOfWork()->isInIdentityMap($node)) {
-                    throw new InvalidArgumentException('Node is not managed by UnitOfWork');
+                    throw new \InvalidArgumentException('Node is not managed by UnitOfWork');
                 }
 
                 $where = 'c.descendant = :node AND ';
@@ -72,7 +72,7 @@ class ElementRepository extends ClosureTreeRepository
             if ($meta->hasField($sortByField) && in_array(strtolower($direction), array('asc', 'desc'))) {
                 $qb->orderBy('node.'.$sortByField, $direction);
             } else {
-                throw new InvalidArgumentException("Invalid sort options specified: field - {$sortByField}, direction - {$direction}");
+                throw new \InvalidArgumentException("Invalid sort options specified: field - {$sortByField}, direction - {$direction}");
             }
         }
 

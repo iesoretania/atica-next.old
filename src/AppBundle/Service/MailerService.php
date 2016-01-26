@@ -22,8 +22,6 @@ namespace AppBundle\Service;
 
 
 use IesOretania\AticaCoreBundle\Entity\User;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class MailerService
