@@ -348,11 +348,12 @@ class Profile
         switch($gender) {
             case Person::GENDER_FEMALE:
                 $name = $this->getNameFemale();
+                break;
             case Person::GENDER_MALE:
                 $name = $this->getNameMale();
                 break;
             default:
-                $name = $this->getProfile()->getNameNeutral();
+                $name = $this->getNameNeutral();
         }
         return $name;
     }
