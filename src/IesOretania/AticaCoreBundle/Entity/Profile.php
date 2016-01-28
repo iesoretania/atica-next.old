@@ -76,7 +76,7 @@ class Profile
 
     /**
      * @ORM\ManyToOne(targetEntity="Enumeration")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      * @var Enumeration
      */
     protected $enumeration;

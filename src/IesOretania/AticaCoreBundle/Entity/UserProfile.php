@@ -46,7 +46,7 @@ class UserProfile
 
     /**
      * @ORM\ManyToOne(targetEntity="Element")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      * @var Element
      */
     protected $element;
