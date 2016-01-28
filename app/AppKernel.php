@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new IesOretania\AticaCoreBundle\AticaCoreBundle(),
+            new IesOretania\AticaEducationBundle\AticaEducationBundle(),
             new IesOretania\AticaFctBundle\AticaFctBundle(),
             new AppBundle\AppBundle(),
         );
