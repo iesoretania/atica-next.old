@@ -81,7 +81,7 @@ class LoadTestProfileData extends EnvironmentOrderedAbstractFixture
             ->setEnumeration($groupEnum);
 
         /** @var User $user */
-        $user = $this->getReference('teacher-user');
+        $user = $this->getReference('user-teacher');
 
         $userProfile = new UserProfile();
         $userProfile

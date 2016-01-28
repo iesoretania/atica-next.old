@@ -53,7 +53,7 @@ class LoadTestUserPersonData extends EnvironmentOrderedAbstractFixture
 
         $manager->persist($userTeacher);
 
-        $this->addReference('teacher-user', $userTeacher);
+        $this->addReference('user-teacher', $userTeacher);
 
         /** @var Organization $organization */
         $organization = $this->getReference('test-org');

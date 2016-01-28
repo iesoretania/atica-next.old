@@ -59,9 +59,9 @@ class LoadUserPersonData extends AbstractFixture implements OrderedFixtureInterf
 
         $manager->persist($userAdmin);
 
-        $this->addReference('admin-user', $userAdmin);
+        $this->addReference('user-admin', $userAdmin);
         /** @var Organization $organization */
-        $organization = $this->getReference('test-org');
+        $organization = $this->getReference('org-test');
 
         $membership = new Membership();
         $membership
