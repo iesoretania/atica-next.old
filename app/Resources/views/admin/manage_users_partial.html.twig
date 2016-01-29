@@ -15,10 +15,12 @@
             <td>{{ user.person.firstName }}</td>
             <td>{{ user.email }}</td>
             <td class="text-center">
+                <div class="btn-group btn-group-xs btn-block" role="group">
                 {% block buttons %}
-                <a href="{{ path('admin_user_form', {'user': user.id}) }}" class="btn btn-default btn-xs col-xs-12 col-sm-6"><i class="fa fa-user"></i> {{ 'form.view' | trans }}</a>
-                <a href="" class="btn btn-danger btn-xs col-xs-12 col-sm-6"><i class="fa fa-sign-out"></i> {{ 'form.unlink' | trans }}</a>
+                    <a href="{{ path('admin_user_form', {'user': user.id}) }}" class="btn btn-default col-xs-12 col-sm-6"><i class="fa fa-user"></i> {{ 'form.view' | trans }}</a>
+                    <a href="" class="btn btn-danger col-xs-12 col-sm-6"><i class="fa fa-sign-out"></i> {{ 'form.unlink' | trans }}</a>
                 {% endblock %}
+                </div>
             </td>
         </tr>
     {% endfor %}
