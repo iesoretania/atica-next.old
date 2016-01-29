@@ -20,3 +20,11 @@ user.invite: Invitar a un usuario
 user.title: Usuarios de la organización
 user.title_pending: Usuarios con invitaciones pendientes
 user.back: Volver a la lista de usuarios
+
+profile.new: Nuevo perfil
+profile.name: Nombre
+profile.enumeration: Lista asociada
+profile.none: Ninguna
+profile.module: Módulo
+profile.description: Descripción
+profile.own: Propio

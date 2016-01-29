@@ -1,0 +1,41 @@
+{% trans_default_domain 'admin' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+{% block content %}
+    <table class="table table-bordered table-condensed table-hover table-responsive">
+        <thead>
+            <tr>
+                {{ m.paginator_th(pagination, 'col-md-3', 'p.nameNeutral', 'profile.name'|trans) }}
+                {{ m.paginator_th(pagination, 'col-md-2', 'm.description', 'profile.module'|trans) }}
+                {{ m.paginator_th(pagination, 'col-md-2', 'e.description', 'profile.enumeration'|trans) }}
+                <th class="col-md-4">{{ 'profile.description'|trans }}</th>
+                <th class="col-md-1"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for profile in pagination %}
+            <tr>
+                <td><strong>{{ profile.nameNeutral }}</strong>{{ profile.initials ? (' (' ~ profile.initials ~ ')') }}</td>
+                <td>{{ profile.module ? profile.module.description : ('profile.own'|trans) }}</td>
+                <td>{{ profile.enumeration ? profile.enumeration.description : ('profile.none'|trans) }}</td>
+                <td>{{ profile.description | nl2br }}</td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-xs btn-block" role="group">
+                        <a href="" class="btn btn-default btn-xs btn-block"><i class="fa fa-pencil"></i> {{ 'form.edit' | trans }}</a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="5">{{ m.paginator_stats(pagination) }}</th>
+            </tr>
+        </tfoot>
+    </table>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+    {{ m.link_button(path('admin_menu'), 'form.back'|trans, 'arrow-left', 'btn-default') }}
+    {{ m.link_button(path('admin_new_organization'), 'profile.new'|trans, 'plus', 'btn-success') }}
+{% endblock %}

@@ -23,6 +23,7 @@ namespace IesOretania\AticaCoreBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
@@ -86,6 +87,20 @@ class Profile
      * @var UserProfile[]
      */
     protected $userProfiles;
+
+    /**
+     * @Gedmo\SortableGroup
+     * @ORM\ManyToOne(targetEntity="Organization")
+     * @var Organization
+     */
+    protected $organization;
+
+    /**
+     * @Gedmo\SortablePosition
+     * @ORM\Column(name="position", type="integer")
+     * @var int
+     */
+    protected $position;
 
     /**
      * Constructor
@@ -356,5 +371,30 @@ class Profile
                 $name = $this->getNameNeutral();
         }
         return $name;
+    }
+
+
+    /**
+     * Set organization
+     *
+     * @param Organization $organization
+     *
+     * @return Profile
+     */
+    public function setOrganization(Organization $organization = null)
+    {
+        $this->organization = $organization;
+
+        return $this;
+    }
+
+    /**
+     * Get organization
+     *
+     * @return Organization
+     */
+    public function getOrganization()
+    {
+        return $this->organization;
     }
 }

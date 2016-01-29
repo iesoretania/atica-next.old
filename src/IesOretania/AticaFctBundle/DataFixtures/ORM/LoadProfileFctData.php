@@ -44,9 +44,9 @@ class LoadProfileFctData extends AbstractFixture implements OrderedFixtureInterf
             ->setDescription('Persona responsable de la FCT')
             ->setEnumeration(null)
             ->setInitials('RFCT')
-            ->setNameNeutral('Reponsable FCT')
-            ->setNameMale('Reponsable FCT')
-            ->setNameFemale('Reponsable FCT');
+            ->setNameNeutral('Responsable FCT')
+            ->setNameMale('Responsable FCT')
+            ->setNameFemale('Responsable FCT');
 
         $manager->persist($profile);
 
