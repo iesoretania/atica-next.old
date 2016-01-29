@@ -250,30 +250,6 @@ class Person
     }
 
     /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return Person
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
      * Set user
      *
      * @param User $user

@@ -20,7 +20,7 @@
 
 namespace AppBundle\Listener;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use IesOretania\AticaCoreBundle\Entity\Membership;
 use IesOretania\AticaCoreBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -30,21 +30,23 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class SecurityListener
 {
+    private $session;
+    private $doctrine;
 
-    public function __construct(TokenStorage $token, Session $session, EntityManager $em)
+    public function __construct(Session $session, Registry $doctrine)
     {
-        /** @var TokenStorage token */
-        $this->token = $token;
         $this->session = $session;
-        $this->em = $em;
+        $this->doctrine = $doctrine;
     }
 
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
     {
         /** @var User $user */
-        $user = $this->token->getToken()->getUser();
+        $user = $event->getAuthenticationToken()->getUser();
 
-        $membershipCount = $this->em->getRepository('AticaCoreBundle:Membership')
+        $em = $this->doctrine->getManager();
+
+        $membershipCount = $em->getRepository('AticaCoreBundle:Membership')
             ->createQueryBuilder('m')
             ->select('count(m.organization)')
             ->andWhere('m.user = :user')
@@ -57,7 +59,7 @@ class SecurityListener
                 throw new CustomUserMessageAuthenticationException('form.login.error.no_membership');
             case 1:
                 /** @var Membership $membership */
-                $membership = $this->em->getRepository('AticaCoreBundle:Membership')->findOneBy(['user' => $user]);
+                $membership = $em->getRepository('AticaCoreBundle:Membership')->findOneBy(['user' => $user]);
                 $this->session->set('organization_id', $membership->getOrganization()->getId());
                 break;
             default:
