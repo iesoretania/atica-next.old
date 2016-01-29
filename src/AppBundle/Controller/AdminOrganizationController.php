@@ -47,7 +47,7 @@ class AdminOrganizationController extends Controller
         $pagination = $paginator->paginate(
             $orgsQuery,
             $request->query->getInt('page', 1),
-            20,
+            $this->getParameter('page.size'),
             [
                 'defaultSortFieldName' => 'o.name',
                 'defaultSortDirection' => 'asc'

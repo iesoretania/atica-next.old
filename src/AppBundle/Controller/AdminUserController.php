@@ -57,7 +57,7 @@ class AdminUserController extends Controller
         $pagination = $paginator->paginate(
             $usersQuery,
             $request->query->getInt('page', 1),
-            20,
+            $this->getParameter('page.size'),
             [
                 'defaultSortFieldName' => 'p.lastName',
                 'defaultSortDirection' => 'asc'
@@ -68,7 +68,7 @@ class AdminUserController extends Controller
         $paginationPending = $paginatorPending->paginate(
             $pendingUsersQuery,
             $request->query->getInt('page', 1),
-            20,
+            $this->getParameter('page.size'),
             [
                 'defaultSortFieldName' => 'p.lastName',
                 'defaultSortDirection' => 'asc',

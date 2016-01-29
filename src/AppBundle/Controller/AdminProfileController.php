@@ -50,7 +50,7 @@ class AdminProfileController extends Controller
         $pagination = $paginator->paginate(
             $usersQuery,
             $request->query->getInt('page', 1),
-            10,
+            $this->getParameter('page.size'),
             [
                 'defaultSortFieldName' => 'p.nameNeutral',
                 'defaultSortDirection' => 'asc'
