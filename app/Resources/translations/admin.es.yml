@@ -15,4 +15,5 @@ user.firstName: Nombre
 user.email: Correo-e
 user.invite: Invitar a un usuario
 user.title: Usuarios de la organización
+user.title_pending: Usuarios con invitaciones pendientes
 user.back: Volver a la lista de usuarios

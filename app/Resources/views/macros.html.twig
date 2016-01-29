@@ -4,7 +4,7 @@
 
 {% macro paginator_stats(pagination) %}
     {{ 'showing'|trans({
-        '%first%': (pagination.getCurrentPageNumber-1)*pagination.getItemNumberPerPage+1,
+        '%first%': min((pagination.getCurrentPageNumber-1)*pagination.getItemNumberPerPage+1, pagination.getTotalItemCount),
         '%last%': min((pagination.getCurrentPageNumber)*pagination.getItemNumberPerPage, pagination.getTotalItemCount),
         '%total%': pagination.getTotalItemCount }, 'messages') }}
 {% endmacro %}

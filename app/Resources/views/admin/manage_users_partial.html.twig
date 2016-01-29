@@ -2,9 +2,9 @@
 <table class="table table-bordered table-condensed table-hover table-responsive">
     <thead>
     <tr>
-        {{ m.paginator_th(pagination, 'col-md-4', 'p.lastName', 'user.lastName'|trans) }}
-        {{ m.paginator_th(pagination, 'col-md-2', 'p.firstName', 'user.firstName'|trans) }}
-        {{ m.paginator_th(pagination, 'col-md-3', 'u.email', 'user.email'|trans) }}
+        {{ m.paginator_th(elements, 'col-md-4', 'p.lastName', 'user.lastName'|trans) }}
+        {{ m.paginator_th(elements, 'col-md-2', 'p.firstName', 'user.firstName'|trans) }}
+        {{ m.paginator_th(elements, 'col-md-3', 'u.email', 'user.email'|trans) }}
         <th class="col-md-3"></th>
     </tr>
     </thead>
@@ -23,7 +23,7 @@
     </tbody>
     <tfoot>
     <tr>
-        <th colspan="5">{{ m.paginator_stats(pagination) }}</th>
+        <th colspan="5">{{ m.paginator_stats(elements) }}</th>
     </tr>
     </tfoot>
 </table>

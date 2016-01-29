@@ -49,6 +49,9 @@ class AdminUserController extends Controller
         $usersQuery = $em->createQuery('SELECT u FROM AticaCoreBundle:User u JOIN AticaCoreBundle:Person p WITH u.person = p JOIN AticaCoreBundle:Membership m WITH m.user = u WHERE m.organization = :org AND m.token IS NULL')
             ->setParameter('org', $this->get('app.user.extension')->getCurrentOrganization());
 
+        $pendingUsersQuery = $em->createQuery('SELECT u FROM AticaCoreBundle:User u JOIN AticaCoreBundle:Person p WITH u.person = p JOIN AticaCoreBundle:Membership m WITH m.user = u WHERE m.organization = :org AND m.token IS NOT NULL')
+            ->setParameter('org', $this->get('app.user.extension')->getCurrentOrganization());
+
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -61,6 +64,20 @@ class AdminUserController extends Controller
             ]
         );
 
+        $paginatorPending  = $this->get('knp_paginator');
+        $paginationPending = $paginatorPending->paginate(
+            $pendingUsersQuery,
+            $request->query->getInt('page', 1),
+            20,
+            [
+                'defaultSortFieldName' => 'p.lastName',
+                'defaultSortDirection' => 'asc',
+                'pageParameterName' => 'ppage',
+                'sortFieldParameterName' => 'psort',
+                'sortDirectionParameterName' => 'pdirection',
+            ]
+        );
+
         return $this->render('admin/manage_users.html.twig',
             [
                 'breadcrumb' => [
@@ -68,7 +85,8 @@ class AdminUserController extends Controller
                     ['caption' => 'menu.admin.manage.users', 'icon' => 'users']
                 ],
                 'title' => null,
-                'pagination' => $pagination
+                'pagination' => $pagination,
+                'paginationPending' => $paginationPending
             ]);
     }
 
