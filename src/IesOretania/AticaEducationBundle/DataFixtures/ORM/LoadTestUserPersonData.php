@@ -18,9 +18,10 @@
   along with this program.  If not, see [http://www.gnu.org/licenses/].
 */
 
-namespace IesOretania\AticaCoreBundle\DataFixtures\ORM;
+namespace IesOretania\AticaEducationBundle\DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use IesOretania\AticaCoreBundle\DataFixtures\ORM\EnvironmentOrderedAbstractFixture;
 use IesOretania\AticaCoreBundle\Entity\Membership;
 use IesOretania\AticaCoreBundle\Entity\Organization;
 use IesOretania\AticaCoreBundle\Entity\Person;
@@ -56,7 +57,7 @@ class LoadTestUserPersonData extends EnvironmentOrderedAbstractFixture
         $this->addReference('user-teacher', $userTeacher);
 
         /** @var Organization $organization */
-        $organization = $this->getReference('test-org');
+        $organization = $this->getReference('org-test');
 
         $membership = new Membership();
         $membership

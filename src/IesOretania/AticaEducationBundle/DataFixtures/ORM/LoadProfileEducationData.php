@@ -38,11 +38,13 @@ class LoadProfileEducationData extends AbstractFixture implements OrderedFixture
     {
         $module = $this->getReference('mod-edu');
 
+        $groupEnum = $this->getReference('enum-group');
+
         $profile = new Profile();
         $profile
             ->setModule($module)
             ->setDescription('Alumnado del centro')
-            ->setEnumeration(null)
+            ->setEnumeration($groupEnum)
             ->setInitials('AL')
             ->setNameNeutral('Alumno/a')
             ->setNameMale('Alumno')
@@ -61,6 +63,8 @@ class LoadProfileEducationData extends AbstractFixture implements OrderedFixture
             ->setNameFemale('Profesora');
 
         $manager->persist($profile);
+
+        $this->setReference('prof-teacher', $profile);
 
         $profile = new Profile();
         $profile
@@ -90,7 +94,7 @@ class LoadProfileEducationData extends AbstractFixture implements OrderedFixture
         $profile
             ->setModule($module)
             ->setDescription('Tutor de un grupo del centro')
-            ->setEnumeration(null)
+            ->setEnumeration($groupEnum)
             ->setInitials('TUT')
             ->setNameNeutral('Tutor/a')
             ->setNameMale('Tutor')

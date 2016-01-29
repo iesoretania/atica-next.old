@@ -18,9 +18,10 @@
   along with this program.  If not, see [http://www.gnu.org/licenses/].
 */
 
-namespace IesOretania\AticaCoreBundle\DataFixtures\ORM;
+namespace IesOretania\AticaEducationBundle\DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use IesOretania\AticaCoreBundle\DataFixtures\ORM\EnvironmentOrderedAbstractFixture;
 use IesOretania\AticaCoreBundle\Entity\Element;
 use IesOretania\AticaCoreBundle\Entity\Enumeration;
 use IesOretania\AticaCoreBundle\Entity\Profile;
@@ -36,10 +37,8 @@ class LoadTestProfileData extends EnvironmentOrderedAbstractFixture
      */
     public function doLoad(ObjectManager $manager)
     {
-        $levelEnum = new Enumeration();
-        $levelEnum
-            ->setName('Niveles')
-            ->setDescription('Niveles educativos de la organización');
+        /** @var Enumeration $levelEnum */
+        $levelEnum = $this->getReference('enum-level');
 
         $level1Elem = new Element();
         $level1Elem
@@ -47,10 +46,8 @@ class LoadTestProfileData extends EnvironmentOrderedAbstractFixture
             ->setName('ESO')
             ->setPosition(0);
 
-        $courseEnum = new Enumeration();
-        $courseEnum
-            ->setName('Cursos')
-            ->setDescription('Cursos de la organización');
+        /** @var Enumeration $courseEnum */
+        $courseEnum = $this->getReference('enum-course');
 
         $course1Elem = new Element();
         $course1Elem
@@ -59,10 +56,8 @@ class LoadTestProfileData extends EnvironmentOrderedAbstractFixture
             ->setPosition(0)
             ->setParent($level1Elem);
 
-        $groupEnum = new Enumeration();
-        $groupEnum
-            ->setName('Grupos')
-            ->setDescription('Grupos de la organización');
+        /** @var Enumeration $groupEnum */
+        $groupEnum = $this->getReference('enum-group');
 
         $group1Elem = new Element();
         $group1Elem
@@ -71,14 +66,8 @@ class LoadTestProfileData extends EnvironmentOrderedAbstractFixture
             ->setPosition(0)
             ->setParent($course1Elem);
 
-        $profile = new Profile();
-        $profile
-            ->setNameNeutral('Profesor/a')
-            ->setNameFemale('Profesora')
-            ->setNameMale('Profesor')
-            ->setDescription('Docente de la organización')
-            ->setInitials('P')
-            ->setEnumeration($groupEnum);
+        /** @var Profile $profile */
+        $profile = $this->getReference('prof-teacher');
 
         /** @var User $user */
         $user = $this->getReference('user-teacher');
@@ -90,12 +79,8 @@ class LoadTestProfileData extends EnvironmentOrderedAbstractFixture
             ->setElement($group1Elem);
 
         $manager->persist($level1Elem);
-        $manager->persist($levelEnum);
         $manager->persist($course1Elem);
-        $manager->persist($courseEnum);
         $manager->persist($group1Elem);
-        $manager->persist($groupEnum);
-        $manager->persist($profile);
         $manager->persist($userProfile);
 
         $manager->flush();
