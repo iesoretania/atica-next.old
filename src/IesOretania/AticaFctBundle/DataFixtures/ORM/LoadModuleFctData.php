@@ -40,7 +40,7 @@ class LoadModuleFctData extends AbstractFixture implements OrderedFixtureInterfa
         $module = new Module();
         $module
             ->setName('fct')
-            ->setDescription('Formación en centros de trabajo')
+            ->setDescription('FCT')
             ->setEnabled(true)
             ->setFixed(false)
             ->setCurrentVersion('2016012800');

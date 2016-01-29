@@ -69,6 +69,20 @@ class LoadProfileEducationData extends AbstractFixture implements OrderedFixture
         $profile = new Profile();
         $profile
             ->setModule($module)
+            ->setDescription('Jefatura de departamento')
+            ->setEnumeration($this->getReference('enum-department'))
+            ->setInitials('JD')
+            ->setNameNeutral('Jefe/a de departamento')
+            ->setNameMale('Jefe de departamento')
+            ->setNameFemale('Jefa de departamento');
+
+        $manager->persist($profile);
+
+        $this->setReference('prof-department', $profile);
+
+        $profile = new Profile();
+        $profile
+            ->setModule($module)
             ->setDescription('Jefatura de estudios del centro')
             ->setEnumeration(null)
             ->setInitials('JE')
