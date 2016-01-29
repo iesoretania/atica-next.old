@@ -6,7 +6,7 @@
     {% include ':admin:manage_users_partial.html.twig' with {'elements': pagination } %}
     {% if paginationPending.getTotalItemCount %}
         <h2>{{ 'user.title_pending'|trans }}</h2>
-        {% include ':admin:manage_users_partial.html.twig' with {'elements': paginationPending } %}
+        {% include ':admin:manage_users_partial_pending.html.twig' with {'elements': paginationPending } %}
     {% endif %}
     {{ m.link_button(path('admin_menu'), 'form.back'|trans, 'arrow-left', 'btn-default') }}
     {{ m.link_button('', 'user.invite'|trans, 'paper-plane', 'btn-success') }}
