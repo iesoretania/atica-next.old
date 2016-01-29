@@ -70,6 +70,16 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
 
         $manager->persist($enumeration);
 
+        $enumeration = new Enumeration();
+        $enumeration
+            ->setModule($module)
+            ->setName('department')
+            ->setDescription('Departamentos del centro');
+
+        $this->setReference('enum-department', $enumeration);
+
+        $manager->persist($enumeration);
+
         $manager->flush();
     }
 
