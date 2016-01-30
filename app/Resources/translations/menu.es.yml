@@ -16,8 +16,8 @@ menu.admin.manage.users: Gestionar usuarios
 menu.admin.manage.users.detail: Permite invitar, modificar o desasociar usuarios
 menu.admin.manage.profiles: Gestionar perfiles
 menu.admin.manage.profiles.detail: Permite crear, modificar o eliminar perfiles
-menu.admin.manage.lists: Gestionar listas
-menu.admin.manage.lists.detail: Permite crear, modificar o eliminar listas de elementos
+menu.admin.manage.enumerations: Gestionar listas
+menu.admin.manage.enumerations.detail: Permite crear, modificar o eliminar listas de elementos
 menu.admin.manage.modules: Gestionar módulos
 menu.admin.manage.modules.detail: Permite activar o desactivar módulos a nivel global
 menu.back: Volver a la portada

@@ -1,0 +1,39 @@
+{% trans_default_domain 'admin' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+{% block content %}
+    <table class="table table-bordered table-condensed table-hover table-responsive">
+        <thead>
+            <tr>
+                <th class="col-md-6">{{ 'enumeration.name'|trans }}</th>
+                <th class="col-md-3">{{ 'enumeration.module'|trans }}</th>
+                <th class="col-md-3"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for enum in pagination %}
+            <tr>
+                <td>{{ enum.description }}</td>
+                <td>{{ enum.module ? enum.module.description : ('profile.own'|trans) }}</td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-xs btn-block" role="group">
+                        <a href="" class="btn btn-info btn-xs col-xs-12 col-sm-4"><i class="fa fa-arrow-up"></i> {{ 'form.up' | trans }}</a>
+                        <a href="" class="btn btn-default btn-xs col-xs-12 col-sm-4"><i class="fa fa-pencil"></i> {{ 'form.edit' | trans }}</a>
+                        <a href="" class="btn btn-info btn-xs col-xs-12 col-sm-4"><i class="fa fa-arrow-down"></i> {{ 'form.down' | trans }}</a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="3">{{ m.paginator_stats(pagination) }}</th>
+            </tr>
+        </tfoot>
+    </table>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+    {{ m.link_button(path('admin_menu'), 'form.back'|trans, 'arrow-left', 'btn-default') }}
+    {{ m.link_button(path('admin_new_organization'), 'enumeration.new'|trans, 'plus', 'btn-success') }}
+{% endblock %}

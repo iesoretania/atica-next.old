@@ -7,6 +7,8 @@ form.resend: Reenviar
 form.back: Volver al menú de administración
 form.new: Nuevo elemento
 form.create: Crear elemento
+form.up: Subir
+form.down: Bajar
 
 org.name: Organización
 org.code: Código
@@ -28,3 +30,8 @@ profile.none: Ninguna
 profile.module: Módulo
 profile.description: Descripción
 profile.own: Propio
+
+enumeration.new: Nueva lista
+enumeration.name: Nombre
+enumeration.module: Módulo
+enumeration.own: Propio
