@@ -79,7 +79,7 @@ class LoadProfileFctData extends AbstractFixture implements OrderedFixtureInterf
             ->setModule($module)
             ->setDescription('Tutor docente de alumnado de FCT')
             ->setEnumeration(null)
-            ->setInitials('TUTDFCT')
+            ->setInitials('TDFCT')
             ->setNameNeutral('Tutor/a docente FCT')
             ->setNameMale('Tutor docente FCT')
             ->setNameFemale('Tutora docente FCT');
@@ -91,10 +91,22 @@ class LoadProfileFctData extends AbstractFixture implements OrderedFixtureInterf
             ->setModule($module)
             ->setDescription('Tutor laboral de alumnado de FCT')
             ->setEnumeration(null)
-            ->setInitials('TUTLFCT')
+            ->setInitials('TLFCT')
             ->setNameNeutral('Tutor/a laboral FCT')
             ->setNameMale('Tutor laboral FCT')
             ->setNameFemale('Tutora laboral FCT');
+
+        $manager->persist($profile);
+
+        $profile = new Profile();
+        $profile
+            ->setModule($module)
+            ->setDescription('Gestor del centro de trabajo')
+            ->setEnumeration($this->getReference('enum-workcenter'))
+            ->setInitials('GCT')
+            ->setNameNeutral('Gestor/a de centro de trabajo')
+            ->setNameMale('Gestor de centro de trabajo')
+            ->setNameFemale('Gestora de centro de trabajo');
 
         $manager->persist($profile);
 
