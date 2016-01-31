@@ -41,6 +41,7 @@ class LoadProfileFctData extends AbstractFixture implements OrderedFixtureInterf
         $profile = new Profile();
         $profile
             ->setModule($module)
+            ->setCode('manager')
             ->setDescription('Persona responsable de la FCT')
             ->setEnumeration(null)
             ->setInitials('RFCT')
@@ -53,6 +54,7 @@ class LoadProfileFctData extends AbstractFixture implements OrderedFixtureInterf
         $profile = new Profile();
         $profile
             ->setModule($module)
+            ->setCode('student')
             ->setDescription('Alumno de FCT')
             ->setEnumeration(null)
             ->setInitials('AFCT')
@@ -65,6 +67,7 @@ class LoadProfileFctData extends AbstractFixture implements OrderedFixtureInterf
         $profile = new Profile();
         $profile
             ->setModule($module)
+            ->setCode('accounter')
             ->setDescription('Responsable económico de la FCT')
             ->setEnumeration(null)
             ->setInitials('REFCT')
@@ -77,6 +80,7 @@ class LoadProfileFctData extends AbstractFixture implements OrderedFixtureInterf
         $profile = new Profile();
         $profile
             ->setModule($module)
+            ->setCode('teacher-tutor')
             ->setDescription('Tutor docente de alumnado de FCT')
             ->setEnumeration(null)
             ->setInitials('TDFCT')
@@ -89,6 +93,7 @@ class LoadProfileFctData extends AbstractFixture implements OrderedFixtureInterf
         $profile = new Profile();
         $profile
             ->setModule($module)
+            ->setCode('work-tutor')
             ->setDescription('Tutor laboral de alumnado de FCT')
             ->setEnumeration(null)
             ->setInitials('TLFCT')
@@ -101,6 +106,7 @@ class LoadProfileFctData extends AbstractFixture implements OrderedFixtureInterf
         $profile = new Profile();
         $profile
             ->setModule($module)
+            ->setCode('workcenter-manager')
             ->setDescription('Gestor del centro de trabajo')
             ->setEnumeration($this->getReference('enum-workcenter'))
             ->setInitials('GCT')

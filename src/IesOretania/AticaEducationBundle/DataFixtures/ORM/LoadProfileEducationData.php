@@ -43,9 +43,10 @@ class LoadProfileEducationData extends AbstractFixture implements OrderedFixture
         $profile = new Profile();
         $profile
             ->setModule($module)
+            ->setCode('student')
             ->setDescription('Alumnado del centro')
             ->setEnumeration($groupEnum)
-            ->setInitials('AL')
+            ->setInitials('ALUM')
             ->setNameNeutral('Alumno/a')
             ->setNameMale('Alumno')
             ->setNameFemale('Alumna');
@@ -55,9 +56,10 @@ class LoadProfileEducationData extends AbstractFixture implements OrderedFixture
         $profile = new Profile();
         $profile
             ->setModule($module)
+            ->setCode('teacher')
             ->setDescription('Profesorado del centro')
-            ->setEnumeration(null)
-            ->setInitials('PR')
+            ->setEnumeration($this->getReference('enum-subject'))
+            ->setInitials('PROF')
             ->setNameNeutral('Profesor/a')
             ->setNameMale('Profesor')
             ->setNameFemale('Profesora');
@@ -69,6 +71,7 @@ class LoadProfileEducationData extends AbstractFixture implements OrderedFixture
         $profile = new Profile();
         $profile
             ->setModule($module)
+            ->setCode('head-department')
             ->setDescription('Jefatura de departamento')
             ->setEnumeration($this->getReference('enum-department'))
             ->setInitials('JD')
@@ -83,6 +86,7 @@ class LoadProfileEducationData extends AbstractFixture implements OrderedFixture
         $profile = new Profile();
         $profile
             ->setModule($module)
+            ->setCode('head-studies')
             ->setDescription('Jefatura de estudios del centro')
             ->setEnumeration(null)
             ->setInitials('JE')
@@ -95,9 +99,10 @@ class LoadProfileEducationData extends AbstractFixture implements OrderedFixture
         $profile = new Profile();
         $profile
             ->setModule($module)
+            ->setCode('deputy-head')
             ->setDescription('Vicedirección del centro')
             ->setEnumeration(null)
-            ->setInitials('VD')
+            ->setInitials('VDIR')
             ->setNameNeutral('Vicedirector/a')
             ->setNameMale('Vicedirector')
             ->setNameFemale('Vicedirectora');
@@ -107,12 +112,63 @@ class LoadProfileEducationData extends AbstractFixture implements OrderedFixture
         $profile = new Profile();
         $profile
             ->setModule($module)
+            ->setCode('headmaster')
+            ->setDescription('Dirección del centro')
+            ->setEnumeration(null)
+            ->setInitials('DIR')
+            ->setNameNeutral('Director/a')
+            ->setNameMale('Director')
+            ->setNameFemale('Directora');
+
+        $manager->persist($profile);
+
+        $profile = new Profile();
+        $profile
+            ->setModule($module)
+            ->setCode('secretary')
+            ->setDescription('Secretaría del centro')
+            ->setEnumeration(null)
+            ->setInitials('SEC')
+            ->setNameNeutral('Secretario/a')
+            ->setNameMale('Secretario')
+            ->setNameFemale('Secretaria');
+
+        $manager->persist($profile);
+
+        $profile = new Profile();
+        $profile
+            ->setModule($module)
+            ->setCode('tutor')
             ->setDescription('Tutor de un grupo del centro')
             ->setEnumeration($groupEnum)
             ->setInitials('TUT')
             ->setNameNeutral('Tutor/a')
             ->setNameMale('Tutor')
             ->setNameFemale('Tutora');
+
+        $manager->persist($profile);
+
+        $profile = new Profile();
+        $profile
+            ->setModule($module)
+            ->setCode('caretaker')
+            ->setDescription('Miembros de la conserjería del centro')
+            ->setEnumeration(null)
+            ->setInitials('ORD')
+            ->setNameNeutral('Ordenanza')
+            ->setNameMale('Ordenanza')
+            ->setNameFemale('Ordenanza');
+
+        $profile = new Profile();
+        $profile
+            ->setModule($module)
+            ->setCode('officeworker')
+            ->setDescription('Oficina administrativa del centro')
+            ->setEnumeration(null)
+            ->setInitials('ADM')
+            ->setNameNeutral('Administrativo/a')
+            ->setNameMale('Administrativo')
+            ->setNameFemale('Administrativa');
 
         $manager->persist($profile);
 
