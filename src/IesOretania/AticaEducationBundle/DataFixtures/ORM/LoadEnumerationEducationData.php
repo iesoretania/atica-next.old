@@ -43,6 +43,7 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
         $enumeration = new Enumeration();
         $enumeration
             ->setModule($module)
+            ->setExternal(true)
             ->setName('level')
             ->setDescription('Niveles educativos del centro');
 
@@ -53,6 +54,7 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
         $enumeration = new Enumeration();
         $enumeration
             ->setModule($module)
+            ->setExternal(true)
             ->setName('course')
             ->setDescription('Cursos del centro');
 
@@ -63,6 +65,7 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
         $enumeration = new Enumeration();
         $enumeration
             ->setModule($module)
+            ->setExternal(true)
             ->setName('group')
             ->setDescription('Grupos del centro');
 
@@ -73,6 +76,7 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
         $enumeration = new Enumeration();
         $enumeration
             ->setModule($module)
+            ->setExternal(true)
             ->setName('department')
             ->setDescription('Departamentos del centro');
 

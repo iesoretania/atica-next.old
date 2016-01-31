@@ -43,14 +43,18 @@ class AdminEnumerationController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $enumQuery = $em->createQuery('SELECT e FROM AticaCoreBundle:Enumeration e LEFT JOIN AticaCoreBundle:Module m WITH e.module = m WHERE e.organization = :org OR e.organization IS NULL ORDER BY e.module, e.position')
+        $enumQuery = $em->createQuery('SELECT e FROM AticaCoreBundle:Enumeration e LEFT JOIN AticaCoreBundle:Module m WITH e.module = m WHERE e.organization = :org OR e.organization IS NULL')
             ->setParameter('org', $this->get('app.user.extension')->getCurrentOrganization());
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $enumQuery,
             $request->query->getInt('page', 1),
-            $this->getParameter('page.size')
+            $this->getParameter('page.size'),
+            [
+                'defaultSortFieldName' => 'e.description',
+                'defaultSortDirection' => 'asc'
+            ]
         );
 
         return $this->render(':admin:manage_enumerations.html.twig',

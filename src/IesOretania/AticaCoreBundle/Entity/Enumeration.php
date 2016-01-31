@@ -52,7 +52,6 @@ class Enumeration
     protected $description;
 
     /**
-     * @Gedmo\SortableGroup
      * @ORM\ManyToOne(targetEntity="Module")
      * @ORM\JoinColumn(referencedColumnName="name")
      * @var Module
@@ -72,18 +71,16 @@ class Enumeration
     protected $related;
 
     /**
-     * @Gedmo\SortableGroup
      * @ORM\ManyToOne(targetEntity="Organization")
      * @var Organization
      */
     protected $organization;
 
     /**
-     * @Gedmo\SortablePosition
-     * @ORM\Column(name="position", type="integer")
-     * @var int
+     * @ORM\Column(type="boolean")
+     * @var bool
      */
-    protected $position;
+    protected $external;
 
     /**
      * Constructor
@@ -160,30 +157,6 @@ class Enumeration
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set position
-     *
-     * @param integer $position
-     *
-     * @return Enumeration
-     */
-    public function setPosition($position)
-    {
-        $this->position = $position;
-
-        return $this;
-    }
-
-    /**
-     * Get position
-     *
-     * @return integer
-     */
-    public function getPosition()
-    {
-        return $this->position;
     }
 
     /**
@@ -316,5 +289,29 @@ class Enumeration
     public function getOrganization()
     {
         return $this->organization;
+    }
+
+    /**
+     * Set external
+     *
+     * @param boolean $external
+     *
+     * @return Enumeration
+     */
+    public function setExternal($external)
+    {
+        $this->external = $external;
+
+        return $this;
+    }
+
+    /**
+     * Get external
+     *
+     * @return boolean
+     */
+    public function isExternal()
+    {
+        return $this->external;
     }
 }

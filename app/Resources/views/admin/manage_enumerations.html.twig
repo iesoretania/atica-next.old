@@ -5,9 +5,9 @@
     <table class="table table-bordered table-condensed table-hover table-responsive">
         <thead>
             <tr>
-                <th class="col-md-6">{{ 'enumeration.name'|trans }}</th>
-                <th class="col-md-3">{{ 'enumeration.module'|trans }}</th>
-                <th class="col-md-3"></th>
+                {{ m.paginator_th(pagination, 'col-md-6', 'e.description', 'enumeration.name'|trans) }}
+                {{ m.paginator_th(pagination, 'col-md-4', 'm.name', 'enumeration.module'|trans) }}
+                <th class="col-md-2"></th>
             </tr>
         </thead>
         <tbody>
@@ -17,9 +17,7 @@
                 <td>{{ enum.module ? enum.module.description : ('profile.own'|trans) }}</td>
                 <td class="text-center">
                     <div class="btn-group btn-group-xs btn-block" role="group">
-                        <a href="" class="btn btn-info btn-xs col-xs-12 col-sm-4"><i class="fa fa-arrow-up"></i> {{ 'form.up' | trans }}</a>
-                        <a href="" class="btn btn-default btn-xs col-xs-12 col-sm-4"><i class="fa fa-pencil"></i> {{ 'form.edit' | trans }}</a>
-                        <a href="" class="btn btn-info btn-xs col-xs-12 col-sm-4"><i class="fa fa-arrow-down"></i> {{ 'form.down' | trans }}</a>
+                        <a href="" class="btn btn-default btn-xs btn-block"><i class="fa fa-pencil"></i> {{ 'form.edit' | trans }}</a>
                     </div>
                 </td>
             </tr>
