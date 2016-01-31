@@ -13,7 +13,7 @@
         <tbody>
             {% for enum in pagination %}
             <tr>
-                <td>{{ enum.description }}</td>
+                <td>{{ enum.description }}{% if enum.external %} <i class="fa fa-external-link"></i>{% endif %}</td>
                 <td>{{ enum.module ? enum.module.description : ('profile.own'|trans) }}</td>
                 <td class="text-center">
                     <div class="btn-group btn-group-xs btn-block" role="group">
