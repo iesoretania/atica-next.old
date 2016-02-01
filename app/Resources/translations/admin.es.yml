@@ -35,3 +35,6 @@ enumeration.new: Nueva lista
 enumeration.name: Nombre
 enumeration.module: Módulo
 enumeration.own: Propio
+enumeration.attributes: Atributos
+enumeration.optional: (opcional)
+enumeration.multiple: (múltiple)

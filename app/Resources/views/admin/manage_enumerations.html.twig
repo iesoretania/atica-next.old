@@ -5,9 +5,10 @@
     <table class="table table-bordered table-condensed table-hover table-responsive">
         <thead>
             <tr>
-                {{ m.paginator_th(pagination, 'col-md-6', 'e.description', 'enumeration.name'|trans) }}
-                {{ m.paginator_th(pagination, 'col-md-4', 'm.name', 'enumeration.module'|trans) }}
-                <th class="col-md-2"></th>
+                {{ m.paginator_th(pagination, 'col-md-5', 'e.description', 'enumeration.name'|trans) }}
+                {{ m.paginator_th(pagination, 'col-md-3', 'm.name', 'enumeration.module'|trans) }}
+                <th class="col-md-3">{{ 'enumeration.attributes'|trans }}</th>
+                <th class="col-md-1"></th>
             </tr>
         </thead>
         <tbody>
@@ -15,6 +16,11 @@
             <tr>
                 <td>{{ enum.description }}{% if enum.external %} <i class="fa fa-external-link"></i>{% endif %}</td>
                 <td>{{ enum.module ? enum.module.description : ('profile.own'|trans) }}</td>
+                <td>
+                    {% for attr in enum.attributes %}
+                        {{ attr.target.description }}{{ not attr.mandatory ? (' '~('enumeration.optional'|trans)) }}{{ attr.multiple ? (' '~('enumeration.multiple'|trans)) }}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
                 <td class="text-center">
                     <div class="btn-group btn-group-xs btn-block" role="group">
                         <a href="" class="btn btn-default btn-xs btn-block"><i class="fa fa-pencil"></i> {{ 'form.edit' | trans }}</a>
