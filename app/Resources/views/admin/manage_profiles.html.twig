@@ -8,7 +8,7 @@
                 {{ m.paginator_th(pagination, 'col-md-3', 'p.nameNeutral', 'profile.name'|trans) }}
                 {{ m.paginator_th(pagination, 'col-md-2', 'm.description', 'profile.module'|trans) }}
                 {{ m.paginator_th(pagination, 'col-md-2', 'e.description', 'profile.enumeration'|trans) }}
-                <th class="col-md-4">{{ 'profile.description'|trans }}</th>
+                {{ m.paginator_th(pagination, 'col-md-4', 'p.description', 'profile.description'|trans) }}
                 <th class="col-md-1"></th>
             </tr>
         </thead>
