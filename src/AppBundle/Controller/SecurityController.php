@@ -211,8 +211,8 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/comprobar", name="login_check")
-     * @Route("/salir", name="logout")
+     * @Route("/comprobar", name="login_check", methods={"POST"})
+     * @Route("/salir", name="logout", methods={"GET"})
      */
     public function logInOutCheckAction()
     {

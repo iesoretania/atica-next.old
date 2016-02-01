@@ -66,7 +66,7 @@ class AdminOrganizationController extends Controller
     }
 
     /**
-     * @Route("/organizacion/{organization}", name="admin_edit_organization", requirements={"organization": "\d+"} )
+     * @Route("/organizacion/{organization}", name="admin_edit_organization", methods={"GET", "POST"}, requirements={"organization": "\d+"} )
      * @Security("has_role('ROLE_ADMIN') or is_granted('manage', organization)")
      */
     public function editOrganizationAction(Request $request, Organization $organization)
