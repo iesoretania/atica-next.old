@@ -34,7 +34,7 @@ use Symfony\Component\HttpFoundation\Request;
 class AdminOrganizationController extends Controller
 {
     /**
-     * @Route("/organizaciones", name="admin_organizations")
+     * @Route("/organizaciones", name="admin_organizations", methods={"GET"})
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function organizationsIndexAction(Request $request)
@@ -115,7 +115,7 @@ class AdminOrganizationController extends Controller
     }
 
     /**
-     * @Route("/organizacion/nueva", name="admin_new_organization")
+     * @Route("/organizacion/nueva", name="admin_new_organization", methods={"GET", "POST"})
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function newOrganizationAction(Request $request)
@@ -149,7 +149,7 @@ class AdminOrganizationController extends Controller
     }
 
     /**
-     * @Route("/organizacion/borrar/{organization}", name="admin_delete_organization")
+     * @Route("/organizacion/borrar/{organization}", name="admin_delete_organization", methods={"GET", "POST"})
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteOrganizationAction(Request $request, Organization $organization)

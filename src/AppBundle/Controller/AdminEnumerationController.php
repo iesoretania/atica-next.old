@@ -31,7 +31,7 @@ use Symfony\Component\HttpFoundation\Request;
 class AdminEnumerationController extends Controller
 {
     /**
-     * @Route("/listas", name="admin_enumerations")
+     * @Route("/listas", name="admin_enumerations", methods={"GET"})
      */
     public function enumerationIndexAction(Request $request)
     {

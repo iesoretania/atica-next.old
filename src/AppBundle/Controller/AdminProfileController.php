@@ -31,7 +31,7 @@ use Symfony\Component\HttpFoundation\Request;
 class AdminProfileController extends Controller
 {
     /**
-     * @Route("/perfiles", name="admin_profiles")
+     * @Route("/perfiles", name="admin_profiles", methods={"GET"})
      */
     public function profilesIndexAction(Request $request)
     {

@@ -29,7 +29,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class AdminController extends Controller
 {
     /**
-     * @Route("/", name="admin_menu")
+     * @Route("/", name="admin_menu", methods={"GET"})
      */
     public function indexAction()
     {

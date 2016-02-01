@@ -30,7 +30,7 @@ use Symfony\Component\HttpFoundation\Request;
 class UserController extends Controller
 {
     /**
-     * @Route("/datos", name="personal_form")
+     * @Route("/datos", name="personal_form"methods={"GET", "POST"})
      */
     public function indexAction(Request $request)
     {

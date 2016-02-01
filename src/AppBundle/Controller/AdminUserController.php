@@ -34,7 +34,7 @@ use Symfony\Component\HttpFoundation\Request;
 class AdminUserController extends Controller
 {
     /**
-     * @Route("/usuarios", name="admin_users")
+     * @Route("/usuarios", name="admin_users", methods={"GET"})
      */
     public function usersIndexAction(Request $request)
     {
@@ -91,7 +91,7 @@ class AdminUserController extends Controller
     }
 
     /**
-     * @Route("/usuario/{user}", name="admin_user_form")
+     * @Route("/usuario/{user}", name="admin_user_form", methods={"GET", "POST"})
      */
     public function indexAction(User $user, Request $request)
     {
