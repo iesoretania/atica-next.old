@@ -23,6 +23,7 @@ namespace IesOretania\AticaEducationBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use IesOretania\AticaCoreBundle\Entity\Attribute;
 use IesOretania\AticaCoreBundle\Entity\Enumeration;
 use IesOretania\AticaCoreBundle\Entity\Module;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -40,60 +41,92 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
         /** @var Module $module */
         $module = $this->getReference('mod-edu');
 
-        $enumeration = new Enumeration();
-        $enumeration
+        // Niveles educativos
+        $enumLevel = new Enumeration();
+        $enumLevel
             ->setModule($module)
             ->setExternal(true)
             ->setName('level')
             ->setDescription('Niveles educativos del centro');
 
-        $this->setReference('enum-level', $enumeration);
+        $this->setReference('enum-level', $enumLevel);
 
-        $manager->persist($enumeration);
+        $manager->persist($enumLevel);
 
-        $enumeration = new Enumeration();
-        $enumeration
+        // Cursos del centro (dependen del nivel educativo)
+        $enumCourse = new Enumeration();
+        $enumCourse
             ->setModule($module)
             ->setExternal(true)
             ->setName('course')
             ->setDescription('Cursos del centro');
 
-        $this->setReference('enum-course', $enumeration);
+        $this->setReference('enum-course', $enumCourse);
 
-        $manager->persist($enumeration);
+        $manager->persist($enumCourse);
 
-        $enumeration = new Enumeration();
-        $enumeration
+        $attribute = new Attribute();
+        $attribute
+            ->setSource($enumCourse)
+            ->setTarget($enumLevel)
+            ->setMandatory(true)
+            ->setMultiple(false);
+
+        $manager->persist($attribute);
+
+        // Grupos del centro (dependen de un curso)
+        $enumGroup = new Enumeration();
+        $enumGroup
             ->setModule($module)
             ->setExternal(true)
             ->setName('group')
             ->setDescription('Grupos del centro');
 
-        $this->setReference('enum-group', $enumeration);
+        $this->setReference('enum-group', $enumGroup);
 
-        $manager->persist($enumeration);
+        $manager->persist($enumGroup);
 
-        $enumeration = new Enumeration();
-        $enumeration
+        $attribute = new Attribute();
+        $attribute
+            ->setSource($enumGroup)
+            ->setTarget($enumCourse)
+            ->setMandatory(true)
+            ->setMultiple(false);
+
+        $manager->persist($attribute);
+
+        // Departamentos del centro
+        $enumDepartment = new Enumeration();
+        $enumDepartment
             ->setModule($module)
             ->setExternal(true)
             ->setName('department')
             ->setDescription('Departamentos del centro');
 
-        $this->setReference('enum-department', $enumeration);
+        $this->setReference('enum-department', $enumDepartment);
 
-        $manager->persist($enumeration);
+        $manager->persist($enumDepartment);
 
-        $enumeration = new Enumeration();
-        $enumeration
+        // Asignaturas/módulos (dependen del departamento)
+        $enumSubject = new Enumeration();
+        $enumSubject
             ->setModule($module)
             ->setExternal(true)
             ->setName('subject')
             ->setDescription('Asignaturas y módulos');
 
-        $this->setReference('enum-subject', $enumeration);
+        $this->setReference('enum-subject', $enumSubject);
 
-        $manager->persist($enumeration);
+        $manager->persist($enumSubject);
+
+        $attribute = new Attribute();
+        $attribute
+            ->setSource($enumSubject)
+            ->setTarget($enumDepartment)
+            ->setMandatory(true)
+            ->setMultiple(false);
+
+        $manager->persist($attribute);
 
         $manager->flush();
     }
