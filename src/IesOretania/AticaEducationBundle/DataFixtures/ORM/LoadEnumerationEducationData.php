@@ -41,6 +41,37 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
         /** @var Module $module */
         $module = $this->getReference('mod-edu');
 
+        // Enseñanzas
+        $enumEducation = new Enumeration();
+        $enumEducation
+            ->setModule($module)
+            ->setExternal(false)
+            ->setName('stage')
+            ->setDescription('Etapa educativa');
+
+        $this->setReference('enum-education', $enumEducation);
+        $manager->persist($enumEducation);
+
+        // Etapas educativa (depende de la enseñanza)
+        $enumStage = new Enumeration();
+        $enumStage
+            ->setModule($module)
+            ->setExternal(false)
+            ->setName('stage')
+            ->setDescription('Etapa educativa');
+
+        $this->setReference('enum-stage', $enumStage);
+        $manager->persist($enumStage);
+
+        $attribute = new Attribute();
+        $attribute
+            ->setSource($enumStage)
+            ->setTarget($enumEducation)
+            ->setMandatory(true)
+            ->setMultiple(false);
+
+        $manager->persist($attribute);
+
         // Niveles educativos
         $enumLevel = new Enumeration();
         $enumLevel
@@ -50,7 +81,6 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
             ->setDescription('Niveles educativos del centro');
 
         $this->setReference('enum-level', $enumLevel);
-
         $manager->persist($enumLevel);
 
         // Cursos del centro (dependen del nivel educativo)
@@ -62,7 +92,6 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
             ->setDescription('Cursos del centro');
 
         $this->setReference('enum-course', $enumCourse);
-
         $manager->persist($enumCourse);
 
         $attribute = new Attribute();
@@ -83,7 +112,6 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
             ->setDescription('Grupos del centro');
 
         $this->setReference('enum-group', $enumGroup);
-
         $manager->persist($enumGroup);
 
         $attribute = new Attribute();
@@ -104,7 +132,6 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
             ->setDescription('Departamentos del centro');
 
         $this->setReference('enum-department', $enumDepartment);
-
         $manager->persist($enumDepartment);
 
         // Asignaturas/módulos (dependen del departamento)
@@ -116,7 +143,6 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
             ->setDescription('Asignaturas y módulos');
 
         $this->setReference('enum-subject', $enumSubject);
-
         $manager->persist($enumSubject);
 
         $attribute = new Attribute();
