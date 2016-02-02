@@ -47,7 +47,7 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
             ->setModule($module)
             ->setExternal(false)
             ->setName('stage')
-            ->setDescription('Etapa educativa');
+            ->setDescription('Enseñanza');
 
         $this->setReference('enum-education', $enumEducation);
         $manager->persist($enumEducation);
