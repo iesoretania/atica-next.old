@@ -4,7 +4,10 @@
     "type": "project",
     "description": "Aplicación web para facilitar ciertos aspectos de la gestión de un centro educativo",
     "autoload": {
-        "psr-4": { "": "src/" }
+        "psr-4": {
+            "AppBundle\\": "src/AppBundle",
+            "IesOretania\\": "src/IesOretania"
+        }
     },
     "require": {
         "php": ">=5.4",
