@@ -45,6 +45,12 @@ class Element
     protected $name;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    protected $code;
+
+    /**
      * @ORM\Column(type="text", nullable=true)
      * @var string
      */
@@ -120,6 +126,30 @@ class Element
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set code
+     *
+     * @param string $code
+     *
+     * @return Element
+     */
+    public function setCode($code)
+    {
+        $this->name = $code;
+
+        return $this;
+    }
+
+    /**
+     * Get code
+     *
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
     }
 
     /**
