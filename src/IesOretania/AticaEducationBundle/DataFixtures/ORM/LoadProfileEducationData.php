@@ -159,6 +159,8 @@ class LoadProfileEducationData extends AbstractFixture implements OrderedFixture
             ->setNameMale('Ordenanza')
             ->setNameFemale('Ordenanza');
 
+        $manager->persist($profile);
+
         $profile = new Profile();
         $profile
             ->setModule($module)
