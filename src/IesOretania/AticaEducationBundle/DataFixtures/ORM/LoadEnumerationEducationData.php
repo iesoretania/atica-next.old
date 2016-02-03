@@ -52,7 +52,7 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
         $this->setReference('enum-education', $enumEducation);
         $manager->persist($enumEducation);
 
-        // Etapas educativa (depende de la enseñanza)
+        // Etapas educativa (dependen de la enseñanza)
         $enumStage = new Enumeration();
         $enumStage
             ->setModule($module)
@@ -72,22 +72,32 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
 
         $manager->persist($attribute);
 
-        // Niveles educativos
+        // Niveles educativos (dependen de la etapa)
         $enumLevel = new Enumeration();
         $enumLevel
             ->setModule($module)
-            ->setExternal(true)
+            ->setExternal(false)
             ->setName('level')
             ->setDescription('Niveles educativos del centro');
 
         $this->setReference('enum-level', $enumLevel);
         $manager->persist($enumLevel);
 
+
+        $attribute = new Attribute();
+        $attribute
+            ->setSource($enumLevel)
+            ->setTarget($enumStage)
+            ->setMandatory(true)
+            ->setMultiple(false);
+
+        $manager->persist($attribute);
+
         // Cursos del centro (dependen del nivel educativo)
         $enumCourse = new Enumeration();
         $enumCourse
             ->setModule($module)
-            ->setExternal(true)
+            ->setExternal(false)
             ->setName('course')
             ->setDescription('Cursos del centro');
 
@@ -103,13 +113,13 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
 
         $manager->persist($attribute);
 
-        // Grupos del centro (dependen de un curso)
+        // Unidades del centro (dependen de un curso)
         $enumGroup = new Enumeration();
         $enumGroup
             ->setModule($module)
-            ->setExternal(true)
+            ->setExternal(false)
             ->setName('group')
-            ->setDescription('Grupos del centro');
+            ->setDescription('Unidades del centro');
 
         $this->setReference('enum-group', $enumGroup);
         $manager->persist($enumGroup);
@@ -127,7 +137,7 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
         $enumDepartment = new Enumeration();
         $enumDepartment
             ->setModule($module)
-            ->setExternal(true)
+            ->setExternal(false)
             ->setName('department')
             ->setDescription('Departamentos del centro');
 
@@ -138,7 +148,7 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
         $enumSubject = new Enumeration();
         $enumSubject
             ->setModule($module)
-            ->setExternal(true)
+            ->setExternal(false)
             ->setName('subject')
             ->setDescription('Asignaturas y módulos');
 
