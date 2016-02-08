@@ -24,8 +24,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @Gedmo\Tree(type="closure")
- * @Gedmo\TreeClosure(class="IesOretania\AticaCoreBundle\Entity\ElementPath")
  * @ORM\Entity(repositoryClass="ElementRepository")
  */
 class Element
@@ -59,27 +57,14 @@ class Element
     /**
      * @ORM\ManyToOne(targetEntity="Enumeration")
      * @ORM\JoinColumn(nullable=false)
+     * @Gedmo\SortableGroup
      * @var Enumeration
      */
     protected $enumeration;
 
     /**
-     * @ORM\Column(name="level", type="integer", nullable=true)
-     * @Gedmo\TreeLevel
-     * @var int
-     */
-    protected $level;
-
-    /**
-     * @Gedmo\TreeParent
-     * @ORM\ManyToOne(targetEntity="Element")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
-     * @var Element
-     */
-    protected $parent;
-
-    /**
      * @ORM\Column(type="integer")
+     * @Gedmo\SortablePosition
      * @var int
      */
     protected $position;
@@ -177,30 +162,6 @@ class Element
     }
 
     /**
-     * Set level
-     *
-     * @param integer $level
-     *
-     * @return Element
-     */
-    public function setLevel($level)
-    {
-        $this->level = $level;
-
-        return $this;
-    }
-
-    /**
-     * Get level
-     *
-     * @return integer
-     */
-    public function getLevel()
-    {
-        return $this->level;
-    }
-
-    /**
      * Set enumeration
      *
      * @param Enumeration $enumeration
@@ -222,30 +183,6 @@ class Element
     public function getEnumeration()
     {
         return $this->enumeration;
-    }
-
-    /**
-     * Set parent
-     *
-     * @param Element $parent
-     *
-     * @return Element
-     */
-    public function setParent(Element $parent = null)
-    {
-        $this->parent = $parent;
-
-        return $this;
-    }
-
-    /**
-     * Get parent
-     *
-     * @return Element
-     */
-    public function getParent()
-    {
-        return $this->parent;
     }
 
     /**

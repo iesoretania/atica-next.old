@@ -53,8 +53,8 @@ class LoadTestProfileData extends EnvironmentOrderedAbstractFixture
         $course1Elem
             ->setEnumeration($courseEnum)
             ->setName('2ºESO')
-            ->setPosition(0)
-            ->setParent($level1Elem);
+            ->setPosition(0);
+            // Activar cuando se implemente el DAG: ->setParent($level1Elem);
 
         /** @var Enumeration $groupEnum */
         $groupEnum = $this->getReference('enum-group');
@@ -63,8 +63,8 @@ class LoadTestProfileData extends EnvironmentOrderedAbstractFixture
         $group1Elem
             ->setEnumeration($groupEnum)
             ->setName('2ºESO-A')
-            ->setPosition(0)
-            ->setParent($course1Elem);
+            ->setPosition(0);
+            // Activar cuando se implemente el DAG: ->setParent($course1Elem);
 
         /** @var Profile $profile */
         $profile = $this->getReference('prof-teacher');
