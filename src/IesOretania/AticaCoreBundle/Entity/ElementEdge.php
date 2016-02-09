@@ -38,28 +38,31 @@ class ElementEdge
 
     /**
      * @ORM\ManyToOne(targetEntity="ElementEdge")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $entryEdge;
 
     /**
      * @ORM\ManyToOne(targetEntity="ElementEdge")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $directEdge;
 
     /**
      * @ORM\ManyToOne(targetEntity="ElementEdge")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $exitEdge;
 
     /**
      * @ORM\ManyToOne(targetEntity="Element")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     protected $startElement;
 
     /**
      * @ORM\ManyToOne(targetEntity="Element")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     protected $endElement;
 

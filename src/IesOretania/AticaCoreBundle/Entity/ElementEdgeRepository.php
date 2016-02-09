@@ -83,6 +83,7 @@ class ElementEdgeRepository extends EntityRepository
             ]
         );
 
+        /** @var ElementEdge $currentEdge */
         foreach($incomingEdges as $currentEdge) {
             $newEdge = new ElementEdge();
             $newEdge
@@ -121,15 +122,16 @@ class ElementEdgeRepository extends EntityRepository
             ->setParameter('endElement', $endElement)
             ->getResult();
 
-        foreach($crossEdges as $currentEdge) {
+        /** @var ElementEdge[] $currentEdges */
+        foreach($crossEdges as $currentEdges) {
             $newEdge = new ElementEdge();
             $newEdge
-                ->setEntryEdge($currentEdge['A'])
+                ->setEntryEdge($currentEdges['A'])
                 ->setDirectEdge($edge)
-                ->setExitEdge($currentEdge['B'])
-                ->setStartElement($currentEdge['A']->getStartElement())
-                ->setEndElement($currentEdge['B']->getEndElement())
-                ->setHops($currentEdge['A']->getHops() + $currentEdge['A']->getHops() + 1);
+                ->setExitEdge($currentEdges['B'])
+                ->setStartElement($currentEdges['A']->getStartElement())
+                ->setEndElement($currentEdges['B']->getEndElement())
+                ->setHops($currentEdges['A']->getHops() + $currentEdges['A']->getHops() + 1);
 
             $em->persist($newEdge);
         }
