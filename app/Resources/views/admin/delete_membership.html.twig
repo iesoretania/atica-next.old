@@ -1,0 +1,12 @@
+{% trans_default_domain 'admin' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+
+{% block content %}
+    <h3>{{ user }}</h3>
+    <div class="alert alert-warning">{{ 'user.delete_membership_confirm'|trans|nl2br }}</div>
+    <form method="post">
+        {{ m.submit_button('unlink', 'form.unlink'|trans, 'sign-out', 'btn-danger') }}
+        {{ m.link_button(path('admin_users'), 'user.back'|trans, 'arrow-left', 'btn-default') }}
+    </form>
+{% endblock %}

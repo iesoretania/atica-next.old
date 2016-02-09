@@ -140,4 +140,53 @@ class AdminUserController extends Controller
             'title' => (string) $user
         ]);
     }
+
+
+    /**
+     * @Route("/usuario/desasociar/{user}", name="admin_delete_user_membership", methods={"GET", "POST"})
+     */
+    public function deleteMembershipAction(User $user, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $membership = $em->getRepository('AticaCoreBundle:Membership')
+            ->findOneBy([
+                'user' => $user,
+                'organization' => $this->get('app.user.extension')->getCurrentOrganization()
+            ]);
+
+        // permitir operación si:
+        // - la pertenencia existe
+        // - y es administrador local o global
+        // - y no es el propio usuario
+        if (!$membership || !$this->get('app.user.extension')->isUserLocalAdministrator() || $user === $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        if ('POST' === $request->getMethod() && $request->request->has('unlink')) {
+            // Eliminar la pertenencia de la base de datos
+            $em->remove($membership);
+            try {
+                $em->flush();
+                $this->addFlash('success', $this->get('translator')->trans('user.unlinked', [], 'admin'));
+            }
+            catch(\Exception $e) {
+                $this->addFlash('error', $this->get('translator')->trans('user.unlink_failed', [], 'admin'));
+            }
+            $url = $this->generateUrl('admin_users');
+            return new RedirectResponse($url);
+        }
+
+        return $this->render(':admin:delete_membership.html.twig', [
+            'breadcrumb' => [
+                ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
+                ['caption' => 'menu.admin.manage.users', 'icon' => 'users', 'path' => 'admin_users'],
+                ['fixed' => (string) $user],
+                ['caption' => $this->get('translator')->trans('user.unlink', [], 'admin')]
+            ],
+            'title' => null,
+            'user' => $user
+        ]);
+    }
+
+
 }

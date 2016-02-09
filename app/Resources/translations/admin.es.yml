@@ -22,6 +22,13 @@ user.invite: Invitar a un usuario
 user.title: Usuarios de la organización
 user.title_pending: Usuarios con invitaciones pendientes
 user.back: Volver a la lista de usuarios
+user.unlink: Desasociar de la organización
+user.unlinked: Usuario desasociado de la organización con éxito
+user.unlink_failed: No se ha podido desasociar al usuario de la organización
+user.delete_membership_confirm: >
+    ¡ATENCIÓN! El usuario seguirá registrado en la aplicación pero no podrá acceder a la organización. Esta operación
+    no puede deshacerse. Si posteriormente se desea reincorporar al usuario será necesario que éste vuelva a confirmar
+    la asociación.
 
 profile.new: Nuevo perfil
 profile.name: Nombre

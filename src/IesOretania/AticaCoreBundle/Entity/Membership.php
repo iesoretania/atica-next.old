@@ -201,7 +201,7 @@ class Membership
      *
      * @return Membership
      */
-    public function setUser(User $user)
+    public function setUser(User $user = null)
     {
         if ($this->user !== null) {
             $this->user->removeMembership($this);
@@ -233,7 +233,7 @@ class Membership
      *
      * @return Membership
      */
-    public function setOrganization(Organization $organization)
+    public function setOrganization(Organization $organization = null)
     {
         if ($this->organization !== null) {
             $this->organization->removeMembership($this);
