@@ -84,7 +84,7 @@ class ElementEdgeRepository extends EntityRepository
         );
 
         /** @var ElementEdge $currentEdge */
-        foreach($incomingEdges as $currentEdge) {
+        foreach ($incomingEdges as $currentEdge) {
             $newEdge = new ElementEdge();
             $newEdge
                 ->setEntryEdge($currentEdge)
@@ -103,7 +103,7 @@ class ElementEdgeRepository extends EntityRepository
             ]
         );
 
-        foreach($outcomingEdges as $currentEdge) {
+        foreach ($outcomingEdges as $currentEdge) {
             $newEdge = new ElementEdge();
             $newEdge
                 ->setEntryEdge($edge)
@@ -123,7 +123,7 @@ class ElementEdgeRepository extends EntityRepository
             ->getResult();
 
         /** @var ElementEdge[] $currentEdges */
-        foreach($crossEdges as $currentEdges) {
+        foreach ($crossEdges as $currentEdges) {
             $newEdge = new ElementEdge();
             $newEdge
                 ->setEntryEdge($currentEdges['A'])
@@ -135,6 +135,33 @@ class ElementEdgeRepository extends EntityRepository
 
             $em->persist($newEdge);
         }
+
+        return true;
+    }
+
+    /**
+     * Delete edge
+     *
+     * @return bool
+     */
+    public function deleteEdge(Element $startElement, Element $endElement)
+    {
+        $em = $this->getEntityManager();
+
+        // Comprobar si la flecha ya existe
+        $criteria = [
+            'startElement' => $startElement,
+            'endElement' => $endElement,
+            'hops' => 0
+        ];
+
+        $item = $this->findOneBy($criteria);
+
+        if (!$item) {
+            // no existe: indicar que la operación ha fallado
+            return false;
+        }
+        $em->remove($item);
 
         return true;
     }
