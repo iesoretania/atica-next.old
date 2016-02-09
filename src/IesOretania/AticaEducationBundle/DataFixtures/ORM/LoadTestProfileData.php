@@ -54,7 +54,6 @@ class LoadTestProfileData extends EnvironmentOrderedAbstractFixture
             ->setEnumeration($courseEnum)
             ->setName('2ºESO')
             ->setPosition(0);
-            // Activar cuando se implemente el DAG: ->setParent($level1Elem);
 
         /** @var Enumeration $groupEnum */
         $groupEnum = $this->getReference('enum-group');
@@ -64,7 +63,6 @@ class LoadTestProfileData extends EnvironmentOrderedAbstractFixture
             ->setEnumeration($groupEnum)
             ->setName('2ºESO-A')
             ->setPosition(0);
-            // Activar cuando se implemente el DAG: ->setParent($course1Elem);
 
         /** @var Profile $profile */
         $profile = $this->getReference('prof-teacher');
@@ -82,6 +80,11 @@ class LoadTestProfileData extends EnvironmentOrderedAbstractFixture
         $manager->persist($course1Elem);
         $manager->persist($group1Elem);
         $manager->persist($userProfile);
+
+        $manager->flush();
+
+        $manager->getRepository('AticaCoreBundle:ElementEdge')->addEdge($course1Elem, $level1Elem);
+        $manager->getRepository('AticaCoreBundle:ElementEdge')->addEdge($group1Elem, $course1Elem);
 
         $manager->flush();
     }

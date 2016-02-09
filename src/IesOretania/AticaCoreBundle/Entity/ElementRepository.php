@@ -22,9 +22,6 @@ namespace IesOretania\AticaCoreBundle\Entity;
 
 use Gedmo\Sortable\Entity\Repository\SortableRepository;
 
-/**
- *  Aquí se implementarán los métodos para acceder al DAG de elementos
- */
 class ElementRepository extends SortableRepository
 {
 }
