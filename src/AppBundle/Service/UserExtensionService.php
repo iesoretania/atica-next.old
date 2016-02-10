@@ -22,6 +22,7 @@ namespace AppBundle\Service;
 
 
 use Doctrine\ORM\EntityManager;
+use IesOretania\AticaCoreBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
@@ -63,5 +64,11 @@ class UserExtensionService
     {
         return $this->authorizationChecker->isGranted('ROLE_ADMIN')
             || $this->authorizationChecker->isGranted('manage', $this->getCurrentOrganization());
+    }
+
+    public function getUserMembership(User $user)
+    {
+        return $this->em->getRepository('AticaCoreBundle:Membership')
+            ->findOneBy(['user' => $user, 'organization' => $this->getCurrentOrganization()]);
     }
 }

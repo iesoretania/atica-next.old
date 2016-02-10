@@ -95,6 +95,15 @@ class AdminUserController extends Controller
      */
     public function indexAction(User $user, Request $request)
     {
+        // permitir acceso si:
+        // - si es administrador global
+        // o
+        // - si es administrador local y el usuario pertenece a la organización
+        if (!$this->isGranted('ROLE_ADMIN')
+            && (!$this->get('app.user.extension')->isUserLocalAdministrator() || !$this->get('app.user.extension')->getUserMembership($user))) {
+            throw $this->createAccessDeniedException();
+        }
+
         $form = $this->createForm('IesOretania\AticaCoreBundle\Form\Type\UserType', $user, [
             'admin' => $this->isGranted('ROLE_ADMIN'),
             'me' => ($user->getId() === $this->getUser()->getId())
