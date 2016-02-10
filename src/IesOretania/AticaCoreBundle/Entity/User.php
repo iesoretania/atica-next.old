@@ -90,6 +90,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\OneToMany(targetEntity="Membership", mappedBy="user")
+     * @ORM\OrderBy({"position":"ASC"})
      * @var Membership[]
      */
     protected $memberships;

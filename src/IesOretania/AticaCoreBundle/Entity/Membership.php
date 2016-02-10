@@ -21,9 +21,10 @@
 namespace IesOretania\AticaCoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Gedmo\Sortable\Entity\Repository\SortableRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class Membership
@@ -32,6 +33,7 @@ class Membership
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="User", inversedBy="memberships")
      * @ORM\JoinColumn(nullable=false)
+     * @Gedmo\SortableGroup()
      * @var User
      */
     protected $user;
@@ -73,6 +75,14 @@ class Membership
      * @var \DateTime
      */
     protected $tokenValidity;
+
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Gedmo\SortablePosition
+     * @var int
+     */
+    protected $position;
 
     /**
      * Set localAdministrator
@@ -256,6 +266,30 @@ class Membership
     public function getOrganization()
     {
         return $this->organization;
+    }
+
+    /**
+     * Set position
+     *
+     * @param integer $position
+     *
+     * @return Membership
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 
     /**
