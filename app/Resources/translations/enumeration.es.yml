@@ -1,0 +1,13 @@
+form.name: Nombre interno
+form.module: Módulo asociado
+form.description: Descripción
+
+form.submit: Guardar cambios
+form.create: Crear lista
+form.delete: Eliminar lista
+
+form.back: Volver a la gestión de listas
+
+alert.saved: Datos guardados correctamente
+alert.deleted: Lista eliminada con éxito
+alert.not_deleted: No se ha podido eliminar la lista. Compruebe que no tenga datos asociados.

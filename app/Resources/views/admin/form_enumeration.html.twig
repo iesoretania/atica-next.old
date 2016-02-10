@@ -1,0 +1,18 @@
+{% trans_default_domain 'enumeration' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+
+{% block content %}
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ m.start_button }}
+        {% if not new %}
+            {{ m.submit_button('submit', 'form.submit'|trans, 'check') }}
+            {% if enumeration.module is null %}{{ m.link_button('', 'form.delete'|trans, 'trash', 'btn-danger') }}{% endif %}
+        {% else %}
+            {{ m.submit_button('submit', 'form.create'|trans, 'plus') }}
+        {% endif %}
+        {{ m.end_button }}
+    {{ form_end(form) }}
+    {{ m.link_button(path('admin_enumerations'), 'form.back'|trans, 'arrow-left', 'btn-default') }}
+{% endblock %}

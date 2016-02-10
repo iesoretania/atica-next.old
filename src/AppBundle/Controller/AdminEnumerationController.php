@@ -28,12 +28,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/admin")
+ * @Route("/admin/listas")
  */
 class AdminEnumerationController extends Controller
 {
     /**
-     * @Route("/listas", name="admin_enumerations", methods={"GET"})
+     * @Route("/", name="admin_enumerations", methods={"GET"})
      */
     public function enumerationIndexAction(Request $request)
     {
@@ -71,7 +71,53 @@ class AdminEnumerationController extends Controller
     }
 
     /**
-     * @Route("/listas/{enumeration}", name="admin_enumeration", methods={"GET"})
+     * @Route("/{enumeration}", name="admin_edit_enumeration", methods={"GET", "POST"}, requirements={"enumeration": "\d+"} )
+     * @Security("is_granted('manage', enumeration)")
+     */
+    public function editEnumerationAction(Request $request, Enumeration $enumeration)
+    {
+        $isFromModule = $enumeration->getModule() !== null;
+        $form = $this->createForm('IesOretania\AticaCoreBundle\Form\Type\EnumerationType', $enumeration, [
+            'is_module' => $isFromModule
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($request->request->has('delete') && !$isFromModule) {
+                // Eliminar la enumeración de la base de datos
+                $this->getDoctrine()->getManager()->remove($enumeration);
+                try {
+                    $this->getDoctrine()->getManager()->flush();
+                    $this->addFlash('success', $this->get('translator')->trans('alert.deleted', [], 'enumeration'));
+                }
+                catch(\Exception $e) {
+                    $this->addFlash('error', $this->get('translator')->trans('alert.not_deleted', [], 'enumeration'));
+                }
+            } else {
+                // Guardar la enumeracion en la base de datos
+                $this->getDoctrine()->getManager()->flush();
+                $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'enumeration'));
+            }
+            return $this->redirectToRoute('admin_enumerations');
+        }
+
+        return $this->render('admin/form_enumeration.html.twig', [
+            'form' => $form->createView(),
+            'breadcrumb' => [
+                ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
+                ['caption' => 'menu.admin.manage.enumerations', 'icon' => 'list-ol', 'path' => 'admin_enumerations'],
+                ['fixed' => $enumeration->getDescription()]
+            ],
+            'title' => $enumeration->getDescription(),
+            'new' => false,
+            'enumeration' => $enumeration
+        ]);
+    }
+
+    /**
+     * @Route("/{enumeration}/elementos", name="admin_enumeration", methods={"GET"})
      * @Security("is_granted('manage', enumeration)")
      */
     public function enumerationDetailAction(Enumeration $enumeration, Request $request)
