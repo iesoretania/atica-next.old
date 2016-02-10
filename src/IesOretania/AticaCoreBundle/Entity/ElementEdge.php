@@ -55,7 +55,7 @@ class ElementEdge
     protected $exitEdge;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Element")
+     * @ORM\ManyToOne(targetEntity="Element", inversedBy="edges")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     protected $startElement;

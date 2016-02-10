@@ -21,7 +21,9 @@
 namespace AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use IesOretania\AticaCoreBundle\Entity\Enumeration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -64,6 +66,42 @@ class AdminEnumerationController extends Controller
                     ['caption' => 'menu.admin.manage.enumerations', 'icon' => 'list-ol']
                 ],
                 'title' => null,
+                'pagination' => $pagination
+            ]);
+    }
+
+    /**
+     * @Route("/listas/{enumeration}", name="admin_enumeration", methods={"GET"})
+     * @Security("is_granted('manage', enumeration)")
+     */
+    public function enumerationDetailAction(Enumeration $enumeration, Request $request)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $enumQuery = $em->createQuery('SELECT e FROM AticaCoreBundle:Element e WHERE e.enumeration = :enum')
+            ->setParameter('enum', $enumeration);
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $enumQuery,
+            $request->query->getInt('page', 1),
+            $this->getParameter('page.size'),
+            [
+                'defaultSortFieldName' => 'e.position',
+                'defaultSortDirection' => 'asc'
+            ]
+        );
+
+        return $this->render(':admin:manage_elements.html.twig',
+            [
+                'breadcrumb' => [
+                    ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
+                    ['caption' => 'menu.admin.manage.enumerations', 'icon' => 'list-ol', 'path' => 'admin_enumerations'],
+                    ['fixed' => $enumeration->getDescription()]
+                ],
+                'title' => $enumeration->getDescription(),
+                'enumeration' => $enumeration,
                 'pagination' => $pagination
             ]);
     }

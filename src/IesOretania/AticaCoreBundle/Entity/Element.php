@@ -20,6 +20,8 @@
 
 namespace IesOretania\AticaCoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -68,6 +70,21 @@ class Element
      * @var int
      */
     protected $position;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ElementEdge", mappedBy="startElement")
+     * @ORM\OrderBy({"hops" = "ASC"})
+     * @var ElementEdge[]
+     */
+    protected $edges;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->edges = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -207,5 +224,30 @@ class Element
     public function getPosition()
     {
         return $this->position;
+    }
+
+    /**
+     * Get edges
+     *
+     * @return Collection
+     */
+    public function getEdges()
+    {
+        return $this->edges;
+    }
+
+    /**
+     * Get ancestors
+     *
+     * @return Collection|Element[]
+     */
+    public function getAncestors()
+    {
+        return array_map(
+            function (ElementEdge $edge) {
+                return $edge->getEndElement();
+            },
+            $this->edges->toArray()
+        );
     }
 }
