@@ -77,24 +77,11 @@ class AdminOrganizationController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if ($request->request->has('delete')) {
-                // Eliminar la organización de la base de datos
-                $this->getDoctrine()->getManager()->remove($organization);
-                try {
-                    $this->getDoctrine()->getManager()->flush();
-                    $this->addFlash('success', $this->get('translator')->trans('menu.deleted', [], 'organization'));
-                }
-                catch(\Exception $e) {
-                    $this->addFlash('error', $this->get('translator')->trans('menu.not_deleted', [], 'organization'));
-                }
-            } else {
-                // Guardar la organización en la base de datos
-                $this->getDoctrine()->getManager()->flush();
-                $this->addFlash('success', $this->get('translator')->trans('menu.saved', [], 'organization'));
-            }
-            return new RedirectResponse(
-                $this->generateUrl($this->isGranted('ROLE_ADMIN') ? 'admin_organizations' : 'admin_menu')
-            );
+            // Guardar la organización en la base de datos
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'organization'));
+
+            return $this->redirectToRoute($this->isGranted('ROLE_ADMIN') ? 'admin_organizations' : 'admin_menu');
         }
 
         $breadcrumb = [['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu']];
@@ -130,7 +117,7 @@ class AdminOrganizationController extends Controller
             // Guardar la organización en la base de datos
             $this->getDoctrine()->getManager()->persist($organization);
             $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('success', $this->get('translator')->trans('menu.saved', [], 'organization'));
+            $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'organization'));
             return new RedirectResponse(
                 $this->generateUrl('admin_organizations')
             );
@@ -159,11 +146,11 @@ class AdminOrganizationController extends Controller
             $this->getDoctrine()->getManager()->remove($organization);
             try {
                 $this->getDoctrine()->getManager()->flush();
-                $this->addFlash('success', $this->get('translator')->trans('menu.deleted', [], 'organization'));
+                $this->addFlash('success', $this->get('translator')->trans('alert.deleted', [], 'organization'));
                 $url = $this->generateUrl('admin_organizations');
             }
             catch(\Exception $e) {
-                $this->addFlash('error', $this->get('translator')->trans('menu.not_deleted', [], 'organization'));
+                $this->addFlash('error', $this->get('translator')->trans('alert.not_deleted', [], 'organization'));
                 $url = $this->generateUrl('admin_edit_organization', ['organization' => $organization->getId()]);
             }
             return new RedirectResponse($url);
@@ -176,7 +163,7 @@ class AdminOrganizationController extends Controller
                 ['fixed' => $organization->getName()],
                 ['caption' => 'menu.delete']
             ],
-            'title' => $this->get('translator')->trans('menu.delete', [], 'organization'),
+            'title' => $this->get('translator')->trans('form.delete', [], 'organization'),
             'organization' => $organization
         ]);
     }

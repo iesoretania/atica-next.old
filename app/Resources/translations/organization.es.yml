@@ -1,0 +1,23 @@
+form.name: Nombre
+form.code: Código
+form.address: Dirección postal
+form.city: Ciudad
+form.phone_number: Teléfono
+form.fax_number: FAX
+form.email: Correo-e
+form.description: Descripción
+
+form.title: Modificar organización
+form.submit: Guardar cambios
+form.create: Crear organización
+form.back: Volver
+
+form.delete: Eliminar organización
+form.delete_back: Volver a la organización
+
+alert.saved: Datos guardados correctamente
+alert.deleted: Organización eliminada con éxito
+alert.not_deleted: No se ha podido eliminar la organización. Compruebe que no tenga datos asociados.
+
+prompt.delete_confirm: >
+    ¡ATENCIÓN! La organización sólo podrá ser eliminada si no contiene datos asociados.

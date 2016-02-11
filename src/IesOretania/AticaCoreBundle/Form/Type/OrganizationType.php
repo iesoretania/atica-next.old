@@ -33,17 +33,31 @@ class OrganizationType extends AbstractType
     {
         $builder
             ->add('name', null, [
+                'label' => 'form.name',
                 'required' => true
             ])
-            ->add('code', null)
-            ->add('address', null)
-            ->add('city', null)
-            ->add('phoneNumber', null)
-            ->add('faxNumber', null)
+            ->add('code', null, [
+                'label' => 'form.code'
+            ])
+            ->add('address', null, [
+                'label' => 'form.address'
+            ])
+            ->add('city', null, [
+                'label' => 'form.city'
+            ])
+            ->add('phoneNumber', null, [
+                'label' => 'form.phone_number',
+            ])
+            ->add('faxNumber', null, [
+                'label' => 'form.fax_number',
+            ])
             ->add('email', 'Symfony\Component\Form\Extension\Core\Type\EmailType', [
+                'label' => 'form.email',
                 'required' => false
             ])
-            ->add('description', null);
+            ->add('description', null, [
+                'label' => 'form.description'
+            ]);
     }
 
     /**
