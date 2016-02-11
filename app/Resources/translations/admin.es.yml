@@ -14,6 +14,7 @@ org.name: Organización
 org.code: Código
 org.city: Ciudad
 org.description: Descripción
+org.new: Nueva organización
 
 user.lastName: Apellidos
 user.firstName: Nombre
