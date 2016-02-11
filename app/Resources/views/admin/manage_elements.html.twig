@@ -40,6 +40,6 @@
     <div class="navigation">
         {{ knp_pagination_render(pagination) }}
     </div>
-    {{ m.link_button(path('admin_enumerations'), 'element.back'|trans, 'arrow-left', 'btn-default') }}
+    {{ m.link_button(path('admin_edit_enumeration', {'enumeration': enumeration.id}), 'element.back'|trans, 'arrow-left', 'btn-default') }}
     {{ m.link_button('', 'element.new'|trans, 'plus', 'btn-success') }}
 {% endblock %}
