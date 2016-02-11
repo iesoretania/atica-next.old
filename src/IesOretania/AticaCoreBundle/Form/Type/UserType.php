@@ -37,49 +37,57 @@ class UserType extends AbstractType
     {
         $builder
             ->add('reference', null, array(
+                'label' => 'form.reference',
                 'property_path' => 'person.reference',
                 'disabled' => !$options['admin']
             ))
             ->add('firstName', null, array(
+                'label' => 'form.first_name',
                 'property_path' => 'person.firstName',
                 'required' => true
             ))
             ->add('lastName', null, array(
+                'label' => 'form.last_name',
                 'property_path' => 'person.lastName',
                 'required' => true
             ))
             ->add('displayName', null, array(
+                'label' => 'form.display_name',
                 'property_path' => 'person.displayName',
                 'required' => true
             ))
             ->add('gender', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
+                'label' => 'form.gender',
                 'property_path' => 'person.gender',
                 'choices_as_values' => true,
                 'choices' => [
-                    'gender.unknown' => Person::GENDER_UNKNOWN,
-                    'gender.male' => Person::GENDER_MALE,
-                    'gender.female' => Person::GENDER_FEMALE
+                    'form.gender_unknown' => Person::GENDER_UNKNOWN,
+                    'form.gender_male' => Person::GENDER_MALE,
+                    'form.gender_female' => Person::GENDER_FEMALE
                 ],
                 'expanded' => true,
                 'multiple' => false,
                 'required' => true
             ))
             ->add('initials', null, array(
+                'label' => 'form.initials',
                 'property_path' => 'person.initials',
                 'required' => false
             ))
             ->add('email', 'Symfony\Component\Form\Extension\Core\Type\EmailType', [
+                'label' => 'form.email',
                 'required' => true
             ]);
 
         if ($options['admin']) {
             $builder
                 ->add('enabled', null, [
-                    'label' => 'enabled',
+                    'label' => 'form.enabled',
                     'disabled' => $options['me'],
                     'required' => false
                 ])
                 ->add('globalAdministrator', null, [
+                    'label' => 'form.global_administrator',
                     'required' => false,
                     'disabled' => $options['me']
                 ]);
@@ -88,12 +96,14 @@ class UserType extends AbstractType
         if (!$options['new']) {
             $builder
                 ->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+                    'label' => 'form.submit',
                     'attr' => ['class' => 'btn btn-success']
                 ]);
 
             if (!$options['admin'] && $options['me']) {
                 $builder
                     ->add('oldPassword', 'Symfony\Component\Form\Extension\Core\Type\PasswordType', [
+                        'label' => 'form.old_password',
                         'required' => false,
                         'mapped' => false,
                         'constraints' => new UserPassword([
@@ -106,12 +116,13 @@ class UserType extends AbstractType
         if ($options['admin'] || $options['me']) {
             $builder
                 ->add('newPassword', 'Symfony\Component\Form\Extension\Core\Type\RepeatedType', [
+                    'label' => 'form.new_password',
                     'required' => false,
                     'type' => 'Symfony\Component\Form\Extension\Core\Type\PasswordType',
                     'mapped' => false,
                     'invalid_message' => 'password.no_match',
                     'first_options' => [
-                        'label' => 'New password',
+                        'label' => 'form.new_password',
                         'constraints' => [
                             new Length([
                                 'min' => 7,
@@ -124,10 +135,11 @@ class UserType extends AbstractType
                         ]
                     ],
                     'second_options' => [
-                        'label' => 'newPassword.repeat'
+                        'label' => 'form.new_password_repeat'
                     ]
                 ])
                 ->add('changePassword', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array(
+                    'label' => 'form.change_password',
                     'attr' => array('class' => 'btn btn-success'),
                     'validation_groups' => array('Default', 'password')
                 ));

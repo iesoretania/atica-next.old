@@ -21,7 +21,6 @@ user.email: Correo-e
 user.invite: Invitar a un usuario
 user.title: Usuarios de la organización
 user.title_pending: Usuarios con invitaciones pendientes
-user.back: Volver a la lista de usuarios
 user.unlink: Desasociar de la organización
 user.unlinked: Usuario desasociado de la organización con éxito
 user.unlink_failed: No se ha podido desasociar al usuario de la organización
@@ -51,4 +50,4 @@ element.position: Orden
 element.name: Nombre
 element.code: Código interno
 element.implicit: Elementos derivados
-element.back: Volver a la gestión de listas
+element.back: Volver a la lista de

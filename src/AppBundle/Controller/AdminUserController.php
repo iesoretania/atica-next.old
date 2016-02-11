@@ -121,9 +121,9 @@ class AdminUserController extends Controller
                 $password = $this->container->get('security.password_encoder')
                     ->encodePassword($user, $form->get('newPassword')->get('first')->getData());
                 $user->setPassword($password);
-                $message = $this->get('translator')->trans('passwordChanged', [], 'user');
+                $message = $this->get('translator')->trans('alert.password_changed', [], 'user');
             } else {
-                $message = $this->get('translator')->trans('dataSaved', [], 'user');
+                $message = $this->get('translator')->trans('alert.saved', [], 'user');
             }
 
             // Probar a guardar los cambios
@@ -135,7 +135,7 @@ class AdminUserController extends Controller
                 );
             }
             catch (\Exception $e) {
-                $this->addFlash('error', $this->get('translator')->trans('saveFailed', [], 'user'));
+                $this->addFlash('error', $this->get('translator')->trans('alert.not_saved', [], 'user'));
             }
         }
 
