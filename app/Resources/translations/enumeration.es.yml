@@ -14,5 +14,5 @@ alert.deleted: Lista eliminada con éxito
 alert.not_deleted: No se ha podido eliminar la lista. Compruebe que no tenga datos asociados.
 
 warning.from_module: >
-    Esta lista está siendo utilizada por un módulo de la aplicación. No podrá ser eliminada salvo que el módulo
+    Esta lista forma parte de un módulo de la aplicación. No podrá ser eliminada salvo que el módulo
     sea desactivado para la organización.
