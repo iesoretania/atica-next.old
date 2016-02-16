@@ -60,6 +60,11 @@ class UserExtensionService
         }
     }
 
+    public function isUserGlobalAdministrator()
+    {
+        return $this->authorizationChecker->isGranted('ROLE_ADMIN');
+    }
+
     public function isUserLocalAdministrator()
     {
         return $this->authorizationChecker->isGranted('ROLE_ADMIN')

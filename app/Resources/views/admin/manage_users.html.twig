@@ -9,5 +9,6 @@
         {% include ':admin:manage_users_partial_pending.html.twig' with {'elements': paginationPending } %}
     {% endif %}
     {{ m.link_button(path('admin_menu'), 'form.back'|trans, 'arrow-left', 'btn-default') }}
-    {{ m.link_button('', 'user.invite'|trans, 'paper-plane', 'btn-success') }}
+    {{ m.link_button(path('admin_new_user'), 'user.new'|trans, 'plus', 'btn-success') }}
+    {{ m.link_button('', 'user.invite'|trans, 'paper-plane', 'btn-info disabled') }}
 {% endblock %}

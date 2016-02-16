@@ -80,7 +80,7 @@ class UserType extends AbstractType
             ))
             ->add('email', 'Symfony\Component\Form\Extension\Core\Type\EmailType', [
                 'label' => 'form.email',
-                'required' => true
+                'required' => false
             ]);
 
         if ($options['admin']) {

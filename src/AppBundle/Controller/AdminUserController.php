@@ -21,6 +21,8 @@
 namespace AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use IesOretania\AticaCoreBundle\Entity\Membership;
+use IesOretania\AticaCoreBundle\Entity\Person;
 use IesOretania\AticaCoreBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -91,22 +93,38 @@ class AdminUserController extends Controller
     }
 
     /**
+     * @Route("/usuario/nuevo", name="admin_new_user", methods={"GET", "POST"})
      * @Route("/usuario/{user}", name="admin_user_form", methods={"GET", "POST"})
      */
-    public function indexAction(User $user, Request $request)
+    public function indexAction(User $user = null, Request $request)
     {
+        if (null === $user) {
+            $user = new User();
+            $person = new Person();
+            $person->setDisplayName('');
+            $user->setPerson($person);
+            $new = true;
+        } else {
+            $new = false;
+        }
+
+        $me = ($user->getId() === $this->getUser()->getId());
+
         // permitir acceso si:
+        // - soy yo
+        // o
         // - si es administrador global
         // o
         // - si es administrador local y el usuario pertenece a la organización
-        if (!$this->isGranted('ROLE_ADMIN')
+        if (!$me && !$this->isGranted('ROLE_ADMIN')
             && (!$this->get('app.user.extension')->isUserLocalAdministrator() || !$this->get('app.user.extension')->getUserMembership($user))) {
             throw $this->createAccessDeniedException();
         }
 
         $form = $this->createForm('IesOretania\AticaCoreBundle\Form\Type\UserType', $user, [
             'admin' => $this->isGranted('ROLE_ADMIN'),
-            'me' => ($user->getId() === $this->getUser()->getId())
+            'me' => $me,
+            'new' => $new
         ]);
 
         $form->handleRequest($request);
@@ -128,10 +146,21 @@ class AdminUserController extends Controller
 
             // Probar a guardar los cambios
             try {
-                $this->getDoctrine()->getManager()->flush();
+                $em = $this->getDoctrine()->getManager();
+                if ($new) {
+                    $membership = new Membership();
+                    $membership
+                        ->setOrganization($this->get('app.user.extension')->getCurrentOrganization())
+                        ->setUser($user)
+                        ->setLocalAdministrator(false);
+                    $em->persist($user->getPerson());
+                    $em->persist($user);
+                    $em->persist($membership);
+                }
+                $em->flush();
                 $this->addFlash('success', $message);
                 return new RedirectResponse(
-                    $this->generateUrl('frontpage')
+                    $this->generateUrl($this->isGranted('ROLE_ADMIN') ? 'admin_users' : 'frontpage')
                 );
             }
             catch (\Exception $e) {
@@ -139,14 +168,17 @@ class AdminUserController extends Controller
             }
         }
 
+        $titulo = (string) $user;
+        $titulo = $titulo ?: $this->get('translator')->trans('user.new', [], 'admin');
+
         return $this->render('admin/form_user.html.twig', [
             'form' => $form->createView(),
             'breadcrumb' => [
                 ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
                 ['caption' => 'menu.admin.manage.users', 'icon' => 'users', 'path' => 'admin_users'],
-                ['fixed' => (string) $user]
+                ['fixed' => $titulo]
             ],
-            'title' => (string) $user
+            'title' => $titulo
         ]);
     }
 
