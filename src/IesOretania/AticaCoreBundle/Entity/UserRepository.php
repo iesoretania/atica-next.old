@@ -42,7 +42,6 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     public function refreshUser(UserInterface $user) {
-        dump($user);
         return $this->loadUserByUsername($user->getUsername());
     }
 
