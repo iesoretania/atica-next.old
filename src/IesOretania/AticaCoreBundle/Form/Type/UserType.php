@@ -121,7 +121,7 @@ class UserType extends AbstractType
             $builder
                 ->add('newPassword', 'Symfony\Component\Form\Extension\Core\Type\RepeatedType', [
                     'label' => 'form.new_password',
-                    'required' => false,
+                    'required' => $options['new'],
                     'type' => 'Symfony\Component\Form\Extension\Core\Type\PasswordType',
                     'mapped' => false,
                     'invalid_message' => 'password.no_match',
@@ -139,7 +139,8 @@ class UserType extends AbstractType
                         ]
                     ],
                     'second_options' => [
-                        'label' => 'form.new_password_repeat'
+                        'label' => 'form.new_password_repeat',
+                        'required' => $options['new']
                     ]
                 ])
                 ->add('changePassword', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array(
