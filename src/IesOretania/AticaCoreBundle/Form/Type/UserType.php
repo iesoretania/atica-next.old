@@ -43,7 +43,7 @@ class UserType extends AbstractType
             ->add('reference', null, array(
                 'label' => 'form.reference',
                 'property_path' => 'person.reference',
-                'disabled' => !$options['admin']
+                'required' => false
             ))
             ->add('firstName', null, array(
                 'label' => 'form.first_name',

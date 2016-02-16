@@ -41,8 +41,7 @@ class Person
     protected $id;
 
     /**
-     * @ORM\Column(type="string", unique=true)
-     * @NotBlank()
+     * @ORM\Column(type="string", unique=true, nullable=true)
      * @var string
      */
     protected $reference;
