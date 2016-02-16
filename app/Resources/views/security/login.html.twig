@@ -9,7 +9,7 @@
 <form method="post" action="{{ path('login_check') }}" role="form">
     <div class="form-group">
         <label for="email">{{ 'form.login.email'|trans }}</label>
-        <input type="email" name="_username" id="email" required="" class="form-control" tabindex="1"
+        <input type="text" name="_username" id="email" required="" class="form-control" tabindex="1"
                autocorrect="off" autocapitalize="none" value="{{ last_username | default('') }}"
                {% if not last_username %}autofocus="" {% endif %}>
     </div>

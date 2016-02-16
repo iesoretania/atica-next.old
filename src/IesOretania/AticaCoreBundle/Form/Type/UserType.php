@@ -36,6 +36,10 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('username', null, array(
+                'label' => 'form.username',
+                'required' => true
+            ))
             ->add('reference', null, array(
                 'label' => 'form.reference',
                 'property_path' => 'person.reference',

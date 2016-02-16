@@ -14,7 +14,6 @@ security:
         db_provider:
             entity:
                 class: AticaCoreBundle:User
-                property: email
         in_memory:
             memory: ~
 

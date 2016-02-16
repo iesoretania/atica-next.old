@@ -50,6 +50,7 @@ class LoadTestUserPersonData extends EnvironmentOrderedAbstractFixture
             ->setGlobalAdministrator(false)
             ->setPassword($this->container->get('security.password_encoder')->encodePassword($userTeacher, 'juan'))
             ->setEmail('juan@example.com')
+            ->setUsername('juan')
             ->setPerson($personTeacher);
 
         $manager->persist($userTeacher);

@@ -27,10 +27,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="UserRepository")
+ * @UniqueEntity("username")
  * @UniqueEntity("email")
  */
 class User implements UserInterface, \Serializable
@@ -52,8 +52,13 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", unique=true)
+     * @var string
+     */
+    protected $username;
+
+    /**
+     * @ORM\Column(type="string", unique=true, nullable=true)
      * @Email()
-     * @NotBlank()
      * @var string
      */
     protected $email;
@@ -138,13 +143,27 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get userName
+     * Get username
      *
      * @return string
      */
-    public function getUserName()
+    public function getUsername()
     {
-        return $this->email;
+        return $this->username;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     *
+     * @return User
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
     }
 
     /**
@@ -437,7 +456,7 @@ class User implements UserInterface, \Serializable
     {
         return serialize(array(
             $this->id,
-            $this->email,
+            $this->username,
             $this->password
         ));
     }
@@ -455,7 +474,7 @@ class User implements UserInterface, \Serializable
     {
         list (
             $this->id,
-            $this->email,
+            $this->username,
             $this->password
         ) = unserialize($serialized);
     }
