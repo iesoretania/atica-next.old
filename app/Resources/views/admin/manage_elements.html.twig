@@ -25,7 +25,7 @@
                 </td>
                 <td class="text-center">
                     <div class="btn-group btn-group-xs btn-block" role="group">
-                        <a href="" class="btn btn-default btn-xs btn-block"><i class="fa fa-pencil"></i> {{ 'form.edit' | trans }}</a>
+                        <a href="{{ path('admin_element_form', {'element': elem.id}) }}" class="btn btn-default btn-xs btn-block"><i class="fa fa-pencil"></i> {{ 'form.edit' | trans }}</a>
                     </div>
                 </td>
             </tr>

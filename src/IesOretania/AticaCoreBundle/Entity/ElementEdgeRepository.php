@@ -32,7 +32,7 @@ use Doctrine\ORM\EntityRepository;
 class ElementEdgeRepository extends EntityRepository
 {
     /**
-     * Add edge
+     * Añadir una flecha
      *
      * @return bool
      */
@@ -122,16 +122,22 @@ class ElementEdgeRepository extends EntityRepository
             ->setParameter('endElement', $endElement)
             ->getResult();
 
+        $crossEdges = array_chunk($crossEdges, 2, true);
+        dump($crossEdges);
+
         /** @var ElementEdge[] $currentEdges */
         foreach ($crossEdges as $currentEdges) {
+            $edgeA = $em->find('AticaCoreBundle:ElementEdge', $currentEdges[0]);
+            $edgeB = $em->find('AticaCoreBundle:ElementEdge', $currentEdges[1]);
+
             $newEdge = new ElementEdge();
             $newEdge
-                ->setEntryEdge($currentEdges['A'])
+                ->setEntryEdge($edgeA)
                 ->setDirectEdge($edge)
-                ->setExitEdge($currentEdges['B'])
-                ->setStartElement($currentEdges['A']->getStartElement())
-                ->setEndElement($currentEdges['B']->getEndElement())
-                ->setHops($currentEdges['A']->getHops() + $currentEdges['A']->getHops() + 1);
+                ->setExitEdge($edgeB)
+                ->setStartElement($edgeA->getStartElement())
+                ->setEndElement($edgeB->getEndElement())
+                ->setHops($edgeA->getHops() + $edgeB->getHops() + 1);
 
             $em->persist($newEdge);
         }
@@ -140,7 +146,7 @@ class ElementEdgeRepository extends EntityRepository
     }
 
     /**
-     * Delete edge
+     * Borrar flecha
      *
      * @return bool
      */
@@ -164,5 +170,51 @@ class ElementEdgeRepository extends EntityRepository
         $em->remove($item);
 
         return true;
+    }
+
+    /**
+     * Borrar todas las flechas de $startElement
+     *
+     * @return bool
+     */
+    public function deleteEdges(Element $startElement)
+    {
+        $em = $this->getEntityManager();
+
+        $criteria = [
+            'startElement' => $startElement,
+        ];
+
+        $items = $this->findBy($criteria);
+
+        if (!$items) {
+            // no hay: indicar que la operación ha fallado
+            return false;
+        }
+
+        foreach($items as $item) {
+            $em->remove($item);
+        }
+
+        return true;
+    }
+
+    /**
+     * Devuelve los elementos que dependen directamente de $startElement y son del tipo $enumeration
+     * @param Element $startElement
+     * @param Enumeration $enumeration
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getDirectEnumerationParentEdge(Element $startElement, Enumeration $enumeration)
+    {
+        return $this->createQueryBuilder('e')
+            ->innerJoin('e.endElement', 'el')
+            ->where('e.startElement = :start')
+            ->andWhere('el.enumeration = :enum')
+            ->setParameter('start', $startElement)
+            ->setParameter('enum', $enumeration)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

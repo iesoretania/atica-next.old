@@ -1,0 +1,16 @@
+form.name: Descripción
+form.code: Código interno
+form.description: Observaciones
+form.select: Elija una opción
+
+form.submit: Guardar cambios
+form.create: Crear elemento
+form.delete: Eliminar elemento
+form.up: Subir elemento
+form.down: Bajar elemento
+
+form.back: Volver a la lista
+
+alert.saved: Datos guardados correctamente
+alert.deleted: Elemento eliminado con éxito
+alert.not_deleted: No se ha podido eliminar el elemento. Compruebe que no depende de otros elementos.

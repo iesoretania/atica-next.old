@@ -59,6 +59,7 @@ class Enumeration
 
     /**
      * @ORM\OneToMany(targetEntity="Attribute", mappedBy="source")
+     * @ORM\OrderBy({"position":"ASC"})
      * @var Attribute[]
      */
     protected $attributes;

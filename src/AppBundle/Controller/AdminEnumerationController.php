@@ -21,6 +21,7 @@
 namespace AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use IesOretania\AticaCoreBundle\Entity\Element;
 use IesOretania\AticaCoreBundle\Entity\Enumeration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -149,6 +150,62 @@ class AdminEnumerationController extends Controller
                 'title' => $enumeration->getDescription(),
                 'enumeration' => $enumeration,
                 'pagination' => $pagination
+            ]);
+    }
+
+    /**
+     * @Route("/elemento/{element}", name="admin_element_form", methods={"GET", "POST"})
+     * @Security("is_granted('manage', element.getEnumeration())")
+     */
+    public function elementDetailAction(Element $element, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $form = $this->createForm('IesOretania\AticaCoreBundle\Form\Type\ElementType', $element);
+
+        $attributes = $element->getEnumeration()->getAttributes();
+
+        foreach($attributes as $attribute) {
+            $attributeEdge = $em->getRepository('AticaCoreBundle:ElementEdge')->getDirectEnumerationParentEdge($element, $attribute->getTarget());
+            $attributeElement = $attributeEdge ? $attributeEdge->getEndElement() : null;
+            $form->get('element' . $attribute->getTarget()->getId())->setData($attributeElement);
+        }
+
+        $form->handleRequest($request);
+
+        if ($form->isValid() && $form->isSubmitted()) {
+
+            // borrar relaciones del antiguo elemento
+            $em->getRepository('AticaCoreBundle:ElementEdge')->deleteEdges($element);
+            $em->flush();
+
+            // añadir nuevas relaciones
+            foreach($attributes as $attribute) {
+                $attributeElement = $form->get('element' . $attribute->getTarget()->getId())->getData();
+                if ($attributeElement) {
+                    $em->getRepository('AticaCoreBundle:ElementEdge')->addEdge($element, $attributeElement);
+                    $em->flush();
+                }
+            }
+
+            // guardar los cambios
+            $em->flush();
+            $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'element'));
+            return $this->redirectToRoute('admin_enumeration', ['enumeration' => $element->getEnumeration()->getId()]);
+        }
+
+        return $this->render(':admin:form_element.html.twig',
+            [
+                'breadcrumb' => [
+                    ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
+                    ['caption' => 'menu.admin.manage.enumerations', 'icon' => 'list-ol', 'path' => 'admin_enumerations'],
+                    ['fixed' => $element->getEnumeration()->getDescription()],
+                    ['fixed' => $element->getName()]
+                ],
+                'title' => $element->getName(),
+                'form' => $form->createView(),
+                'element' => $element,
+                'new' => false
             ]);
     }
 }
