@@ -36,31 +36,31 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', null, array(
+            ->add('username', null, [
                 'label' => 'form.username',
                 'required' => true
-            ))
-            ->add('reference', null, array(
+            ])
+            ->add('reference', null, [
                 'label' => 'form.reference',
                 'property_path' => 'person.reference',
                 'required' => false
-            ))
-            ->add('firstName', null, array(
+            ])
+            ->add('firstName', null, [
                 'label' => 'form.first_name',
                 'property_path' => 'person.firstName',
                 'required' => true
-            ))
-            ->add('lastName', null, array(
+            ])
+            ->add('lastName', null, [
                 'label' => 'form.last_name',
                 'property_path' => 'person.lastName',
                 'required' => true
-            ))
-            ->add('displayName', null, array(
+            ])
+            ->add('displayName', null, [
                 'label' => 'form.display_name',
                 'property_path' => 'person.displayName',
                 'required' => true
-            ))
-            ->add('gender', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
+            ])
+            ->add('gender', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
                 'label' => 'form.gender',
                 'property_path' => 'person.gender',
                 'choices_as_values' => true,
@@ -72,7 +72,7 @@ class UserType extends AbstractType
                 'expanded' => true,
                 'multiple' => false,
                 'required' => true
-            ))
+            ])
             ->add('initials', null, array(
                 'label' => 'form.initials',
                 'property_path' => 'person.initials',
