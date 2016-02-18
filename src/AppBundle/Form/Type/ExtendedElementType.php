@@ -18,41 +18,29 @@
   along with this program.  If not, see [http://www.gnu.org/licenses/].
 */
 
-namespace IesOretania\AticaCoreBundle\Form\Type;
+namespace AppBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
+use AppBundle\Form\EventListener\AddElementAttributesSubscriber;
+use IesOretania\AticaCoreBundle\Form\Type\ElementType;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ElementType extends AbstractType
+class ExtendedElementType extends ElementType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    private $translator;
+
+    public function __construct(Translator $translator)
     {
-        $builder
-            ->add('name', null, [
-                'label' => 'form.name',
-                'required' => true
-            ])
-            ->add('code', null, [
-                'label' => 'form.code',
-                'required' => false
-            ])
-            ->add('description', null, [
-                'label' => 'form.description'
-            ]);
+        $this->translator = $translator;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $resolver->setDefaults([
-            'data_class' => 'IesOretania\AticaCoreBundle\Entity\Element',
-            'translation_domain' => 'element'
-        ]);
+        parent::buildForm($builder, $options);
+
+        $builder->addEventSubscriber(new AddElementAttributesSubscriber($this->translator->trans('form.select', [], 'element')));
     }
 }

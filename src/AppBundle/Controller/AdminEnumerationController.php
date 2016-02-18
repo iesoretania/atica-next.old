@@ -161,7 +161,7 @@ class AdminEnumerationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $form = $this->createForm('IesOretania\AticaCoreBundle\Form\Type\ElementType', $element);
+        $form = $this->createForm('AppBundle\Form\Type\ExtendedElementType', $element);
 
         $attributes = $element->getEnumeration()->getAttributes();
 

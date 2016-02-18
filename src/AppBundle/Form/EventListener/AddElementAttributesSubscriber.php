@@ -29,6 +29,13 @@ use Symfony\Component\Form\FormEvents;
 
 class AddElementAttributesSubscriber implements EventSubscriberInterface
 {
+    private $placeholder;
+
+    public function __construct($placeholder)
+    {
+        $this->placeholder = $placeholder;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -53,7 +60,7 @@ class AddElementAttributesSubscriber implements EventSubscriberInterface
                 'mapped' => false,
                 'label' => $attribute->getTarget()->getDescription(),
                 'class' => 'IesOretania\AticaCoreBundle\Entity\Element',
-                'placeholder' => 'form.select',
+                'placeholder' => $this->placeholder,
                 'translation_domain' => false,
                 'choice_translation_domain' => false,
                 'query_builder' => function(EntityRepository $er) use ($attribute) {

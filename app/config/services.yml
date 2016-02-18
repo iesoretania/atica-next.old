@@ -40,3 +40,9 @@ services:
         public: false
         tags:
             - { name: security.voter }
+
+    app.form.extended_element:
+        class: AppBundle\Form\Type\ExtendedElementType
+        autowire: true
+        tags:
+            - { name: form.type }
