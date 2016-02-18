@@ -46,6 +46,12 @@ class LoadTestProfileData extends EnvironmentOrderedAbstractFixture
             ->setName('ESO')
             ->setPosition(0);
 
+        $level2Elem = new Element();
+        $level2Elem
+            ->setEnumeration($levelEnum)
+            ->setName('FP')
+            ->setPosition(1);
+
         /** @var Enumeration $courseEnum */
         $courseEnum = $this->getReference('enum-course');
 
@@ -55,6 +61,12 @@ class LoadTestProfileData extends EnvironmentOrderedAbstractFixture
             ->setName('2ºESO')
             ->setPosition(0);
 
+        $course2Elem = new Element();
+        $course2Elem
+            ->setEnumeration($courseEnum)
+            ->setName('2ºDAW')
+            ->setPosition(0);
+
         /** @var Enumeration $groupEnum */
         $groupEnum = $this->getReference('enum-group');
 
@@ -62,6 +74,12 @@ class LoadTestProfileData extends EnvironmentOrderedAbstractFixture
         $group1Elem
             ->setEnumeration($groupEnum)
             ->setName('2ºESO-A')
+            ->setPosition(0);
+
+        $group2Elem = new Element();
+        $group2Elem
+            ->setEnumeration($groupEnum)
+            ->setName('2ºDAW-A')
             ->setPosition(0);
 
         /** @var Profile $profile */
@@ -79,16 +97,22 @@ class LoadTestProfileData extends EnvironmentOrderedAbstractFixture
         $manager->persist($level1Elem);
         $manager->persist($course1Elem);
         $manager->persist($group1Elem);
+        $manager->persist($level2Elem);
+        $manager->persist($course2Elem);
+        $manager->persist($group2Elem);
         $manager->persist($userProfile);
-
         $manager->flush();
 
         $manager->getRepository('AticaCoreBundle:ElementEdge')->addEdge($course1Elem, $level1Elem);
-
         $manager->flush();
 
         $manager->getRepository('AticaCoreBundle:ElementEdge')->addEdge($group1Elem, $course1Elem);
+        $manager->flush();
 
+        $manager->getRepository('AticaCoreBundle:ElementEdge')->addEdge($course2Elem, $level2Elem);
+        $manager->flush();
+
+        $manager->getRepository('AticaCoreBundle:ElementEdge')->addEdge($group2Elem, $course2Elem);
         $manager->flush();
     }
 
