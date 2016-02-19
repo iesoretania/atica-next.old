@@ -18,5 +18,4 @@
         {{ m.end_button }}
     {{ form_end(form) }}
     {{ m.link_button(path('admin_enumerations'), 'form.back'|trans, 'arrow-left', 'btn-default') }}
-    {{ m.link_button(path('admin_enumeration', {'enumeration': enumeration.id}), 'form.elements'|trans, 'reorder', 'btn-info') }}
 {% endblock %}

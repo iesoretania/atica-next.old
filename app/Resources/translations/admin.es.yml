@@ -46,10 +46,11 @@ enumeration.own: Propio
 enumeration.attributes: Atributos
 enumeration.optional: (opcional)
 enumeration.multiple: (múltiple)
+enumeration.elements: Elementos
 
 element.new: Nuevo elemento
 element.position: Orden
 element.name: Nombre
 element.code: Código interno
 element.implicit: Elementos asociados
-element.back: Volver a la gestión de la lista
+element.back: Volver al listado

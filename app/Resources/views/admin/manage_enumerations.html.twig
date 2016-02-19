@@ -5,10 +5,10 @@
     <table class="table table-bordered table-condensed table-hover table-responsive">
         <thead>
             <tr>
-                {{ m.paginator_th(pagination, 'col-md-5', 'e.description', 'enumeration.name'|trans) }}
+                {{ m.paginator_th(pagination, 'col-md-4', 'e.description', 'enumeration.name'|trans) }}
                 {{ m.paginator_th(pagination, 'col-md-3', 'm.name', 'enumeration.module'|trans) }}
                 <th class="col-md-3">{{ 'enumeration.attributes'|trans }}</th>
-                <th class="col-md-1"></th>
+                <th class="col-md-2"></th>
             </tr>
         </thead>
         <tbody>
@@ -23,7 +23,8 @@
                 </td>
                 <td class="text-center">
                     <div class="btn-group btn-group-xs btn-block" role="group">
-                        <a href="{{ path('admin_edit_enumeration', {'enumeration': enum.id}) }}" class="btn btn-default btn-xs btn-block"><i class="fa fa-pencil"></i> {{ 'form.edit' | trans }}</a>
+                        <a href="{{ path('admin_enumeration', {'enumeration': enum.id}) }}" class="col-md-6 btn btn-info btn-xs"><i class="fa fa-list-ol"></i> {{ 'enumeration.elements' | trans }}</a>
+                        <a href="{{ path('admin_edit_enumeration', {'enumeration': enum.id}) }}" class="col-md-6 btn btn-default btn-xs"><i class="fa fa-pencil"></i> {{ 'form.edit' | trans }}</a>
                     </div>
                 </td>
             </tr>
