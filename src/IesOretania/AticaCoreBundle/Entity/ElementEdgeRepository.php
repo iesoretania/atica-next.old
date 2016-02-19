@@ -191,9 +191,9 @@ class ElementEdgeRepository extends EntityRepository
             return false;
         }
 
-        foreach($items as $item) {
-            $em->remove($item);
-        }
+        $em->createQuery('DELETE FROM AticaCoreBundle:ElementEdge e WHERE e IN (:items)')
+            ->setParameter('items', $items)
+            ->execute();
 
         return true;
     }
