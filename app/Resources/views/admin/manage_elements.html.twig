@@ -25,7 +25,7 @@
                 </td>
                 <td class="text-center">
                     <div class="btn-group btn-group-xs btn-block" role="group">
-                        <a href="{{ path('admin_element_form', {'element': elem.id}) }}" class="btn btn-default btn-xs btn-block"><i class="fa fa-pencil"></i> {{ 'form.edit' | trans }}</a>
+                        <a href="{{ path('admin_element_form', {'enumeration': enumeration.id, 'element': elem.id}) }}" class="btn btn-default btn-xs btn-block"><i class="fa fa-pencil"></i> {{ 'form.edit' | trans }}</a>
                     </div>
                 </td>
             </tr>
@@ -41,5 +41,5 @@
         {{ knp_pagination_render(pagination) }}
     </div>
     {{ m.link_button(path('admin_edit_enumeration', {'enumeration': enumeration.id}), 'element.back'|trans, 'arrow-left', 'btn-default') }}
-    {{ m.link_button('', 'element.new'|trans, 'plus', 'btn-success') }}
+    {{ m.link_button(path('admin_element_new', {'enumeration': enumeration.id}), 'element.new'|trans, 'plus', 'btn-success') }}
 {% endblock %}

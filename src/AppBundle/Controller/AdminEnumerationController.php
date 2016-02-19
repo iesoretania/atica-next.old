@@ -154,20 +154,37 @@ class AdminEnumerationController extends Controller
     }
 
     /**
-     * @Route("/elemento/{element}", name="admin_element_form", methods={"GET", "POST"})
-     * @Security("is_granted('manage', element.getEnumeration())")
+     * @Route("/{enumeration}/elemento/nuevo", name="admin_element_new", methods={"GET", "POST"})
+     * @Route("/{enumeration}/elemento/{element}", name="admin_element_form", methods={"GET", "POST"})
+     * @Security("is_granted('manage', enumeration)")
      */
-    public function elementDetailAction(Element $element, Request $request)
+    public function elementDetailAction(Enumeration $enumeration, Element $element, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+
+        if ($element && $element->getEnumeration() !== $enumeration) {
+            $this->createAccessDeniedException();
+        }
+        if ('admin_element_new' === $request->get('_route')) {
+            $element = new Element();
+            $element->setEnumeration($enumeration);
+            $new = true;
+        } else {
+            $new = false;
+        }
 
         $form = $this->createForm('AppBundle\Form\Type\ExtendedElementType', $element);
 
         $attributes = $element->getEnumeration()->getAttributes();
 
         foreach($attributes as $attribute) {
-            $attributeEdge = $em->getRepository('AticaCoreBundle:ElementEdge')->getDirectEnumerationParentEdge($element, $attribute->getTarget());
-            $attributeElement = $attributeEdge ? $attributeEdge->getEndElement() : null;
+            if (!$new) {
+                $attributeEdge = $em->getRepository('AticaCoreBundle:ElementEdge')->getDirectEnumerationParentEdge($element,
+                    $attribute->getTarget());
+                $attributeElement = $attributeEdge ? $attributeEdge->getEndElement() : null;
+            } else {
+                $attributeElement = null;
+            }
             $form->get('element' . $attribute->getTarget()->getId())->setData($attributeElement);
         }
 
@@ -175,6 +192,9 @@ class AdminEnumerationController extends Controller
 
         if ($form->isValid() && $form->isSubmitted()) {
 
+            if (null === $element->getId()) {
+                $em->persist($element);
+            }
             // borrar relaciones del antiguo elemento
             $em->getRepository('AticaCoreBundle:ElementEdge')->deleteEdges($element);
             $em->flush();
@@ -194,18 +214,19 @@ class AdminEnumerationController extends Controller
             return $this->redirectToRoute('admin_enumeration', ['enumeration' => $element->getEnumeration()->getId()]);
         }
 
+        $title = $new ? 'Nuevo elemento' : $element->getName();
         return $this->render(':admin:form_element.html.twig',
             [
                 'breadcrumb' => [
                     ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
                     ['caption' => 'menu.admin.manage.enumerations', 'icon' => 'list-ol', 'path' => 'admin_enumerations'],
                     ['fixed' => $element->getEnumeration()->getDescription()],
-                    ['fixed' => $element->getName()]
+                    ['fixed' => $title]
                 ],
-                'title' => $element->getName(),
+                'title' => $title,
                 'form' => $form->createView(),
                 'element' => $element,
-                'new' => false
+                'new' => $new
             ]);
     }
 }
