@@ -64,19 +64,7 @@
             </div>
         {% endfor %}
         {% if breadcrumb is defined %}
-            <ol class="breadcrumb">
-                {% spaceless %}
-                    <li><a href="{{ path('frontpage') }}"><i class="fa fa-home fa-2x"></i></a></li>
-                    {% for item in breadcrumb %}
-                        <li>
-                            {%- if item.path is defined %}<a href="{{ path(item.path) }}">{% endif -%}
-                                {%- if item.icon is defined %}<i class="fa fa-{{ item.icon }}"></i> {% endif -%}
-                                {%- if item.caption is defined %}{{- item.caption|trans -}}{% endif %}{{- item.fixed|default('') -}}
-                            {%- if item.path is defined %}</a>{% endif -%}
-                        </li>
-                    {%- endfor %}
-                {% endspaceless %}
-            </ol>
+            {% include 'breadcrumb.html.twig' %}
         {% endif %}
         {% if title is defined %}
             <h1 class="well">{{ ((title is null and breadcrumb is defined) ? (breadcrumb|last).caption|trans : title) }}</h1>

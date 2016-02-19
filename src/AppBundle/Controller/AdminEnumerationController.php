@@ -155,16 +155,12 @@ class AdminEnumerationController extends Controller
 
     /**
      * @Route("/{enumeration}/elemento/nuevo", name="admin_element_new", methods={"GET", "POST"})
-     * @Route("/{enumeration}/elemento/{element}", name="admin_element_form", methods={"GET", "POST"})
-     * @Security("is_granted('manage', enumeration)")
+     * @Route("/elemento/{element}", name="admin_element_form", methods={"GET", "POST"})
      */
-    public function elementDetailAction(Enumeration $enumeration, Element $element, Request $request)
+    public function elementDetailAction(Enumeration $enumeration = null, Element $element = null, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        if ($element && $element->getEnumeration() !== $enumeration) {
-            $this->createAccessDeniedException();
-        }
         if ('admin_element_new' === $request->get('_route')) {
             $element = new Element();
             $element->setEnumeration($enumeration);
@@ -172,6 +168,8 @@ class AdminEnumerationController extends Controller
         } else {
             $new = false;
         }
+
+        $this->denyAccessUnlessGranted('manage', $element->getEnumeration());
 
         $form = $this->createForm('AppBundle\Form\Type\ExtendedElementType', $element);
 
@@ -220,7 +218,7 @@ class AdminEnumerationController extends Controller
                 'breadcrumb' => [
                     ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
                     ['caption' => 'menu.admin.manage.enumerations', 'icon' => 'list-ol', 'path' => 'admin_enumerations'],
-                    ['fixed' => $element->getEnumeration()->getDescription()],
+                    ['fixed' => $element->getEnumeration()->getDescription(), 'path' => 'admin_enumeration', 'options' => ['enumeration' => $element->getEnumeration()->getId()]],
                     ['fixed' => $title]
                 ],
                 'title' => $title,
