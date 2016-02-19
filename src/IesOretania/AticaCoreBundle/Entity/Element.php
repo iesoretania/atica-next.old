@@ -139,7 +139,7 @@ class Element
      */
     public function setCode($code)
     {
-        $this->name = $code;
+        $this->code = $code;
 
         return $this;
     }
