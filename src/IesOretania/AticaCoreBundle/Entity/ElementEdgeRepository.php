@@ -123,7 +123,6 @@ class ElementEdgeRepository extends EntityRepository
             ->getResult();
 
         $crossEdges = array_chunk($crossEdges, 2, true);
-        dump($crossEdges);
 
         /** @var ElementEdge[] $currentEdges */
         foreach ($crossEdges as $currentEdges) {
