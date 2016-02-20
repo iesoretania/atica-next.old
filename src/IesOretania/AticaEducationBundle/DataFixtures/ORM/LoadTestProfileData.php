@@ -27,7 +27,6 @@ use IesOretania\AticaCoreBundle\Entity\Enumeration;
 use IesOretania\AticaCoreBundle\Entity\Profile;
 use IesOretania\AticaCoreBundle\Entity\User;
 use IesOretania\AticaCoreBundle\Entity\UserProfile;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
 class LoadTestProfileData extends EnvironmentOrderedAbstractFixture
 {
@@ -43,14 +42,12 @@ class LoadTestProfileData extends EnvironmentOrderedAbstractFixture
         $level1Elem = new Element();
         $level1Elem
             ->setEnumeration($levelEnum)
-            ->setName('ESO')
-            ->setPosition(0);
+            ->setName('ESO');
 
         $level2Elem = new Element();
         $level2Elem
             ->setEnumeration($levelEnum)
-            ->setName('FP')
-            ->setPosition(1);
+            ->setName('FP');
 
         /** @var Enumeration $courseEnum */
         $courseEnum = $this->getReference('enum-course');
@@ -58,14 +55,12 @@ class LoadTestProfileData extends EnvironmentOrderedAbstractFixture
         $course1Elem = new Element();
         $course1Elem
             ->setEnumeration($courseEnum)
-            ->setName('2ºESO')
-            ->setPosition(0);
+            ->setName('2ºESO');
 
         $course2Elem = new Element();
         $course2Elem
             ->setEnumeration($courseEnum)
-            ->setName('2ºDAW')
-            ->setPosition(0);
+            ->setName('2ºDAW');
 
         /** @var Enumeration $groupEnum */
         $groupEnum = $this->getReference('enum-group');
@@ -73,14 +68,12 @@ class LoadTestProfileData extends EnvironmentOrderedAbstractFixture
         $group1Elem = new Element();
         $group1Elem
             ->setEnumeration($groupEnum)
-            ->setName('2ºESO-A')
-            ->setPosition(0);
+            ->setName('2ºESO-A');
 
         $group2Elem = new Element();
         $group2Elem
             ->setEnumeration($groupEnum)
-            ->setName('2ºDAW-A')
-            ->setPosition(0);
+            ->setName('2ºDAW-A');
 
         /** @var Profile $profile */
         $profile = $this->getReference('prof-teacher');
