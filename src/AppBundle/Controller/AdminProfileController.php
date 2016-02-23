@@ -43,7 +43,7 @@ class AdminProfileController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $usersQuery = $em->createQuery('SELECT p FROM AticaCoreBundle:Profile p LEFT JOIN AticaCoreBundle:Module m WITH p.module = m LEFT JOIN AticaCoreBundle:Enumeration e WITH p.enumeration = e WHERE p.organization = :org OR p.organization IS NULL')
+        $usersQuery = $em->createQuery('SELECT p FROM AticaCoreBundle:Profile p LEFT JOIN AticaCoreBundle:Module m WITH p.module = m LEFT JOIN AticaCoreBundle:Enumeration e WITH p.enumeration = e WHERE p.organization = :org')
             ->setParameter('org', $this->get('app.user.extension')->getCurrentOrganization());
 
         $paginator  = $this->get('knp_paginator');
