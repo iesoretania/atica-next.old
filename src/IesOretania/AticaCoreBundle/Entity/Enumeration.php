@@ -72,6 +72,7 @@ class Enumeration
 
     /**
      * @ORM\ManyToOne(targetEntity="Organization")
+     * @ORM\JoinColumn(nullable=false)
      * @var Organization
      */
     protected $organization;

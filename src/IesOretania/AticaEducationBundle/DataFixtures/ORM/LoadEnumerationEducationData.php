@@ -26,6 +26,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use IesOretania\AticaCoreBundle\Entity\Attribute;
 use IesOretania\AticaCoreBundle\Entity\Enumeration;
 use IesOretania\AticaCoreBundle\Entity\Module;
+use IesOretania\AticaCoreBundle\Entity\Organization;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -38,12 +39,16 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
 
     public function load(ObjectManager $manager)
     {
+        /** @var Organization $org */
+        $org = $this->getReference('org-test');
+
         /** @var Module $module */
         $module = $this->getReference('mod-edu');
 
         // Enseñanzas
         $enumEducation = new Enumeration();
         $enumEducation
+            ->setOrganization($org)
             ->setModule($module)
             ->setExternal(false)
             ->setName('education')
@@ -55,6 +60,7 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
         // Etapas educativa (dependen de la enseñanza)
         $enumStage = new Enumeration();
         $enumStage
+            ->setOrganization($org)
             ->setModule($module)
             ->setExternal(false)
             ->setName('stage')
@@ -75,6 +81,7 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
         // Niveles educativos (dependen de la etapa)
         $enumLevel = new Enumeration();
         $enumLevel
+            ->setOrganization($org)
             ->setModule($module)
             ->setExternal(false)
             ->setName('level')
@@ -96,6 +103,7 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
         // Cursos del centro (dependen del nivel educativo)
         $enumCourse = new Enumeration();
         $enumCourse
+            ->setOrganization($org)
             ->setModule($module)
             ->setExternal(false)
             ->setName('course')
@@ -116,6 +124,7 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
         // Unidades del centro (dependen de un curso)
         $enumGroup = new Enumeration();
         $enumGroup
+            ->setOrganization($org)
             ->setModule($module)
             ->setExternal(false)
             ->setName('group')
@@ -136,6 +145,7 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
         // Departamentos del centro
         $enumDepartment = new Enumeration();
         $enumDepartment
+            ->setOrganization($org)
             ->setModule($module)
             ->setExternal(false)
             ->setName('department')
@@ -147,6 +157,7 @@ class LoadEnumerationEducationData extends AbstractFixture implements OrderedFix
         // Asignaturas/módulos (dependen del departamento y grupos)
         $enumSubject = new Enumeration();
         $enumSubject
+            ->setOrganization($org)
             ->setModule($module)
             ->setExternal(false)
             ->setName('subject')

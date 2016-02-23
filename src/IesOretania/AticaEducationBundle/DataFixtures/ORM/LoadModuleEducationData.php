@@ -23,7 +23,9 @@ namespace IesOretania\AticaEducationBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use IesOretania\AticaCoreBundle\Entity\Link;
 use IesOretania\AticaCoreBundle\Entity\Module;
+use IesOretania\AticaCoreBundle\Entity\Organization;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -36,6 +38,9 @@ class LoadModuleEducationData extends AbstractFixture implements OrderedFixtureI
 
     public function load(ObjectManager $manager)
     {
+        /** @var Organization $org */
+        $org = $this->getReference('org-test');
+
         $module = new Module();
         $module
             ->setName('edu')
@@ -47,6 +52,15 @@ class LoadModuleEducationData extends AbstractFixture implements OrderedFixtureI
         $this->setReference('mod-edu', $module);
 
         $manager->persist($module);
+
+        $link = new Link();
+        $link
+            ->setOrganization($org)
+            ->setModule($module)
+            ->setActive(true);
+
+        $manager->persist($link);
+
         $manager->flush();
     }
 

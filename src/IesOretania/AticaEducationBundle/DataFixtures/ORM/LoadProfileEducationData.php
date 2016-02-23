@@ -23,6 +23,7 @@ namespace IesOretania\AticaEducationBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use IesOretania\AticaCoreBundle\Entity\Organization;
 use IesOretania\AticaCoreBundle\Entity\Profile;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -36,12 +37,16 @@ class LoadProfileEducationData extends AbstractFixture implements OrderedFixture
 
     public function load(ObjectManager $manager)
     {
+        /** @var Organization $org */
+        $org = $this->getReference('org-test');
+
         $module = $this->getReference('mod-edu');
 
         $groupEnum = $this->getReference('enum-group');
 
         $profile = new Profile();
         $profile
+            ->setOrganization($org)
             ->setModule($module)
             ->setCode('student')
             ->setDescription('Alumnado del centro')
@@ -55,6 +60,7 @@ class LoadProfileEducationData extends AbstractFixture implements OrderedFixture
 
         $profile = new Profile();
         $profile
+            ->setOrganization($org)
             ->setModule($module)
             ->setCode('teacher')
             ->setDescription('Profesorado del centro')
@@ -70,6 +76,7 @@ class LoadProfileEducationData extends AbstractFixture implements OrderedFixture
 
         $profile = new Profile();
         $profile
+            ->setOrganization($org)
             ->setModule($module)
             ->setCode('head-department')
             ->setDescription('Jefatura de departamento')
@@ -85,6 +92,7 @@ class LoadProfileEducationData extends AbstractFixture implements OrderedFixture
 
         $profile = new Profile();
         $profile
+            ->setOrganization($org)
             ->setModule($module)
             ->setCode('head-studies')
             ->setDescription('Jefatura de estudios del centro')
@@ -98,6 +106,7 @@ class LoadProfileEducationData extends AbstractFixture implements OrderedFixture
 
         $profile = new Profile();
         $profile
+            ->setOrganization($org)
             ->setModule($module)
             ->setCode('deputy-head')
             ->setDescription('Vicedirección del centro')
@@ -111,6 +120,7 @@ class LoadProfileEducationData extends AbstractFixture implements OrderedFixture
 
         $profile = new Profile();
         $profile
+            ->setOrganization($org)
             ->setModule($module)
             ->setCode('headmaster')
             ->setDescription('Dirección del centro')
@@ -124,6 +134,7 @@ class LoadProfileEducationData extends AbstractFixture implements OrderedFixture
 
         $profile = new Profile();
         $profile
+            ->setOrganization($org)
             ->setModule($module)
             ->setCode('secretary')
             ->setDescription('Secretaría del centro')
@@ -137,6 +148,7 @@ class LoadProfileEducationData extends AbstractFixture implements OrderedFixture
 
         $profile = new Profile();
         $profile
+            ->setOrganization($org)
             ->setModule($module)
             ->setCode('tutor')
             ->setDescription('Tutor de un grupo del centro')
@@ -150,6 +162,7 @@ class LoadProfileEducationData extends AbstractFixture implements OrderedFixture
 
         $profile = new Profile();
         $profile
+            ->setOrganization($org)
             ->setModule($module)
             ->setCode('caretaker')
             ->setDescription('Miembros de la conserjería del centro')
@@ -163,6 +176,7 @@ class LoadProfileEducationData extends AbstractFixture implements OrderedFixture
 
         $profile = new Profile();
         $profile
+            ->setOrganization($org)
             ->setModule($module)
             ->setCode('officeworker')
             ->setDescription('Oficina administrativa del centro')

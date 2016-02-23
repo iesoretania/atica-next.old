@@ -23,6 +23,7 @@ namespace IesOretania\AticaFctBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use IesOretania\AticaCoreBundle\Entity\Organization;
 use IesOretania\AticaCoreBundle\Entity\Profile;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -36,10 +37,14 @@ class LoadProfileFctData extends AbstractFixture implements OrderedFixtureInterf
 
     public function load(ObjectManager $manager)
     {
+        /** @var Organization $org */
+        $org = $this->getReference('org-test');
+
         $module = $this->getReference('mod-fct');
 
         $profile = new Profile();
         $profile
+            ->setOrganization($org)
             ->setModule($module)
             ->setCode('manager')
             ->setDescription('Persona responsable de la FCT')
@@ -53,6 +58,7 @@ class LoadProfileFctData extends AbstractFixture implements OrderedFixtureInterf
 
         $profile = new Profile();
         $profile
+            ->setOrganization($org)
             ->setModule($module)
             ->setCode('student')
             ->setDescription('Alumno de FCT')
@@ -66,6 +72,7 @@ class LoadProfileFctData extends AbstractFixture implements OrderedFixtureInterf
 
         $profile = new Profile();
         $profile
+            ->setOrganization($org)
             ->setModule($module)
             ->setCode('accounter')
             ->setDescription('Responsable económico de la FCT')
@@ -79,6 +86,7 @@ class LoadProfileFctData extends AbstractFixture implements OrderedFixtureInterf
 
         $profile = new Profile();
         $profile
+            ->setOrganization($org)
             ->setModule($module)
             ->setCode('teacher-tutor')
             ->setDescription('Tutor docente de alumnado de FCT')
@@ -92,6 +100,7 @@ class LoadProfileFctData extends AbstractFixture implements OrderedFixtureInterf
 
         $profile = new Profile();
         $profile
+            ->setOrganization($org)
             ->setModule($module)
             ->setCode('work-tutor')
             ->setDescription('Tutor laboral de alumnado de FCT')
@@ -105,6 +114,7 @@ class LoadProfileFctData extends AbstractFixture implements OrderedFixtureInterf
 
         $profile = new Profile();
         $profile
+            ->setOrganization($org)
             ->setModule($module)
             ->setCode('workcenter-manager')
             ->setDescription('Gestor del centro de trabajo')

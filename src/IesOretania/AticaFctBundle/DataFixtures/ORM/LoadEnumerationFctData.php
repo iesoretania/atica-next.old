@@ -25,6 +25,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use IesOretania\AticaCoreBundle\Entity\Enumeration;
 use IesOretania\AticaCoreBundle\Entity\Module;
+use IesOretania\AticaCoreBundle\Entity\Organization;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -37,11 +38,15 @@ class LoadEnumerationFctData extends AbstractFixture implements OrderedFixtureIn
 
     public function load(ObjectManager $manager)
     {
+        /** @var Organization $org */
+        $org = $this->getReference('org-test');
+
         /** @var Module $module */
         $module = $this->getReference('mod-fct');
 
         $enumeration = new Enumeration();
         $enumeration
+            ->setOrganization($org)
             ->setModule($module)
             ->setExternal(true)
             ->setName('workcenter')

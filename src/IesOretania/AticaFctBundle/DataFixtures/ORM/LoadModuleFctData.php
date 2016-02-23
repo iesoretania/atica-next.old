@@ -24,7 +24,9 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use IesOretania\AticaCoreBundle\Entity\Dependency;
+use IesOretania\AticaCoreBundle\Entity\Link;
 use IesOretania\AticaCoreBundle\Entity\Module;
+use IesOretania\AticaCoreBundle\Entity\Organization;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -37,6 +39,9 @@ class LoadModuleFctData extends AbstractFixture implements OrderedFixtureInterfa
 
     public function load(ObjectManager $manager)
     {
+        /** @var Organization $org */
+        $org = $this->getReference('org-test');
+
         $module = new Module();
         $module
             ->setName('fct')
@@ -57,6 +62,15 @@ class LoadModuleFctData extends AbstractFixture implements OrderedFixtureInterfa
 
         $manager->persist($dependency);
         $manager->persist($module);
+
+        $link = new Link();
+        $link
+            ->setOrganization($org)
+            ->setModule($module)
+            ->setActive(true);
+
+        $manager->persist($link);
+
         $manager->flush();
     }
 

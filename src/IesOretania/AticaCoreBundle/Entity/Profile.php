@@ -97,6 +97,7 @@ class Profile
     /**
      * @Gedmo\SortableGroup
      * @ORM\ManyToOne(targetEntity="Organization")
+     * @ORM\JoinColumn(nullable=false)
      * @var Organization
      */
     protected $organization;
