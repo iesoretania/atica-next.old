@@ -45,24 +45,28 @@ class SecurityListener
 
         $em = $this->doctrine->getManager();
 
-        $membershipCount = $em->getRepository('AticaCoreBundle:Membership')
-            ->createQueryBuilder('m')
-            ->select('count(m.organization)')
-            ->andWhere('m.user = :user')
-            ->setParameter('user', $user)
-            ->getQuery()
-            ->getSingleScalarResult();
+        if ($user->isGlobalAdministrator()) {
+            $this->session->set('_security.organization.target_path', $this->session->get('_security.main.target_path'));
+        } else {
+            $membershipCount = $em->getRepository('AticaCoreBundle:Membership')
+                ->createQueryBuilder('m')
+                ->select('count(m.organization)')
+                ->andWhere('m.user = :user')
+                ->setParameter('user', $user)
+                ->getQuery()
+                ->getSingleScalarResult();
 
-        switch($membershipCount) {
-            case 0:
-                throw new CustomUserMessageAuthenticationException('form.login.error.no_membership');
-            case 1:
-                /** @var Membership $membership */
-                $membership = $em->getRepository('AticaCoreBundle:Membership')->findOneBy(['user' => $user]);
-                $this->session->set('organization_id', $membership->getOrganization()->getId());
-                break;
-            default:
-                $this->session->set('_security.organization.target_path', $this->session->get('_security.main.target_path'));
+            switch($membershipCount) {
+                case 0:
+                    throw new CustomUserMessageAuthenticationException('form.login.error.no_membership');
+                case 1:
+                    /** @var Membership $membership */
+                    $membership = $em->getRepository('AticaCoreBundle:Membership')->findOneBy(['user' => $user]);
+                    $this->session->set('organization_id', $membership->getOrganization()->getId());
+                    break;
+                default:
+                    $this->session->set('_security.organization.target_path', $this->session->get('_security.main.target_path'));
+            }
         }
     }
 }

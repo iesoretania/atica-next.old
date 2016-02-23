@@ -2,7 +2,8 @@
 
 namespace AppBundle\Controller;
 
-use IesOretania\AticaCoreBundle\Entity\Membership;
+use IesOretania\AticaCoreBundle\Entity\Organization;
+use IesOretania\AticaCoreBundle\Entity\OrganizationRepository;
 use IesOretania\AticaCoreBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -43,34 +44,35 @@ class SecurityController extends Controller
         /** @var Session $session */
         $session = $this->get('session');
 
+        $data = ['organization' => $this->getUser()->getDefaultOrganization()];
+
+        $form = $this->createFormBuilder($data)
+            ->add('organization', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
+                'expanded' => !$this->getUser()->isGlobalAdministrator(),
+                'class' => 'IesOretania\AticaCoreBundle\Entity\Organization',
+                'query_builder' => function(OrganizationRepository $er) {
+                    return $er->getMembershipByUserQueryBuilder($this->getUser());
+                }
+            ])
+            ->getForm();
+
+        $form->handleRequest($request);
+
         // ¿se ha seleccionado una organización?
-        if ($request->isMethod('POST')) {
+        if ($form->isValid() && $form->isSubmitted()) {
 
-            // comprobar que está asociada al usuario
-            $em = $this->getDoctrine()->getManager();
+            $session->set('organization_id', $form->get('organization')->getData()->getId());
+            $this->getUser()->setDefaultOrganization($form->get('organization')->getData());
+            $this->getDoctrine()->getManager()->flush();
 
-            /**
-             * @var Membership|null
-             */
-            $membership = $em->getRepository('AticaCoreBundle:Membership')->findOneBy(
-                [
-                    'user' => $this->getUser(),
-                    'organization' => $em->getRepository('AticaCoreBundle:Organization')->find($request->get('organization'))
-                ]
-            );
-
-            // ¿es correcta?
-            if ($membership) {
-                $session->set('organization_id', $membership->getOrganization()->getId());
-
-                $url = $session->get('_security.organization.target_path', $this->generateUrl('frontpage'));
-                $session->remove('_security.organization.target_path');
-                return new RedirectResponse($url);
-            }
+            $url = $session->get('_security.organization.target_path', $this->generateUrl('frontpage'));
+            $session->remove('_security.organization.target_path');
+            return new RedirectResponse($url);
         }
 
-        return $this->render(
-            'security/login_organization.html.twig'
+        return $this->render('security/login_organization.html.twig', [
+                'form' => $form->createView()
+            ]
         );
     }
 
