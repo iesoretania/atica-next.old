@@ -20,7 +20,6 @@
 
 namespace AppBundle\Tests\Controller;
 
-use Monolog\ErrorHandler;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class SecurityControllerTest extends WebTestCase
@@ -43,7 +42,7 @@ class SecurityControllerTest extends WebTestCase
         $client->request('GET', $loginUrl);
         $form = $client->getCrawler()->selectButton('login')->form();
         $form->setValues([
-                '_username' => 'admin@example.com',
+                '_username' => 'admin',
                 '_password' => 'wrong'
             ]
         );
@@ -63,7 +62,7 @@ class SecurityControllerTest extends WebTestCase
         $client->request('GET', $loginUrl);
         $form = $client->getCrawler()->selectButton('login')->form();
         $form->setValues([
-                '_username' => 'admin@example.com',
+                '_username' => 'admin',
                 '_password' => 'admin'
             ]
         );
