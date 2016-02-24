@@ -36,11 +36,11 @@ class EnumerationType extends AbstractType
                 ->add('name', null, [
                     'label' => 'form.name',
                     'required' => true,
-                    'read_only' => true
+                    'disabled' => true
                 ])
                 ->add('module', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                     'label' => 'form.module',
-                    'read_only' => true,
+                    'disabled' => true,
                     'property_path' => 'module.description'
                 ]);
         }
