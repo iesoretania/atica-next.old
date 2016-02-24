@@ -21,17 +21,19 @@
 namespace AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use IesOretania\AticaCoreBundle\Entity\Profile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/admin")
+ * @Route("/admin/perfiles")
  */
 class AdminProfileController extends Controller
 {
     /**
-     * @Route("/perfiles", name="admin_profiles", methods={"GET"})
+     * @Route("/", name="admin_profiles", methods={"GET"})
      */
     public function profilesIndexAction(Request $request)
     {
@@ -66,5 +68,49 @@ class AdminProfileController extends Controller
                 'title' => null,
                 'pagination' => $pagination
             ]);
+    }
+
+    /**
+     * @Route("/nuevo", name="admin_profile_new", methods={"GET", "POST"} )
+     * @Route("/{profile}", name="admin_profile_form", methods={"GET", "POST"}, requirements={"profile": "\d+"} )
+     * @Security("has_role('ROLE_ADMIN') or is_granted('manage', profile)")
+     */
+    public function editProfileAction(Request $request, Profile $profile = null)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if (null === $profile) {
+            $profile = new Profile();
+            $profile->setOrganization($this->get('app.user.extension')->getCurrentOrganization());
+
+            $em->persist($profile);
+        }
+        $form = $this->createForm('IesOretania\AticaCoreBundle\Form\Type\ProfileType', $profile);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // Guardar el perfil en la base de datos
+            $em->flush();
+            $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'profile'));
+
+            return $this->redirectToRoute('admin_profiles');
+        }
+
+        $title = $profile->getNameNeutral() ?: $this->get('translator')->trans('profile.new', [], 'admin');
+
+        $breadcrumb = [
+            ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
+            ['caption' => 'menu.admin.manage.profiles', 'icon' => 'street-view', 'path' => 'admin_profiles'],
+            ['fixed' => $title]
+        ];
+
+        return $this->render('admin/form_profile.html.twig', [
+            'form' => $form->createView(),
+            'breadcrumb' => $breadcrumb,
+            'title' => $title,
+            'profile' => $profile,
+            'new' => (null === $profile->getId())
+        ]);
     }
 }

@@ -41,6 +41,13 @@ services:
         tags:
             - { name: security.voter }
 
+    app.entity.profile_voter:
+        class: AppBundle\Security\EnumerationVoter
+        autowire: true
+        public: false
+        tags:
+            - { name: security.voter }
+
     app.form.extended_element:
         class: AppBundle\Form\Type\ExtendedElementType
         autowire: true

@@ -1,0 +1,20 @@
+{% trans_default_domain 'profile' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+
+{% block content %}
+    {% if profile.module %}
+        <div class="alert alert-warning">{{ 'warning.from_module'|trans }}</div>
+    {% endif %}
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ m.start_button }}
+        {% if not new %}
+            {{ m.submit_button('submit', 'form.submit'|trans, 'check') }}
+        {% else %}
+            {{ m.submit_button('submit', 'form.create'|trans, 'plus') }}
+        {% endif %}
+        {{ m.end_button }}
+    {{ form_end(form) }}
+    {{ m.link_button(path('admin_profiles'), 'form.back'|trans, 'arrow-left', 'btn-default') }}
+{% endblock %}

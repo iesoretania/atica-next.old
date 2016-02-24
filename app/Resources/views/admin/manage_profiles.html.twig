@@ -20,9 +20,11 @@
                 <td>{{ profile.enumeration ? profile.enumeration.description : ('profile.none'|trans) }}</td>
                 <td>{{ profile.description | nl2br }}</td>
                 <td class="text-center">
+                    {% if is_granted('ROLE_ADMIN') or profile.module is null %}
                     <div class="btn-group btn-group-xs btn-block" role="group">
-                        <a href="" class="btn btn-default btn-xs btn-block"><i class="fa fa-pencil"></i> {{ 'form.edit' | trans }}</a>
+                        <a href="{{ path('admin_profile_form', {'profile': profile.id}) }}" class="btn btn-default btn-xs btn-block"><i class="fa fa-pencil"></i> {{ 'form.edit' | trans }}</a>
                     </div>
+                    {% endif %}
                 </td>
             </tr>
             {% endfor %}
@@ -37,5 +39,5 @@
         {{ knp_pagination_render(pagination) }}
     </div>
     {{ m.link_button(path('admin_menu'), 'form.back'|trans, 'arrow-left', 'btn-default') }}
-    {{ m.link_button(path('admin_new_organization'), 'profile.new'|trans, 'plus', 'btn-success') }}
+    {{ m.link_button(path('admin_profile_new'), 'profile.new'|trans, 'plus', 'btn-success') }}
 {% endblock %}
