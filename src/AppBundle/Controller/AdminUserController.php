@@ -31,12 +31,12 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/admin")
+ * @Route("/admin/usuarios")
  */
 class AdminUserController extends Controller
 {
     /**
-     * @Route("/usuarios", name="admin_users", methods={"GET"})
+     * @Route("/", name="admin_users", methods={"GET"})
      */
     public function usersIndexAction(Request $request)
     {
@@ -93,33 +93,35 @@ class AdminUserController extends Controller
     }
 
     /**
-     * @Route("/usuario/nuevo", name="admin_new_user", methods={"GET", "POST"})
-     * @Route("/usuario/{user}", name="admin_user_form", methods={"GET", "POST"})
+     * @Route("/nuevo", name="admin_user_new", methods={"GET", "POST"})
+     * @Route("/{user}", name="admin_user_form", methods={"GET", "POST"}, requirements={"profile": "\d+"})
      */
-    public function indexAction(User $user = null, Request $request)
+    public function formAction(User $user = null, Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
         if (null === $user) {
             $user = new User();
             $person = new Person();
             $person->setDisplayName('');
             $user->setPerson($person);
+
+            $membership = new Membership();
+            $membership
+                ->setOrganization($this->get('app.user.extension')->getCurrentOrganization())
+                ->setUser($user)
+                ->setLocalAdministrator(false);
+            $em->persist($user->getPerson());
+            $em->persist($user);
+            $em->persist($membership);
+
             $new = true;
         } else {
             $new = false;
+            $this->denyAccessUnlessGranted('manage', $user);
         }
 
         $me = ($user->getId() === $this->getUser()->getId());
-
-        // permitir acceso si:
-        // - soy yo
-        // o
-        // - si es administrador global
-        // o
-        // - si es administrador local y el usuario pertenece a la organización
-        if (!$me && !$this->isGranted('ROLE_ADMIN')
-            && (!$this->get('app.user.extension')->isUserLocalAdministrator() || !$this->get('app.user.extension')->getUserMembership($user))) {
-            throw $this->createAccessDeniedException();
-        }
 
         $form = $this->createForm('IesOretania\AticaCoreBundle\Form\Type\UserType', $user, [
             'admin' => $this->isGranted('ROLE_ADMIN'),
@@ -146,17 +148,6 @@ class AdminUserController extends Controller
 
             // Probar a guardar los cambios
             try {
-                $em = $this->getDoctrine()->getManager();
-                if ($new) {
-                    $membership = new Membership();
-                    $membership
-                        ->setOrganization($this->get('app.user.extension')->getCurrentOrganization())
-                        ->setUser($user)
-                        ->setLocalAdministrator(false);
-                    $em->persist($user->getPerson());
-                    $em->persist($user);
-                    $em->persist($membership);
-                }
                 $em->flush();
                 $this->addFlash('success', $message);
                 return new RedirectResponse(
