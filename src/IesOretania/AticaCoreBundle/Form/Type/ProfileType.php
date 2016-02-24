@@ -43,8 +43,31 @@ class ProfileType extends AbstractType
             $profile = $event->getData();
             $form = $event->getForm();
 
+            $form
+                ->add('enumeration', null, [
+                    'label' => 'form.enumeration',
+                    'translation_domain' => null,
+                    'placeholder' => 'form.enumeration_placeholder',
+                    'choice_label' => function(Enumeration $enum) {
+                        return $enum->getDescription();
+                    },
+                    'query_builder' => function(EntityRepository $er) use ($profile) {
+                        return $er->createQueryBuilder('q')
+                            ->where('q.organization = :org')
+                            ->setParameter('org', $profile->getOrganization())
+                            ->orderBy('q.description');
+                    },
+                    'required' => false,
+                    'disabled' => (null !== $profile->getModule())
+                ]);
+
             if (null !== $profile->getModule()) {
                 $form
+                    ->add('module', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+                        'label' => 'form.module',
+                        'disabled' => true,
+                        'property_path' => 'module.description'
+                    ])
                     ->add('code', null, [
                         'label' => 'form.code',
                         'required' => false,
@@ -65,19 +88,6 @@ class ProfileType extends AbstractType
             ])
             ->add('initials', null, [
                 'label' => 'form.initials',
-            ])
-            ->add('enumeration', null, [
-                'label' => 'form.enumeration',
-                'translation_domain' => null,
-                'placeholder' => 'form.enumeration_placeholder',
-                'choice_label' => function(Enumeration $enum) {
-                    return $enum->getDescription();
-                },
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('q')
-                        ->orderBy('q.description');
-                },
-                'required' => false
             ])
             ->add('description', null, [
                 'label' => 'form.description',

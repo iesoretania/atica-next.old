@@ -20,11 +20,9 @@
                 <td>{{ profile.enumeration ? profile.enumeration.description : ('profile.none'|trans) }}</td>
                 <td>{{ profile.description | nl2br }}</td>
                 <td class="text-center">
-                    {% if is_granted('ROLE_ADMIN') or profile.module is null %}
                     <div class="btn-group btn-group-xs btn-block" role="group">
                         <a href="{{ path('admin_profile_form', {'profile': profile.id}) }}" class="btn btn-default btn-xs btn-block"><i class="fa fa-pencil"></i> {{ 'form.edit' | trans }}</a>
                     </div>
-                    {% endif %}
                 </td>
             </tr>
             {% endfor %}

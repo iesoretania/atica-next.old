@@ -1,4 +1,5 @@
 form.code: Código interno
+form.module: Módulo asociado
 form.name_neutral: Nombre genérico
 form.name_male: Nombre masculino
 form.name_female: Nombre femenino
@@ -8,6 +9,7 @@ form.enumeration_placeholder: Ninguna
 form.description: Descripción
 
 form.create: Crear perfil
+form.delete: Eliminar perfil
 form.submit: Guardar cambios
 
 form.back: Volver a la gestión de perfiles
@@ -17,5 +19,5 @@ alert.deleted: Perfil eliminado con éxito
 alert.not_deleted: No se ha podido eliminar el perfil. Compruebe que no tenga datos asociados.
 
 warning.from_module: >
-    Este perfil forma parte de un módulo de la aplicación. Los cambios que se hagan en él se aplicarán
-    a todas las organizaciones de la aplicación.
+    Este perfil forma parte de un módulo de la aplicación. Para eliminarlo será necesario desactivar
+    el módulo para la organización.

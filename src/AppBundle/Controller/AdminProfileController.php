@@ -23,7 +23,6 @@ namespace AppBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use IesOretania\AticaCoreBundle\Entity\Profile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -73,7 +72,6 @@ class AdminProfileController extends Controller
     /**
      * @Route("/nuevo", name="admin_profile_new", methods={"GET", "POST"} )
      * @Route("/{profile}", name="admin_profile_form", methods={"GET", "POST"}, requirements={"profile": "\d+"} )
-     * @Security("is_granted('manage', profile)")
      */
     public function editProfileAction(Request $request, Profile $profile = null)
     {
@@ -84,6 +82,9 @@ class AdminProfileController extends Controller
 
             $em->persist($profile);
         }
+
+        $this->denyAccessUnlessGranted('manage', $profile);
+
         $form = $this->createForm('IesOretania\AticaCoreBundle\Form\Type\ProfileType', $profile);
 
         $form->handleRequest($request);
