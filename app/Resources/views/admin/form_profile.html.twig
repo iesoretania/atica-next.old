@@ -9,7 +9,7 @@
     {{ form_start(form) }}
         {{ form_widget(form) }}
         {{ m.start_button }}
-        {% if not new %}
+        {% if profile.id is not null %}
             {{ m.submit_button('submit', 'form.submit'|trans, 'check') }}
         {% else %}
             {{ m.submit_button('submit', 'form.create'|trans, 'plus') }}

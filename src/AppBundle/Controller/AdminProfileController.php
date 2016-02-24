@@ -73,7 +73,7 @@ class AdminProfileController extends Controller
     /**
      * @Route("/nuevo", name="admin_profile_new", methods={"GET", "POST"} )
      * @Route("/{profile}", name="admin_profile_form", methods={"GET", "POST"}, requirements={"profile": "\d+"} )
-     * @Security("has_role('ROLE_ADMIN') or is_granted('manage', profile)")
+     * @Security("is_granted('manage', profile)")
      */
     public function editProfileAction(Request $request, Profile $profile = null)
     {
@@ -109,8 +109,7 @@ class AdminProfileController extends Controller
             'form' => $form->createView(),
             'breadcrumb' => $breadcrumb,
             'title' => $title,
-            'profile' => $profile,
-            'new' => (null === $profile->getId())
+            'profile' => $profile
         ]);
     }
 }

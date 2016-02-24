@@ -23,7 +23,9 @@ namespace AppBundle\Security;
 
 use Doctrine\ORM\EntityManager;
 use IesOretania\AticaCoreBundle\Entity\Profile;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class ProfileVoter extends Voter
@@ -32,8 +34,14 @@ class ProfileVoter extends Voter
 
     private $em;
 
-    public function __construct(EntityManager $em) {
+    private $decisionManager;
+
+    private $session;
+
+    public function __construct(EntityManager $em, AccessDecisionManagerInterface $decisionManager, SessionInterface $session) {
         $this->em = $em;
+        $this->decisionManager = $decisionManager;
+        $this->session = $session;
     }
 
     /**
@@ -61,13 +69,18 @@ class ProfileVoter extends Voter
             return false;
         }
 
+        // los administradores globales siempre tienen permiso
+        if ($this->decisionManager->decide($token, ['ROLE_ADMIN'])) {
+            return true;
+        }
+
         $user = $token->getUser();
 
         // obtener pertenencia del usuario a la organización del perfil
         $membership = $this->em->getRepository('AticaCoreBundle:Membership')->findOneBy(
             [
                 'user' => $user,
-                'organization' => $subject->getOrganization()
+                'organization' => $this->session->get('organization_id')
             ]
         );
 
