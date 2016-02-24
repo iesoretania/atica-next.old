@@ -175,24 +175,18 @@ class AdminUserController extends Controller
 
 
     /**
-     * @Route("/usuario/desasociar/{user}", name="admin_delete_user_membership", methods={"GET", "POST"})
+     * @Route("/desasociar/{user}", name="admin_delete_user_membership", methods={"GET", "POST"})
      */
     public function deleteMembershipAction(User $user, Request $request)
     {
+        $this->denyAccessUnlessGranted('manage', $user);
+
         $em = $this->getDoctrine()->getManager();
         $membership = $em->getRepository('AticaCoreBundle:Membership')
             ->findOneBy([
                 'user' => $user,
                 'organization' => $this->get('app.user.extension')->getCurrentOrganization()
             ]);
-
-        // permitir operación si:
-        // - la pertenencia existe
-        // - y es administrador local o global
-        // - y no es el propio usuario
-        if (!$membership || !$this->get('app.user.extension')->isUserLocalAdministrator() || $user === $this->getUser()) {
-            throw $this->createAccessDeniedException();
-        }
 
         if ('POST' === $request->getMethod() && $request->request->has('unlink')) {
             // Eliminar la pertenencia de la base de datos
@@ -208,14 +202,16 @@ class AdminUserController extends Controller
             return new RedirectResponse($url);
         }
 
+        $title = $this->get('translator')->trans('user.unlink', [], 'admin');
+
         return $this->render(':admin:delete_membership.html.twig', [
             'breadcrumb' => [
                 ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
                 ['caption' => 'menu.admin.manage.users', 'icon' => 'users', 'path' => 'admin_users'],
                 ['fixed' => (string) $user],
-                ['caption' => $this->get('translator')->trans('user.unlink', [], 'admin')]
+                ['fixed' => $title]
             ],
-            'title' => null,
+            'title' => $title,
             'user' => $user
         ]);
     }

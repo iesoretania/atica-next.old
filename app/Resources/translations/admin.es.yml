@@ -26,6 +26,7 @@ user.title_pending: Usuarios con invitaciones pendientes
 user.unlink: Desasociar de la organización
 user.unlinked: Usuario desasociado de la organización con éxito
 user.unlink_failed: No se ha podido desasociar al usuario de la organización
+user.back: Volver al listado de usuario
 user.delete_membership_confirm: >
     ¡ATENCIÓN! El usuario seguirá registrado en la aplicación pero no podrá acceder a la organización. Esta operación
     no puede deshacerse. Si posteriormente se desea reincorporar al usuario será necesario que éste vuelva a confirmar
