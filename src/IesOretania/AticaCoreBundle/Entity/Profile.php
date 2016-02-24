@@ -63,7 +63,7 @@ class Profile
     protected $nameFemale;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
     protected $description;
