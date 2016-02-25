@@ -1,0 +1,9 @@
+parameters:
+
+
+services:
+    atica.core_bundle.menu_builder:
+        class: IesOretania\AticaCoreBundle\Service\CoreMenuBuilderService
+        autowire: true
+        tags:
+            -  { name: atica.menu_builder }
