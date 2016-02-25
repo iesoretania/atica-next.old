@@ -37,4 +37,9 @@ class OrganizationRepository extends EntityRepository
             ->setParameter('user', $user)
             ->orderBy('o.name');
     }
+
+    public function count() {
+        $query = $this->createQueryBuilder('o')->select('count(o)')->getQuery();
+        return $query->getSingleScalarResult();
+    }
 }

@@ -46,7 +46,12 @@ class SecurityListener
         $em = $this->doctrine->getManager();
 
         if ($user->isGlobalAdministrator()) {
-            $this->session->set('_security.organization.target_path', $this->session->get('_security.main.target_path'));
+            $organizationCount = $em->getRepository('AticaCoreBundle:Organization')->count();
+            if ($organizationCount > 1) {
+                $this->session->set('_security.organization.target_path', $this->session->get('_security.main.target_path'));
+            } else {
+                $this->session->set('organization_id', $em->getRepository('AticaCoreBundle:Organization')->findOneBy([]));
+            }
         } else {
             $membershipCount = $em->getRepository('AticaCoreBundle:Membership')
                 ->createQueryBuilder('m')
