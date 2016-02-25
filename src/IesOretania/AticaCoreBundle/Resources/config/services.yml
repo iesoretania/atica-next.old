@@ -7,7 +7,7 @@ services:
         autowire: true
 
     atica.core_bundle.menu:
-        class: IesOretania\AticaCoreBundle\Service\CoreMenuService
+        class: IesOretania\AticaCoreBundle\Service\CoreMenu
         arguments: ['@atica.core_bundle.user.extension']
         tags:
             -  { name: atica_core.menu_builder }
