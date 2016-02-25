@@ -1,0 +1,9 @@
+parameters:
+
+
+services:
+    atica.education.menu:
+        class: IesOretania\AticaEducationBundle\Service\EducationMenu
+        arguments: ['@atica.core_bundle.user.extension']
+        tags:
+            -  { name: atica_core.menu_builder }
