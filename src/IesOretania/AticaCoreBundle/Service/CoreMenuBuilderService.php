@@ -46,17 +46,75 @@ class CoreMenuBuilderService implements MenuBuilderInterface
         $menu = new MenuItem();
         $menu
             ->setName('admin')
-            ->setDescription('menu.manage')
-            ->setIcon('wrench')
-            ->setDescription('menu.manage')
-            ->setRouteName('admin_menu');
+            ->setRouteName('admin_menu')
+            ->setCaption('menu.manage')
+            ->setDescription('menu.manage.detail')
+            ->setColor('teal')
+            ->setIcon('wrench');
 
         $item = new MenuItem();
         $item
             ->setName('admin.organization')
-            ->setDescription($isLocalAdministrator ? 'menu.admin.manage.org' : 'menu.admin.manage.orgs')
             ->setRouteName('admin_organizations')
-            ->setColor('amber');
+            ->setRouteParams($isLocalAdministrator ? ['organization' => $this->userExtension->getCurrentOrganization()->getId] : [])
+            ->setCaption($isLocalAdministrator ? 'menu.admin.manage.org' : 'menu.admin.manage.orgs')
+            ->setDescription($isLocalAdministrator ? 'menu.admin.manage.org.detail' : 'menu.admin.manage.orgs.detail')
+            ->setColor('amber')
+            ->setIcon('bank');
+
+        $menu->addChild($item);
+
+        $item = new MenuItem();
+        $item
+            ->setName('admin.stats')
+            ->setRouteName('frontpage')
+            ->setCaption('menu.admin.stats')
+            ->setDescription('menu.admin.stats.detail')
+            ->setColor('orange')
+            ->setIcon('pie-chart');
+
+        $menu->addChild($item);
+
+        $item = new MenuItem();
+        $item
+            ->setName('admin.users')
+            ->setRouteName('admin_users')
+            ->setCaption('menu.admin.manage.users')
+            ->setDescription('menu.admin.manage.users.detail')
+            ->setColor('magenta')
+            ->setIcon('users');
+
+        $menu->addChild($item);
+
+        $item = new MenuItem();
+        $item
+            ->setName('admin.profiles')
+            ->setRouteName('admin_profiles')
+            ->setCaption('menu.admin.manage.profiles')
+            ->setDescription('menu.admin.manage.profiles.detail')
+            ->setColor('green')
+            ->setIcon('street-view');
+
+        $menu->addChild($item);
+
+        $item = new MenuItem();
+        $item
+            ->setName('admin.enumerations')
+            ->setRouteName('admin_enumerations')
+            ->setCaption('menu.admin.manage.enumerations')
+            ->setDescription('menu.admin.manage.enumerations.detail')
+            ->setColor('emerald')
+            ->setIcon('list-ol');
+
+        $menu->addChild($item);
+        $item = new MenuItem();
+        $item
+            ->setName('admin.modules')
+            ->setRouteName('frontpage')
+            ->setCaption('menu.admin.manage.modules')
+            ->setDescription('menu.admin.manage.modules.detail')
+            ->setColor('cyan')
+            ->setIcon('cubes');
 
         $menu->addChild($item);
 

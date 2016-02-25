@@ -32,12 +32,22 @@ class MenuItem
     /**
      * @var string
      */
+    protected $caption;
+
+    /**
+     * @var string
+     */
     protected $description;
 
     /**
      * @var string
      */
     protected $routeName;
+
+    /**
+     * @var array
+     */
+    protected $routeParams = [];
 
     /**
      * @var string
@@ -75,6 +85,24 @@ class MenuItem
     /**
      * @return string
      */
+    public function getCaption()
+    {
+        return $this->caption;
+    }
+
+    /**
+     * @param string $caption
+     * @return MenuItem
+     */
+    public function setCaption($caption)
+    {
+        $this->caption = $caption;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getDescription()
     {
         return $this->description;
@@ -105,6 +133,24 @@ class MenuItem
     public function setRouteName($routeName)
     {
         $this->routeName = $routeName;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRouteParams()
+    {
+        return $this->routeParams;
+    }
+
+    /**
+     * @param mixed $routeParams
+     * @return MenuItem
+     */
+    public function setRouteParams($routeParams)
+    {
+        $this->routeParams = $routeParams;
         return $this;
     }
 
