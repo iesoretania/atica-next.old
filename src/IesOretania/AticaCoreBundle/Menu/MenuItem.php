@@ -65,6 +65,14 @@ class MenuItem
     protected $children;
 
     /**
+     * MenuItem constructor
+     */
+    public function __construct()
+    {
+        $this->children = new ArrayCollection();
+    }
+
+    /**
      * @return string
      */
     public function getName()

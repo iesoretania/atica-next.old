@@ -18,18 +18,32 @@
   along with this program.  If not, see [http://www.gnu.org/licenses/].
 */
 
-namespace AppBundle;
+namespace AppBundle\DependencyInjection\Compiler;
 
-use AppBundle\DependencyInjection\Compiler\MenuCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\Reference;
 
-class AppBundle extends Bundle
+class MenuCompilerPass implements CompilerPassInterface
 {
-    public function build(ContainerBuilder $container)
+    public function process(ContainerBuilder $container)
     {
-        parent::build($container);
+        if (!$container->has('app.menu_builders_chain')) {
+            return;
+        }
 
-        $container->addCompilerPass(new MenuCompilerPass());
+        $definition = $container->findDefinition(
+            'app.menu_builders_chain'
+        );
+
+        $taggedServices = $container->findTaggedServiceIds(
+            'atica_core.menu_builder'
+        );
+        foreach ($taggedServices as $id => $tags) {
+            $definition->addMethodCall(
+                'addMenuBuilder',
+                array(new Reference($id))
+            );
+        }
     }
 }

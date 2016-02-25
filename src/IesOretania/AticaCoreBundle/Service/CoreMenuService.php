@@ -23,7 +23,7 @@ namespace IesOretania\AticaCoreBundle\Service;
 use IesOretania\AticaCoreBundle\Menu\MenuItem;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class CoreMenuBuilderService implements MenuBuilderInterface
+class CoreMenuService implements MenuBuilderInterface
 {
     private $userExtension;
 
@@ -56,7 +56,7 @@ class CoreMenuBuilderService implements MenuBuilderInterface
         $item
             ->setName('admin.organization')
             ->setRouteName('admin_organizations')
-            ->setRouteParams($isLocalAdministrator ? ['organization' => $this->userExtension->getCurrentOrganization()->getId] : [])
+            ->setRouteParams($isLocalAdministrator ? ['organization' => $this->userExtension->getCurrentOrganization()] : [])
             ->setCaption($isLocalAdministrator ? 'menu.admin.manage.org' : 'menu.admin.manage.orgs')
             ->setDescription($isLocalAdministrator ? 'menu.admin.manage.org.detail' : 'menu.admin.manage.orgs.detail')
             ->setColor('amber')
