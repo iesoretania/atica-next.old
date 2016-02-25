@@ -1,0 +1,9 @@
+parameters:
+
+
+services:
+    atica.fct.menu:
+        class: IesOretania\AticaFctBundle\Service\FctMenu
+        arguments: ['@atica.core_bundle.user.extension']
+        tags:
+            -  { name: atica_core.menu_builder }
