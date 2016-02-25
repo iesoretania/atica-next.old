@@ -20,33 +20,22 @@
 
 namespace IesOretania\AticaCoreBundle\Service;
 
-use Doctrine\ORM\EntityManager;
 use IesOretania\AticaCoreBundle\Menu\MenuItem;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class CoreMenuBuilderService implements MenuBuilderInterface
 {
-    private $authorizationChecker;
-    private $em;
-    private $session;
+    private $userExtension;
 
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker, SessionInterface $session, EntityManager $em)
+    public function __construct(UserExtensionService $userExtension)
     {
-        $this->authorizationChecker = $authorizationChecker;
-        $this->session = $session;
-        $this->em = $em;
+        $this->userExtension = $userExtension;
     }
 
     public function getMenuStructure()
     {
-        $isGlobalAdministrator = $this->authorizationChecker->isGranted('ROLE_ADMIN');
-        if ($this->session->has('organization_id')) {
-            $isLocalAdministrator = $this->authorizationChecker->isGranted('manage',
-                $this->em->getRepository('AticaCoreBundle:Organization')->find($this->session->get('organization_id')));
-        } else {
-            $isLocalAdministrator = false;
-        }
+        $isGlobalAdministrator = $this->userExtension->isUserGlobalAdministrator();
+        $isLocalAdministrator = $this->userExtension->isUserLocalAdministrator();
 
         $isAdministrator = $isGlobalAdministrator || $isLocalAdministrator;
 

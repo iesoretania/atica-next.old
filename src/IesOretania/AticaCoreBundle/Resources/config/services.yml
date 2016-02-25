@@ -8,6 +8,6 @@ services:
 
     atica.core_bundle.menu_builder:
         class: IesOretania\AticaCoreBundle\Service\CoreMenuBuilderService
-        arguments: ['@security.authorization_checker', '@session', '@doctrine.orm.entity_manager']
+        arguments: ['@atica.core_bundle.user.extension']
         tags:
             -  { name: atica.menu_builder }
