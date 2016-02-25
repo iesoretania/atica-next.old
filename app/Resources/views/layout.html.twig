@@ -25,6 +25,19 @@
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-main">
+                {% for order, item in menu_extension.menu %}
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-fw fa-{{ item.icon }}"></i> {{ item.caption|trans }}<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                {% for child in item.children %}
+                                <li><a href="{{ path(child.routeName, child.routeParams) }}"><i class="fa fa-fw fa-{{ child.icon }}"></i> {{ child.caption|trans }}{% if child.routeName == app.request.get('_route') %} <i class="fa fa-fw fa-check"></i>{% endif %}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    </ul>
+                {% endfor %}
+
                 {% if not app.user %}
                     <a href="{{ path('login') }}" class="btn btn-default navbar-btn pull-right">Entrar en la aplicación</a>
                 {% else %}
