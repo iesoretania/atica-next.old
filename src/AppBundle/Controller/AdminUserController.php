@@ -41,7 +41,7 @@ class AdminUserController extends Controller
     public function usersIndexAction(Request $request)
     {
         // permitir acceso si es administrador local o si es administrador global
-        if (!$this->get('app.user.extension')->isUserLocalAdministrator()) {
+        if (!$this->get('atica.core_bundle.user.extension')->isUserLocalAdministrator()) {
             $this->denyAccessUnlessGranted('ROLE_ADMIN');
         }
 
@@ -49,10 +49,10 @@ class AdminUserController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $usersQuery = $em->createQuery('SELECT u FROM AticaCoreBundle:User u JOIN AticaCoreBundle:Person p WITH u.person = p JOIN AticaCoreBundle:Membership m WITH m.user = u WHERE m.organization = :org AND m.token IS NULL')
-            ->setParameter('org', $this->get('app.user.extension')->getCurrentOrganization());
+            ->setParameter('org', $this->get('atica.core_bundle.user.extension')->getCurrentOrganization());
 
         $pendingUsersQuery = $em->createQuery('SELECT u FROM AticaCoreBundle:User u JOIN AticaCoreBundle:Person p WITH u.person = p JOIN AticaCoreBundle:Membership m WITH m.user = u WHERE m.organization = :org AND m.token IS NOT NULL')
-            ->setParameter('org', $this->get('app.user.extension')->getCurrentOrganization());
+            ->setParameter('org', $this->get('atica.core_bundle.user.extension')->getCurrentOrganization());
 
 
         $paginator  = $this->get('knp_paginator');
@@ -108,7 +108,7 @@ class AdminUserController extends Controller
 
             $membership = new Membership();
             $membership
-                ->setOrganization($this->get('app.user.extension')->getCurrentOrganization())
+                ->setOrganization($this->get('atica.core_bundle.user.extension')->getCurrentOrganization())
                 ->setUser($user)
                 ->setLocalAdministrator(false);
             $em->persist($user->getPerson());
@@ -185,7 +185,7 @@ class AdminUserController extends Controller
         $membership = $em->getRepository('AticaCoreBundle:Membership')
             ->findOneBy([
                 'user' => $user,
-                'organization' => $this->get('app.user.extension')->getCurrentOrganization()
+                'organization' => $this->get('atica.core_bundle.user.extension')->getCurrentOrganization()
             ]);
 
         if ('POST' === $request->getMethod() && $request->request->has('unlink')) {

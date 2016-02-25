@@ -2,8 +2,12 @@ parameters:
 
 
 services:
+    atica.core_bundle.user.extension:
+        class: IesOretania\AticaCoreBundle\Service\UserExtensionService
+        autowire: true
+
     atica.core_bundle.menu_builder:
         class: IesOretania\AticaCoreBundle\Service\CoreMenuBuilderService
-        autowire: true
+        arguments: ['@security.authorization_checker', '@session', '@doctrine.orm.entity_manager']
         tags:
             -  { name: atica.menu_builder }

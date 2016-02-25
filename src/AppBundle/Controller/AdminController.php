@@ -34,7 +34,7 @@ class AdminController extends Controller
     public function indexAction()
     {
         // permitir acceso si es administrador local o si es administrador global
-        if (!$this->get('app.user.extension')->isUserLocalAdministrator()) {
+        if (!$this->get('atica.core_bundle.user.extension')->isUserLocalAdministrator()) {
             $this->denyAccessUnlessGranted('ROLE_ADMIN');
         }
         return $this->render('admin/menu.html.twig',

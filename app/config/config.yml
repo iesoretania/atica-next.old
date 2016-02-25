@@ -42,7 +42,7 @@ twig:
         app_name:     "ÁTICA"
         app_repository: "https://github.com/iesoretania/atica-next"
         app_version:  "6.0"
-        user_extension: "@app.user.extension"
+        user_extension: "@atica.core_bundle.user.extension"
 
 # Doctrine Configuration
 doctrine:

@@ -37,7 +37,7 @@ class AdminProfileController extends Controller
     public function profilesIndexAction(Request $request)
     {
         // permitir acceso si es administrador local o si es administrador global
-        if (!$this->get('app.user.extension')->isUserLocalAdministrator()) {
+        if (!$this->get('atica.core_bundle.user.extension')->isUserLocalAdministrator()) {
             $this->denyAccessUnlessGranted('ROLE_ADMIN');
         }
 
@@ -45,7 +45,7 @@ class AdminProfileController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $usersQuery = $em->createQuery('SELECT p FROM AticaCoreBundle:Profile p LEFT JOIN AticaCoreBundle:Module m WITH p.module = m LEFT JOIN AticaCoreBundle:Enumeration e WITH p.enumeration = e WHERE p.organization = :org')
-            ->setParameter('org', $this->get('app.user.extension')->getCurrentOrganization());
+            ->setParameter('org', $this->get('atica.core_bundle.user.extension')->getCurrentOrganization());
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -78,7 +78,7 @@ class AdminProfileController extends Controller
         $em = $this->getDoctrine()->getManager();
         if (null === $profile) {
             $profile = new Profile();
-            $profile->setOrganization($this->get('app.user.extension')->getCurrentOrganization());
+            $profile->setOrganization($this->get('atica.core_bundle.user.extension')->getCurrentOrganization());
 
             $em->persist($profile);
         }

@@ -39,7 +39,7 @@ class AdminEnumerationController extends Controller
     public function enumerationIndexAction(Request $request)
     {
         // permitir acceso si es administrador local o si es administrador global
-        if (!$this->get('app.user.extension')->isUserLocalAdministrator()) {
+        if (!$this->get('atica.core_bundle.user.extension')->isUserLocalAdministrator()) {
             $this->denyAccessUnlessGranted('ROLE_ADMIN');
         }
 
@@ -47,7 +47,7 @@ class AdminEnumerationController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $enumQuery = $em->createQuery('SELECT e FROM AticaCoreBundle:Enumeration e LEFT JOIN AticaCoreBundle:Module m WITH e.module = m WHERE e.organization = :org')
-            ->setParameter('org', $this->get('app.user.extension')->getCurrentOrganization());
+            ->setParameter('org', $this->get('atica.core_bundle.user.extension')->getCurrentOrganization());
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
