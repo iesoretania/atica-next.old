@@ -123,6 +123,6 @@ class CoreMenu implements MenuBuilderInterface
 
     public function getMenuPriority()
     {
-        return -1;
+        return 10000;
     }
 }
