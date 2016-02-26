@@ -49,7 +49,10 @@ class MenuBuilderChain
         $menu = [];
 
         foreach($this->menuBuilders as $menuBuilder) {
-            $menu[$menuBuilder->getMenuPriority()] = $menuBuilder->getMenuStructure();
+            $menuStructure = $menuBuilder->getMenuStructure();
+            if ($menuStructure) {
+                $menu[$menuBuilder->getMenuPriority()] = $menuStructure;
+            }
         }
         ksort($menu);
 
