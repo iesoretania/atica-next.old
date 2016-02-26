@@ -54,7 +54,7 @@ class MenuBuilderChain
                 $menu[$menuBuilder->getMenuPriority()] = $menuStructure;
             }
         }
-        ksort($menu);
+        ksort($menu, SORT_NUMERIC);
 
         return $menu;
     }
