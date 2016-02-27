@@ -14,8 +14,8 @@
         {% else %}
             {{ m.submit_button('submit', 'form.create'|trans, 'plus') }}
         {% endif %}
-        {% if not profile.module %}
-            {{ m.submit_button('submit', 'form.delete'|trans, 'trash', 'btn-danger') }}
+        {% if not profile.module and profile.id is not null %}
+            {{ m.link_button(path('admin_profile_delete', {'profile': profile.id}), 'form.delete'|trans, 'trash', 'btn-danger') }}
         {% endif %}
         {{ m.end_button }}
     {{ form_end(form) }}

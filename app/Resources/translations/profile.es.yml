@@ -12,6 +12,8 @@ form.create: Crear perfil
 form.delete: Eliminar perfil
 form.submit: Guardar cambios
 
+form.delete_back: Volver al perfil
+
 form.back: Volver a la gestión de perfiles
 
 alert.saved: Datos guardados correctamente
@@ -21,3 +23,7 @@ alert.not_deleted: No se ha podido eliminar el perfil. Compruebe que no tenga da
 warning.from_module: >
     Este perfil forma parte de un módulo de la aplicación. Para eliminarlo será necesario desactivar
     el módulo para la organización.
+
+prompt.delete_confirm: >
+    ¡ATENCIÓN! El perfil sólo podrá ser eliminado si no contiene datos asociados.
+

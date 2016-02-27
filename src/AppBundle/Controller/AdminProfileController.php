@@ -23,7 +23,9 @@ namespace AppBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use IesOretania\AticaCoreBundle\Entity\Profile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -108,6 +110,43 @@ class AdminProfileController extends Controller
 
         return $this->render('admin/form_profile.html.twig', [
             'form' => $form->createView(),
+            'breadcrumb' => $breadcrumb,
+            'title' => $title,
+            'profile' => $profile
+        ]);
+    }
+
+    /**
+     * @Route("/borrar/{profile}", name="admin_profile_delete", methods={"GET", "POST"}, requirements={"profile": "\d+"} )
+     * @Security("is_granted('manage', profile)")
+     */
+    public function deleteProfileAction(Request $request, Profile $profile = null)
+    {
+        if ('POST' === $request->getMethod() && $request->request->has('delete')) {
+            // Eliminar la organización de la base de datos
+            $this->getDoctrine()->getManager()->remove($profile);
+            try {
+                $this->getDoctrine()->getManager()->flush();
+                $this->addFlash('success', $this->get('translator')->trans('alert.deleted', [], 'profile'));
+                $url = $this->generateUrl('admin_profiles');
+            }
+            catch(\Exception $e) {
+                $this->addFlash('error', $this->get('translator')->trans('alert.not_deleted', [], 'profile'));
+                $url = $this->generateUrl('admin_profile_form', ['profile' => $profile->getId()]);
+            }
+            return new RedirectResponse($url);
+        }
+
+        $title = $profile->getNameNeutral() ?: $this->get('translator')->trans('profile.new', [], 'admin');
+
+        $breadcrumb = [
+            ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
+            ['caption' => 'menu.admin.manage.profiles', 'icon' => 'street-view', 'path' => 'admin_profiles'],
+            ['fixed' => $profile->getNameNeutral(), 'path' => 'admin_profile_form', 'options' => ['profile' => $profile->getId()]],
+            ['caption' => 'menu.delete']
+        ];
+
+        return $this->render(':admin:delete_profile.html.twig', [
             'breadcrumb' => $breadcrumb,
             'title' => $title,
             'profile' => $profile
