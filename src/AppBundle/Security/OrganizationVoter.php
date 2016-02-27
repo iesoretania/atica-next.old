@@ -24,6 +24,7 @@ namespace AppBundle\Security;
 use Doctrine\ORM\EntityManager;
 use IesOretania\AticaCoreBundle\Entity\Organization;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class OrganizationVoter extends Voter
@@ -33,8 +34,11 @@ class OrganizationVoter extends Voter
 
     private $em;
 
-    public function __construct(EntityManager $em) {
+    private $decisionManager;
+
+    public function __construct(EntityManager $em, AccessDecisionManagerInterface $decisionManager) {
         $this->em = $em;
+        $this->decisionManager = $decisionManager;
     }
 
     /**
@@ -60,6 +64,11 @@ class OrganizationVoter extends Voter
     {
         if (!$subject instanceof Organization) {
             return false;
+        }
+
+        // los administradores globales siempre tienen permiso
+        if ($this->decisionManager->decide($token, ['ROLE_ADMIN'])) {
+            return true;
         }
 
         $user = $token->getUser();

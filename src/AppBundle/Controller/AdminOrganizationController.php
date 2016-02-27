@@ -66,11 +66,19 @@ class AdminOrganizationController extends Controller
     }
 
     /**
+     * @Route("/nueva", name="admin_organization_new", methods={"GET", "POST"})
      * @Route("/{organization}", name="admin_organization_form", methods={"GET", "POST"}, requirements={"organization": "\d+"} )
-     * @Security("has_role('ROLE_ADMIN') or is_granted('manage', organization)")
      */
-    public function editOrganizationAction(Request $request, Organization $organization)
+    public function editOrganizationAction(Request $request, Organization $organization = null)
     {
+        $em = $this->getDoctrine()->getManager();
+        if (null === $organization) {
+            $organization = new Organization();
+            $em->persist($organization);
+        }
+
+        $this->denyAccessUnlessGranted('manage', $organization);
+
         $form = $this->createForm('IesOretania\AticaCoreBundle\Form\Type\OrganizationType', $organization);
 
         $form->handleRequest($request);
@@ -91,46 +99,18 @@ class AdminOrganizationController extends Controller
         } else {
             $breadcrumb[] = ['caption' => 'menu.admin.manage.org', 'icon' => 'bank'];
         }
-        $breadcrumb[]= ['fixed' => $organization->getName()];
+
+        if (null === $organization->getId()) {
+            $title = $this->get('translator')->trans('form.create', [], 'organization');
+        } else {
+            $title = $organization->getName();
+        }
+        $breadcrumb[]= ['fixed' => $title];
+
         return $this->render('admin/form_organization.html.twig', [
             'form' => $form->createView(),
             'breadcrumb' => $breadcrumb,
-            'title' => $this->get('translator')->trans('form.title', [], 'organization'),
-            'new' => false,
-            'organization' => $organization
-        ]);
-    }
-
-    /**
-     * @Route("/nueva", name="admin_organization_new", methods={"GET", "POST"})
-     * @Security("has_role('ROLE_ADMIN')")
-     */
-    public function newOrganizationAction(Request $request)
-    {
-        $organization = new Organization();
-
-        $form = $this->createForm('IesOretania\AticaCoreBundle\Form\Type\OrganizationType', $organization);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Guardar la organización en la base de datos
-            $this->getDoctrine()->getManager()->persist($organization);
-            $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'organization'));
-            return new RedirectResponse(
-                $this->generateUrl('admin_organizations')
-            );
-        }
-
-        return $this->render('admin/form_organization.html.twig', [
-            'form' => $form->createView(),
-            'breadcrumb' => [
-                ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
-                ['caption' => 'menu.admin.manage.orgs', 'icon' => 'bank', 'path' => 'admin_organizations'],
-                ['caption' => 'menu.new']
-            ],
-            'title' => null,
+            'title' => $title,
             'organization' => $organization
         ]);
     }
