@@ -1,79 +1,12 @@
 {% trans_default_domain 'menu' %}
 {% extends 'layout.html.twig' %}
+{% import '::macros_menu.html.twig' as mm %}[
 
 {% block content %}
     <section class="row tile-row">
-        <article class="col-md-4 tile tile-col-4 tile-amber">
-            <a class="tile-link" href="{{ is_granted('ROLE_ADMIN') ? path('admin_organizations') : path('admin_edit_organization', {'organization': user_extension.currentOrganization.id}) }}">
-                <div class="tile-icon-holder">
-                    <i class="fa fa-bank fa-4x"></i>
-                </div>
-                <div class="text-holder">
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <h4>{{ 'menu.admin.manage.orgs'|trans }}</h4>
-                        <p>{{ 'menu.admin.manage.orgs.detail'|trans }}</p>
-                    {% else %}
-                        <h4>{{ 'menu.admin.manage.org'|trans }}</h4>
-                        <p>{{ 'menu.admin.manage.org.detail'|trans }}</p>
-                    {% endif %}
-                </div>
-            </a>
-        </article>
-        <article class="col-md-4 tile tile-col-4 tile-orange">
-            <a class="tile-link" href="{{ path('frontpage') }}">
-                <div class="tile-icon-holder">
-                    <i class="fa fa-pie-chart fa-4x"></i>
-                </div>
-                <div class="text-holder">
-                    <h4>{{ 'menu.admin.stats'|trans }}</h4>
-                    <p>{{ 'menu.admin.stats.detail'|trans }}</p>
-                </div>
-            </a>
-        </article>
-        <article class="col-md-4 tile tile-col-4 tile-magenta">
-            <a class="tile-link" href="{{ path('admin_users') }}">
-                <div class="tile-icon-holder">
-                    <i class="fa fa-users fa-4x"></i>
-                </div>
-                <div class="text-holder">
-                    <h4>{{ 'menu.admin.manage.users'|trans }}</h4>
-                    <p>{{ 'menu.admin.manage.users.detail'|trans }}</p>
-                </div>
-            </a>
-        </article>
-        <article class="col-md-4 tile tile-col-4 tile-green">
-            <a class="tile-link" href="{{ path('admin_profiles') }}">
-                <div class="tile-icon-holder">
-                    <i class="fa fa-street-view fa-4x"></i>
-                </div>
-                <div class="text-holder">
-                    <h4>{{ 'menu.admin.manage.profiles'|trans }}</h4>
-                    <p>{{ 'menu.admin.manage.profiles.detail'|trans }}</p>
-                </div>
-            </a>
-        </article>
-        <article class="col-md-4 tile tile-col-4 tile-emerald">
-            <a class="tile-link" href="{{ path('admin_enumerations') }}">
-                <div class="tile-icon-holder">
-                    <i class="fa fa-list-ol fa-4x"></i>
-                </div>
-                <div class="text-holder">
-                    <h4>{{ 'menu.admin.manage.enumerations'|trans }}</h4>
-                    <p>{{ 'menu.admin.manage.enumerations.detail'|trans }}</p>
-                </div>
-            </a>
-        </article>
-        <article class="col-md-4 tile tile-col-4 tile-cyan">
-            <a class="tile-link" href="{{ path('frontpage') }}">
-                <div class="tile-icon-holder">
-                    <i class="fa fa-cubes fa-4x"></i>
-                </div>
-                <div class="text-holder">
-                    <h4>{{ 'menu.admin.manage.modules'|trans }}</h4>
-                    <p>{{ 'menu.admin.manage.modules.detail'|trans }}</p>
-                </div>
-            </a>
-        </article>
+        {% for item in children %}
+            {{ mm.menu_item(item.caption, item.description, item.routeName, item.routeParams, item.color, item.icon) }}
+        {% endfor %}
         <article class="col-md-4 tile tile-col-4 tile-teal">
             <a class="tile-link" href="{{ path('frontpage') }}">
                 <div class="tile-icon-holder">

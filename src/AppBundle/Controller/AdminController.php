@@ -20,6 +20,7 @@
 
 namespace AppBundle\Controller;
 
+use IesOretania\AticaCoreBundle\Menu\MenuItem;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -37,11 +38,27 @@ class AdminController extends Controller
         if (!$this->get('atica.core_bundle.user.extension')->isUserLocalAdministrator()) {
             $this->denyAccessUnlessGranted('ROLE_ADMIN');
         }
+
+        $menu = $this->get('app.menu_builders_chain')->getMenu();
+
+        $children = [];
+
+        /**
+         * @var MenuItem $item
+         */
+        foreach($menu as $item) {
+            if ($item->getName() === 'admin') {
+                $children = $item->getChildren();
+            }
+        }
+
         return $this->render('admin/menu.html.twig',
             [
                 'breadcrumb' => [
                     ['caption' => 'menu.manage', 'icon' => 'wrench']
-                ]
+                ],
+                'menu' => $menu,
+                'children' => $children
             ]);
     }
 }
