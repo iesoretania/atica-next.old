@@ -21,7 +21,7 @@
                 <td>{{ org.description | nl2br }}</td>
                 <td class="text-center">
                     <div class="btn-group btn-group-xs btn-block" role="group">
-                        <a href="{{ path('admin_edit_organization', {'organization': org.id }) }}" class="btn btn-default btn-xs btn-block"><i class="fa fa-pencil"></i> {{ 'form.edit' | trans }}</a>
+                        <a href="{{ path('admin_organization_form', {'organization': org.id }) }}" class="btn btn-default btn-xs btn-block"><i class="fa fa-pencil"></i> {{ 'form.edit' | trans }}</a>
                     </div>
                 </td>
             </tr>
@@ -37,5 +37,5 @@
         {{ knp_pagination_render(pagination) }}
     </div>
     {{ m.link_button(path('admin_menu'), 'form.back'|trans, 'arrow-left', 'btn-default') }}
-    {{ m.link_button(path('admin_new_organization'), 'org.new'|trans, 'plus', 'btn-success') }}
+    {{ m.link_button(path('admin_organization_new'), 'org.new'|trans, 'plus', 'btn-success') }}
 {% endblock %}

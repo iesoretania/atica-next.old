@@ -6,9 +6,9 @@
     {{ form_start(form) }}
         {{ form_widget(form) }}
         {{ m.start_button }}
-        {% if not new %}
+        {% if organization.id is not null %}
             {{ m.submit_button('submit', 'form.submit'|trans, 'check') }}
-            {% if is_granted('ROLE_ADMIN') %}{{ m.link_button(path('admin_delete_organization', {'organization': organization.id}), 'form.delete'|trans, 'trash', 'btn-danger') }}{% endif %}
+            {% if is_granted('ROLE_ADMIN') %}{{ m.link_button(path('admin_organization_delete', {'organization': organization.id}), 'form.delete'|trans, 'trash', 'btn-danger') }}{% endif %}
         {% else %}
             {{ m.submit_button('submit', 'form.create'|trans, 'plus') }}
         {% endif %}

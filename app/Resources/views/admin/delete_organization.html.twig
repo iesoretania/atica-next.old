@@ -6,6 +6,6 @@
     <div class="alert alert-warning">{{ 'prompt.delete_confirm'|trans|nl2br }}</div>
     <form method="post">
         {{ m.submit_button('delete', 'form.delete'|trans, 'trash', 'btn-danger') }}
-        {{ m.link_button(path('admin_edit_organization', {'organization': organization.id}), 'form.delete_back'|trans, 'arrow-left', 'btn-default') }}
+        {{ m.link_button(path('admin_organization_form', {'organization': organization.id}), 'form.delete_back'|trans, 'arrow-left', 'btn-default') }}
     </form>
 {% endblock %}

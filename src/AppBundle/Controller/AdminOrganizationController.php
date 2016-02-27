@@ -29,12 +29,12 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/admin")
+ * @Route("/admin/organizacion")
  */
 class AdminOrganizationController extends Controller
 {
     /**
-     * @Route("/organizaciones", name="admin_organizations", methods={"GET"})
+     * @Route("/", name="admin_organizations", methods={"GET"})
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function organizationsIndexAction(Request $request)
@@ -66,7 +66,7 @@ class AdminOrganizationController extends Controller
     }
 
     /**
-     * @Route("/organizacion/{organization}", name="admin_edit_organization", methods={"GET", "POST"}, requirements={"organization": "\d+"} )
+     * @Route("/{organization}", name="admin_organization_form", methods={"GET", "POST"}, requirements={"organization": "\d+"} )
      * @Security("has_role('ROLE_ADMIN') or is_granted('manage', organization)")
      */
     public function editOrganizationAction(Request $request, Organization $organization)
@@ -102,7 +102,7 @@ class AdminOrganizationController extends Controller
     }
 
     /**
-     * @Route("/organizacion/nueva", name="admin_new_organization", methods={"GET", "POST"})
+     * @Route("/nueva", name="admin_organization_new", methods={"GET", "POST"})
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function newOrganizationAction(Request $request)
@@ -131,12 +131,12 @@ class AdminOrganizationController extends Controller
                 ['caption' => 'menu.new']
             ],
             'title' => null,
-            'new' => true
+            'organization' => $organization
         ]);
     }
 
     /**
-     * @Route("/organizacion/borrar/{organization}", name="admin_delete_organization", methods={"GET", "POST"})
+     * @Route("/borrar/{organization}", name="admin_organization_delete", methods={"GET", "POST"})
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteOrganizationAction(Request $request, Organization $organization)
@@ -151,7 +151,7 @@ class AdminOrganizationController extends Controller
             }
             catch(\Exception $e) {
                 $this->addFlash('error', $this->get('translator')->trans('alert.not_deleted', [], 'organization'));
-                $url = $this->generateUrl('admin_edit_organization', ['organization' => $organization->getId()]);
+                $url = $this->generateUrl('admin_organization_form', ['organization' => $organization->getId()]);
             }
             return new RedirectResponse($url);
         }
@@ -160,7 +160,7 @@ class AdminOrganizationController extends Controller
             'breadcrumb' => [
                 ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
                 ['caption' => 'menu.admin.manage.orgs', 'icon' => 'bank', 'path' => 'admin_organizations'],
-                ['fixed' => $organization->getName()],
+                ['fixed' => $organization->getName(), 'path' => 'admin_organization_form', 'options' => ['organization' => $organization->getId()]],
                 ['caption' => 'menu.delete']
             ],
             'title' => $this->get('translator')->trans('form.delete', [], 'organization'),
