@@ -23,7 +23,6 @@ namespace IesOretania\AticaFctBundle\Service;
 use IesOretania\AticaCoreBundle\Menu\MenuItem;
 use IesOretania\AticaCoreBundle\Service\MenuBuilderInterface;
 use IesOretania\AticaCoreBundle\Service\UserExtensionService;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class FctMenu implements MenuBuilderInterface
 {

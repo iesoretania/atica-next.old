@@ -21,7 +21,6 @@
 namespace IesOretania\AticaCoreBundle\Service;
 
 use IesOretania\AticaCoreBundle\Menu\MenuItem;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CoreMenu implements MenuBuilderInterface
 {
