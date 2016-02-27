@@ -48,7 +48,7 @@ class FctMenu implements MenuBuilderInterface
             ->setCaption('menu.fct')
             ->setDescription('menu.fct.detail')
             ->setColor('orange')
-            ->setIcon('suitcase');
+            ->setIcon('briefcase');
 
         return $menu;
     }
