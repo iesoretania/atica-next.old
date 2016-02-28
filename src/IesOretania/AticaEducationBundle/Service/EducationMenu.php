@@ -35,11 +35,6 @@ class EducationMenu implements MenuBuilderInterface
 
     public function getMenuStructure()
     {
-        $isGlobalAdministrator = $this->userExtension->isUserGlobalAdministrator();
-        $isLocalAdministrator = $this->userExtension->isUserLocalAdministrator();
-
-        $isAdministrator = $isGlobalAdministrator || $isLocalAdministrator;
-
         $menu = new MenuItem();
         $menu
             ->setName('education')
