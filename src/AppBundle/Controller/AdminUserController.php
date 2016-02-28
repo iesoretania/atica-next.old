@@ -20,10 +20,12 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\Model\ProfileElementModel;
 use Doctrine\ORM\EntityManager;
 use IesOretania\AticaCoreBundle\Entity\Membership;
 use IesOretania\AticaCoreBundle\Entity\Person;
 use IesOretania\AticaCoreBundle\Entity\User;
+use IesOretania\AticaCoreBundle\Entity\UserProfile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\SubmitButton;
@@ -123,11 +125,27 @@ class AdminUserController extends Controller
 
         $me = ($user->getId() === $this->getUser()->getId());
 
-        $form = $this->createForm('IesOretania\AticaCoreBundle\Form\Type\UserType', $user, [
+        $profiles = $em->getRepository('AticaCoreBundle:UserProfile')->getAllProfiles($this->get('atica.core_bundle.user.extension')->getCurrentOrganization());
+
+        $form = $this->createForm('AppBundle\Form\Type\FullUserType', $user, [
             'admin' => $this->isGranted('ROLE_ADMIN'),
             'me' => $me,
-            'new' => $new
+            'new' => $new,
+            'profiles' => $profiles,
+            'user_gender' => $user->getPerson()->getGender()
         ]);
+
+        $currentProfiles = [];
+
+        foreach($user->getProfileElements() as $profileElement) {
+            foreach($profiles as $item) {
+                if ($item == $profileElement) {
+                    $currentProfiles[] = $item;
+                }
+            }
+        }
+
+        $form->get('profiles')->setData($currentProfiles);
 
         $form->handleRequest($request);
 
@@ -148,6 +166,22 @@ class AdminUserController extends Controller
 
             // Probar a guardar los cambios
             try {
+                // borrar todos los perfiles del usuario
+                $em->getRepository('AticaCoreBundle:UserProfile')->deleteAllFromUser($user);
+
+                // añadir los seleccionados
+                /**
+                 * @var ProfileElementModel $profileElement
+                 */
+                foreach($form->get('profiles')->getData() as $profileElement) {
+                    $userProfile = new UserProfile();
+                    $userProfile
+                        ->setUser($user)
+                        ->setProfile($profileElement->getProfile())
+                        ->setElement($profileElement->getElement());
+                    $em->persist($userProfile);
+                }
+
                 $em->flush();
                 $this->addFlash('success', $message);
                 return new RedirectResponse(

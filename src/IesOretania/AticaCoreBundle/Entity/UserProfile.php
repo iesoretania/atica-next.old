@@ -23,7 +23,7 @@ namespace IesOretania\AticaCoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="UserProfileRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class UserProfile
@@ -47,7 +47,7 @@ class UserProfile
     /**
      * @ORM\ManyToOne(targetEntity="Element")
      * @ORM\JoinColumn(nullable=true)
-     * @var Element
+     * @var Element|null
      */
     protected $element;
 
@@ -67,8 +67,8 @@ class UserProfile
      */
     public function __toString()
     {
-        $profile = $this->getProfile()->getName($this->getUser()->getPerson()->getGender());
-        return $profile . ($this->getElement()->getName() ? (' ' . $this->getElement()->getName()) : '');
+        $profile = $this->getProfile()->getName($this->getUser() ? $this->getUser()->getPerson()->getGender() : Person::GENDER_UNKNOWN);
+        return $profile . ($this->getElement() ? (' ' . $this->getElement()->getName()) : '');
     }
 
     /**
@@ -139,9 +139,9 @@ class UserProfile
      *
      * @param Element $element
      *
-     * @return UserProfile
+     * @return UserProfile|null
      */
-    public function setElement(Element $element)
+    public function setElement(Element $element = null)
     {
         $this->element = $element;
 

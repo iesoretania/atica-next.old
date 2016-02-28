@@ -20,6 +20,7 @@
 
 namespace IesOretania\AticaCoreBundle\Entity;
 
+use AppBundle\Form\Model\ProfileElementModel;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -426,9 +427,24 @@ class User implements UserInterface, \Serializable
      *
      * @return Collection
      */
-    public function getUserProfile()
+    public function getUserProfiles()
     {
         return $this->userProfiles;
+    }
+
+    /**
+     * Get userProfiles
+     *
+     * @return Collection
+     */
+    public function getProfileElements()
+    {
+        return array_map(
+            function (UserProfile $userProfile) {
+                return new ProfileElementModel($userProfile->getProfile(), $userProfile->getElement());
+            },
+            $this->userProfiles->toArray()
+        );
     }
 
     /**

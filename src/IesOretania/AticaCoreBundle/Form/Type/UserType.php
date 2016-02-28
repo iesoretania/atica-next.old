@@ -30,6 +30,10 @@ use Symfony\Component\Validator\Constraints\NotNull;
 
 class UserType extends AbstractType
 {
+    public function additionalForm(FormBuilderInterface $builder, array $options)
+    {
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -96,6 +100,8 @@ class UserType extends AbstractType
                     'disabled' => $options['me']
                 ]);
         }
+
+        $this->additionalForm($builder, $options);
 
         if (!$options['new']) {
             $builder
