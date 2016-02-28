@@ -6423,6 +6423,23 @@
       "version": "1.11.3",
       "from": "jquery@1.11.3",
       "resolved": "https://registry.npmjs.org/jquery/-/jquery-1.11.3.tgz"
+    },
+    "select2": {
+      "version": "4.0.2-rc.1",
+      "from": "select2@latest",
+      "resolved": "https://registry.npmjs.org/select2/-/select2-4.0.2-rc.1.tgz",
+      "dependencies": {
+        "almond": {
+          "version": "0.3.1",
+          "from": "almond@>=0.3.1 <0.4.0",
+          "resolved": "https://registry.npmjs.org/almond/-/almond-0.3.1.tgz"
+        },
+        "jquery-mousewheel": {
+          "version": "3.1.13",
+          "from": "jquery-mousewheel@>=3.1.13 <3.2.0",
+          "resolved": "https://registry.npmjs.org/jquery-mousewheel/-/jquery-mousewheel-3.1.13.tgz"
+        }
+      }
     }
   }
 }

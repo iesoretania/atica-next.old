@@ -37,7 +37,7 @@ class FullUserType extends UserType
             ->add('profiles', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
                 'label' => 'form.profiles',
                 'mapped' => false,
-                'expanded' => true,
+                'expanded' => false,
                 'multiple' => true,
                 'choices_as_values' => true,
                 'choices' => $options['profiles'],
@@ -45,7 +45,10 @@ class FullUserType extends UserType
                     /** @var ProfileElementModel $item */
                     return $item->toGenderString($options['user_gender']);
                 },
-                'choice_translation_domain' => false
+                'choice_translation_domain' => false,
+                'attr' => [
+                    'class' => 'autocomplete'
+                ]
             ]);
     }
 

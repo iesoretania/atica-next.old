@@ -3,7 +3,7 @@ var plugins = require('gulp-load-plugins')();
 
 gulp.task('default', function() {
     // procesar SCSS
-    gulp.src(['web/css/**/*.scss', 'web/css/lato/css/fonts.css', 'web/css/atica.css'])
+    gulp.src(['node_modules/select2/dist/css/select2.css', 'web/css/**/*.scss', 'web/css/lato/css/fonts.css', 'web/css/atica.css'])
         .pipe(plugins.sass())
         .pipe(plugins.autoprefixer({
             browsers: [
@@ -29,6 +29,10 @@ gulp.task('default', function() {
     // copiar Javascript de Bootstrap
     gulp.src('node_modules/bootstrap-sass/assets/javascripts/*.min.js')
         .pipe(gulp.dest('web/dist/js/bootstrap'));
+
+    // copiar Javascript de Select2
+    gulp.src('node_modules/select2/dist/js/*')
+        .pipe(gulp.dest('web/dist/js/select2'));
 
     // copiar fuentes
     gulp.src(['node_modules/font-awesome/fonts/*', 'web/css/lato/fonts/**'])
