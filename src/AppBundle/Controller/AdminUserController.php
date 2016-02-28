@@ -22,7 +22,6 @@ namespace AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use IesOretania\AticaCoreBundle\Entity\User;
-use IesOretania\AticaCoreBundle\Entity\UserProfile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\SubmitButton;

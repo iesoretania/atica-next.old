@@ -22,17 +22,9 @@ namespace IesOretania\AticaEducationBundle\Service;
 
 use IesOretania\AticaCoreBundle\Menu\MenuItem;
 use IesOretania\AticaCoreBundle\Service\MenuBuilderInterface;
-use IesOretania\AticaCoreBundle\Service\UserExtensionService;
 
 class EducationMenu implements MenuBuilderInterface
 {
-    private $userExtension;
-
-    public function __construct(UserExtensionService $userExtension)
-    {
-        $this->userExtension = $userExtension;
-    }
-
     public function getMenuStructure()
     {
         $menu = new MenuItem();

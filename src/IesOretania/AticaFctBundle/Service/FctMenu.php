@@ -22,17 +22,9 @@ namespace IesOretania\AticaFctBundle\Service;
 
 use IesOretania\AticaCoreBundle\Menu\MenuItem;
 use IesOretania\AticaCoreBundle\Service\MenuBuilderInterface;
-use IesOretania\AticaCoreBundle\Service\UserExtensionService;
 
 class FctMenu implements MenuBuilderInterface
 {
-    private $userExtension;
-
-    public function __construct(UserExtensionService $userExtension)
-    {
-        $this->userExtension = $userExtension;
-    }
-
     public function getMenuStructure()
     {
         $menu = new MenuItem();
