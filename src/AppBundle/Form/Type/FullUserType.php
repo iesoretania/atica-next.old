@@ -41,8 +41,7 @@ class FullUserType extends UserType
                 'multiple' => true,
                 'choices_as_values' => true,
                 'choices' => $options['profiles'],
-                'choice_label' => function($item) use ($options) {
-                    /** @var ProfileElementModel $item */
+                'choice_label' => function(ProfileElementModel $item) use ($options) {
                     return $item->toGenderString($options['user_gender']);
                 },
                 'choice_translation_domain' => false,
