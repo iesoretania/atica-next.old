@@ -44,6 +44,9 @@ class FullUserType extends UserType
                 'choice_label' => function(ProfileElementModel $item) use ($options) {
                     return $item->toGenderString($options['user_gender']);
                 },
+                'group_by' => function(ProfileElementModel $item) use ($options) {
+                    return $item->getElement() ? $item->getProfile() : '';
+                },
                 'choice_translation_domain' => false,
                 'attr' => [
                     'class' => 'autocomplete'
