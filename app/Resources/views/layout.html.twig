@@ -64,6 +64,12 @@
         </div>
     </nav>
     <div class="container">
+        {% if breadcrumb is defined %}
+            {% include 'breadcrumb.html.twig' %}
+        {% endif %}
+        {% if title is defined %}
+            <h1 class="well">{{ ((title is null and breadcrumb is defined) ? (breadcrumb|last).caption|trans : title) }}</h1>
+        {% endif %}
         {% for flashMessage in app.session.flashbag.get('success') %}
             <div class="alert alert-success alert-dismissable" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
@@ -76,12 +82,6 @@
                 {{ flashMessage }}
             </div>
         {% endfor %}
-        {% if breadcrumb is defined %}
-            {% include 'breadcrumb.html.twig' %}
-        {% endif %}
-        {% if title is defined %}
-            <h1 class="well">{{ ((title is null and breadcrumb is defined) ? (breadcrumb|last).caption|trans : title) }}</h1>
-        {% endif %}
         {% block content %}{% endblock %}
     </div>
 
