@@ -10,7 +10,11 @@ form.up: Subir elemento
 form.down: Bajar elemento
 
 form.back: Volver a la lista
+form.delete_back: Volver al elemento
 
 alert.saved: Datos guardados correctamente
 alert.deleted: Elemento eliminado con éxito
 alert.not_deleted: No se ha podido eliminar el elemento. Compruebe que no depende de otros elementos.
+
+prompt.delete_confirm: >
+    ¡ATENCIÓN! El elemento sólo podrá ser eliminado si no existen datos asociados al mismo.

@@ -8,7 +8,7 @@
         {{ m.start_button }}
         {% if not new %}
             {{ m.submit_button('submit', 'form.submit'|trans, 'check') }}
-            {{ m.link_button('', 'form.delete'|trans, 'trash', 'btn-danger') }}
+            {{ m.link_button(path('admin_element_delete', {'element': element.id}), 'form.delete'|trans, 'trash', 'btn-danger') }}
         {% else %}
             {{ m.submit_button('submit', 'form.create'|trans, 'plus') }}
         {% endif %}

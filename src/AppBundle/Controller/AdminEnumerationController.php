@@ -22,6 +22,7 @@ namespace AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use IesOretania\AticaCoreBundle\Entity\Element;
+use IesOretania\AticaCoreBundle\Entity\ElementEdge;
 use IesOretania\AticaCoreBundle\Entity\Enumeration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -221,6 +222,9 @@ class AdminEnumerationController extends Controller
 
         foreach($attributes as $attribute) {
             if (!$new) {
+                /**
+                 * @var ElementEdge $attributeEdge
+                 */
                 $attributeEdge = $em->getRepository('AticaCoreBundle:ElementEdge')->getDirectEnumerationParentEdge($element,
                     $attribute->getTarget());
                 $attributeElement = $attributeEdge ? $attributeEdge->getEndElement() : null;
@@ -270,5 +274,42 @@ class AdminEnumerationController extends Controller
                 'element' => $element,
                 'new' => $new
             ]);
+    }
+
+    /**
+     * @Route("/elemento/eliminar/{element}", name="admin_element_delete", methods={"GET", "POST"}, requirements={"enumeration": "\d+"} )
+     * @Security("is_granted('manage', element.getEnumeration())")
+     */
+    public function deleteElementAction(Request $request, Element $element)
+    {
+        if ('POST' === $request->getMethod() && $request->request->has('delete')) {
+
+            // Eliminar la organización de la base de datos
+            $this->getDoctrine()->getManager()->remove($element);
+            try {
+                $this->getDoctrine()->getManager()->flush();
+                $this->addFlash('success', $this->get('translator')->trans('alert.deleted', [], 'element'));
+            }
+            catch(\Exception $e) {
+                $this->addFlash('error', $this->get('translator')->trans('alert.not_deleted', [], 'element'));
+            }
+            return $this->redirectToRoute('admin_enumeration', ['enumeration' => $element->getEnumeration()->getId()]);
+        }
+
+        $title = $element->getName();
+
+        $breadcrumb = [
+            ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
+            ['caption' => 'menu.admin.manage.enumerations', 'icon' => 'list-ol', 'path' => 'admin_enumerations'],
+            ['fixed' => $element->getEnumeration()->getDescription(), 'path' => 'admin_enumeration', 'options' => ['enumeration' => $element->getEnumeration()->getId()]],
+            ['fixed' => $title, 'path' => 'admin_element_form', 'options' => ['element' => $element->getId()]],
+            ['caption' => 'menu.delete']
+        ];
+
+        return $this->render(':admin:delete_element.html.twig', [
+            'breadcrumb' => $breadcrumb,
+            'title' => $title,
+            'element' => $element
+        ]);
     }
 }
