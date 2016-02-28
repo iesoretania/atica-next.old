@@ -21,7 +21,6 @@
 namespace AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use IesOretania\AticaCoreBundle\Entity\Membership;
 use IesOretania\AticaCoreBundle\Entity\User;
 use IesOretania\AticaCoreBundle\Entity\UserProfile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -100,7 +99,7 @@ class AdminUserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $new = (null == $user);
+        $new = (null === $user);
         if ($new) {
             $user = $em->getRepository('AticaCoreBundle:User')->createNewUser($this->get('atica.core_bundle.user.extension')->getCurrentOrganization(), false);
         }
