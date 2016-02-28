@@ -23,6 +23,7 @@ namespace IesOretania\AticaCoreBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  *
@@ -45,7 +46,8 @@ class Enumeration
     protected $name;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="string", nullable=false)
+     * @NotBlank()
      * @var string
      */
     protected $description;

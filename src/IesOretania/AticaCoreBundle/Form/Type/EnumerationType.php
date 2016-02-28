@@ -48,6 +48,7 @@ class EnumerationType extends AbstractType
         $builder
             ->add('description', null, [
                 'label' => 'form.description',
+                'required' => true
             ]);
     }
 
