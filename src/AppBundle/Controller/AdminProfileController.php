@@ -117,10 +117,10 @@ class AdminProfileController extends Controller
     }
 
     /**
-     * @Route("/borrar/{profile}", name="admin_profile_delete", methods={"GET", "POST"}, requirements={"profile": "\d+"} )
-     * @Security("is_granted('manage', profile)")
+     * @Route("/eliminar/{profile}", name="admin_profile_delete", methods={"GET", "POST"}, requirements={"profile": "\d+"} )
+     * @Security("is_granted('manage', profile) and (profile.getModule() == null)")
      */
-    public function deleteProfileAction(Request $request, Profile $profile = null)
+    public function deleteProfileAction(Request $request, Profile $profile)
     {
         if ('POST' === $request->getMethod() && $request->request->has('delete')) {
             // Eliminar la organización de la base de datos
@@ -137,12 +137,12 @@ class AdminProfileController extends Controller
             return new RedirectResponse($url);
         }
 
-        $title = $profile->getNameNeutral() ?: $this->get('translator')->trans('profile.new', [], 'admin');
+        $title = $profile->getNameNeutral();
 
         $breadcrumb = [
             ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
             ['caption' => 'menu.admin.manage.profiles', 'icon' => 'street-view', 'path' => 'admin_profiles'],
-            ['fixed' => $profile->getNameNeutral(), 'path' => 'admin_profile_form', 'options' => ['profile' => $profile->getId()]],
+            ['fixed' => $title, 'path' => 'admin_profile_form', 'options' => ['profile' => $profile->getId()]],
             ['caption' => 'menu.delete']
         ];
 
