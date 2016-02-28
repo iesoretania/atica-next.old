@@ -72,11 +72,19 @@ class AdminEnumerationController extends Controller
     }
 
     /**
-     * @Route("/{enumeration}", name="admin_edit_enumeration", methods={"GET", "POST"}, requirements={"enumeration": "\d+"} )
-     * @Security("is_granted('manage', enumeration)")
+     * @Route("/nueva", name="admin_enumeration_new", methods={"GET", "POST"}, requirements={"enumeration": "\d+"} )
+     * @Route("/{enumeration}", name="admin_enumeration_form", methods={"GET", "POST"}, requirements={"enumeration": "\d+"} )
      */
-    public function editEnumerationAction(Request $request, Enumeration $enumeration)
+    public function editEnumerationAction(Request $request, Enumeration $enumeration = null)
     {
+        if (null === $enumeration) {
+            $enumeration = new Enumeration();
+            $enumeration
+                ->setExternal(false)
+                ->setOrganization($this->get('atica.core_bundle.user.extension')->getCurrentOrganization());
+            $this->getDoctrine()->getManager()->persist($enumeration);
+        }
+
         $isFromModule = $enumeration->getModule() !== null;
         $form = $this->createForm('IesOretania\AticaCoreBundle\Form\Type\EnumerationType', $enumeration, [
             'is_module' => $isFromModule
@@ -104,15 +112,51 @@ class AdminEnumerationController extends Controller
             return $this->redirectToRoute('admin_enumerations');
         }
 
+        $title = (null === $enumeration->getId()) ? $this->get('translator')->trans('form.create', [], 'enumeration') : $enumeration->getDescription();
+
         return $this->render('admin/form_enumeration.html.twig', [
             'form' => $form->createView(),
             'breadcrumb' => [
                 ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
                 ['caption' => 'menu.admin.manage.enumerations', 'icon' => 'list-ol', 'path' => 'admin_enumerations'],
-                ['fixed' => $enumeration->getDescription()]
+                ['fixed' => $title]
             ],
-            'title' => $enumeration->getDescription(),
-            'new' => false,
+            'title' => $title,
+            'enumeration' => $enumeration
+        ]);
+    }
+
+    /**
+     * @Route("/eliminar/{enumeration}", name="admin_enumeration_delete", methods={"GET", "POST"}, requirements={"enumeration": "\d+"} )
+     * @Security("is_granted('manage', enumeration) and (enumeration.getModule() == null)")
+     */
+    public function deleteEnumerationAction(Request $request, Enumeration $enumeration)
+    {
+        if ('POST' === $request->getMethod() && $request->request->has('delete')) {
+            // Eliminar la organización de la base de datos
+            $this->getDoctrine()->getManager()->remove($enumeration);
+            try {
+                $this->getDoctrine()->getManager()->flush();
+                $this->addFlash('success', $this->get('translator')->trans('alert.deleted', [], 'enumeration'));
+            }
+            catch(\Exception $e) {
+                $this->addFlash('error', $this->get('translator')->trans('alert.not_deleted', [], 'enumeration'));
+            }
+            return $this->redirectToRoute('admin_enumerations');
+        }
+
+        $title = $enumeration->getDescription();
+
+        $breadcrumb = [
+            ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
+            ['caption' => 'menu.admin.manage.profiles', 'icon' => 'street-view', 'path' => 'admin_profiles'],
+            ['fixed' => $title, 'path' => 'admin_enumeration_form', 'options' => ['enumeration' => $enumeration->getId()]],
+            ['caption' => 'menu.delete']
+        ];
+
+        return $this->render(':admin:delete_enumeration.html.twig', [
+            'breadcrumb' => $breadcrumb,
+            'title' => $title,
             'enumeration' => $enumeration
         ]);
     }

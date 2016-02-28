@@ -9,9 +9,9 @@
     {{ form_start(form) }}
         {{ form_widget(form) }}
         {{ m.start_button }}
-        {% if not new %}
+        {% if enumeration.id is not null %}
             {{ m.submit_button('submit', 'form.submit'|trans, 'check') }}
-            {% if enumeration.module is null %}{{ m.link_button('', 'form.delete'|trans, 'trash', 'btn-danger') }}{% endif %}
+            {% if enumeration.module is null %}{{ m.link_button(path('admin_enumeration_delete', {'enumeration': enumeration.id}), 'form.delete'|trans, 'trash', 'btn-danger') }}{% endif %}
         {% else %}
             {{ m.submit_button('submit', 'form.create'|trans, 'plus') }}
         {% endif %}

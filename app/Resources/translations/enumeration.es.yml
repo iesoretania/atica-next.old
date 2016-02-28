@@ -8,6 +8,7 @@ form.delete: Eliminar lista
 form.elements: Elementos de la lista
 
 form.back: Volver a la gestión de listas
+form.delete_back: Volver a la lista
 
 alert.saved: Datos guardados correctamente
 alert.deleted: Lista eliminada con éxito
@@ -16,3 +17,6 @@ alert.not_deleted: No se ha podido eliminar la lista. Compruebe que no tenga dat
 warning.from_module: >
     Esta lista forma parte de un módulo de la aplicación. No podrá ser eliminada salvo que el módulo
     sea desactivado para la organización.
+
+prompt.delete_confirm: >
+    ¡ATENCIÓN! La lista sólo podrá ser eliminada si no existen datos asociados a ella.
