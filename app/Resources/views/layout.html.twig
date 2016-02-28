@@ -1,5 +1,6 @@
 {% trans_default_domain 'menu' %}
 {% extends 'base.html.twig' %}
+{% import 'macros_layout.html.twig' as ml %}
 
 {% block title %}
     {% if title is defined and title is not empty %}
@@ -25,63 +26,24 @@
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-main">
-                {% for order, item in menu|default(menu_extension.menu) %}
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-fw fa-{{ item.icon }}"></i> {{ item.caption|trans }}<span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                {% for child in item.children %}
-                                <li><a href="{{ path(child.routeName, child.routeParams) }}"><i class="fa fa-fw fa-{{ child.icon }}"></i> {{ child.caption|trans }}{% if child.routeName == app.request.get('_route') %} <i class="fa fa-fw fa-check"></i>{% endif %}</a></li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                    </ul>
-                {% endfor %}
-
+                {{ ml.navbar_menu(menu|default(menu_extension.menu)) }}
                 {% if not app.user %}
                     <a href="{{ path('login') }}" class="btn btn-default navbar-btn pull-right">Entrar en la aplicación</a>
                 {% else %}
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-user"></i> {{ 'navbar.logged.as'|trans({'{{ user }}': app.user.person }) }}<span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ path('personal_form') }}"><i class="fa fa-cog"></i> {{ 'menu.personal'|trans }}</a></li>
-                                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                                    <li class="divider"></li>
-                                    <li><a href="{{ path('frontpage', {'_switch_to': '_exit'}) }}"><i class="fa fa-user-secret"></i> {{ 'menu.impersonate.exit'|trans }}</a></li>
-                                {% endif %}
-                                {% if is_granted('ROLE_ADMIN') %}
-                                    <li class="divider"></li>
-                                    <li><a href="{{ path('admin_menu') }}"><i class="fa fa-wrench"></i> {{ 'menu.manage'|trans }}</a></li>
-                                {% endif %}
-                                <li class="divider"></li>
-                                <li><a href="{{ path('logout') }}"><i class="fa fa-power-off"></i> {{ 'menu.logout'|trans }}</a></li>
-                            </ul>
-                        </li>
-                    </ul>
+                    {% include 'partial_usermenu.html.twig' %}
                 {% endif %}
             </div>
         </div>
     </nav>
     <div class="container">
         {% if breadcrumb is defined %}
-            {% include 'breadcrumb.html.twig' %}
+            {% include 'partial_breadcrumb.html.twig' %}
         {% endif %}
         {% if title is defined %}
             <h1 class="well">{{ ((title is null and breadcrumb is defined) ? (breadcrumb|last).caption|trans : title) }}</h1>
         {% endif %}
-        {% for flashMessage in app.session.flashbag.get('success') %}
-            <div class="alert alert-success alert-dismissable" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
-                {{ flashMessage }}
-            </div>
-        {% endfor %}
-        {% for flashMessage in app.session.flashbag.get('error') %}
-            <div class="alert alert-danger alert-dismissable" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
-                {{ flashMessage }}
-            </div>
-        {% endfor %}
+        {{ ml.flash_message('success', 'success') }}
+        {{ ml.flash_message('error', 'danger') }}
         {% block content %}{% endblock %}
     </div>
 
