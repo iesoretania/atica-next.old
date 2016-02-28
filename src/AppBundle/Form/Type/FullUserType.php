@@ -45,7 +45,7 @@ class FullUserType extends UserType
                     return $item->toGenderString($options['user_gender']);
                 },
                 'group_by' => function(ProfileElementModel $item) use ($options) {
-                    return $item->getElement() ? $item->getProfile() : '';
+                    return $item->getElement() ? $item->getProfile()->getName($options['user_gender']) : '';
                 },
                 'choice_translation_domain' => false,
                 'attr' => [
