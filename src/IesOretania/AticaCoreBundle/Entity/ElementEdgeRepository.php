@@ -141,6 +141,8 @@ class ElementEdgeRepository extends EntityRepository
             $em->persist($newEdge);
         }
 
+        $em->flush();
+
         return true;
     }
 

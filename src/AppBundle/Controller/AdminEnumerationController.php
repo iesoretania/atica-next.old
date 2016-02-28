@@ -250,7 +250,6 @@ class AdminEnumerationController extends Controller
                 $attributeElement = $form->get('element' . $attribute->getTarget()->getId())->getData();
                 if ($attributeElement) {
                     $em->getRepository('AticaCoreBundle:ElementEdge')->addEdge($element, $attributeElement);
-                    $em->flush();
                 }
             }
 

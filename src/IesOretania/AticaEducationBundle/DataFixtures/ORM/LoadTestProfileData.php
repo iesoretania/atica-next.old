@@ -97,16 +97,9 @@ class LoadTestProfileData extends EnvironmentOrderedAbstractFixture
         $manager->flush();
 
         $manager->getRepository('AticaCoreBundle:ElementEdge')->addEdge($course1Elem, $level1Elem);
-        $manager->flush();
-
         $manager->getRepository('AticaCoreBundle:ElementEdge')->addEdge($group1Elem, $course1Elem);
-        $manager->flush();
-
         $manager->getRepository('AticaCoreBundle:ElementEdge')->addEdge($course2Elem, $level2Elem);
-        $manager->flush();
-
         $manager->getRepository('AticaCoreBundle:ElementEdge')->addEdge($group2Elem, $course2Elem);
-        $manager->flush();
     }
 
     public function getOrder()
