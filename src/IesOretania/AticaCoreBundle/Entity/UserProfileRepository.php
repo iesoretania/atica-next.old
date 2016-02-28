@@ -32,6 +32,10 @@ class UserProfileRepository extends EntityRepository
         return $userProfiles;
     }
 
+    /**
+     * @param User $user
+     * @return mixed
+     */
     public function deleteAllFromUser(User $user)
     {
         return $this->getEntityManager()->getRepository('AticaCoreBundle:UserProfile')
@@ -41,5 +45,36 @@ class UserProfileRepository extends EntityRepository
             ->delete()
             ->getQuery()
             ->execute();
+    }
+
+    /**
+     * @param User $user
+     * @param ProfileElementModel[] $profileElementModels
+     */
+    public function addToUser(User $user, $profileElementModels)
+    {
+        // añadir los seleccionados
+        /**
+         * @var ProfileElementModel $profileElement
+         */
+        foreach($profileElementModels as $profileElement) {
+            $userProfile = new UserProfile();
+            $userProfile
+                ->setUser($user)
+                ->setProfile($profileElement->getProfile())
+                ->setElement($profileElement->getElement());
+            $this->getEntityManager()->persist($userProfile);
+        }
+    }
+
+    /**
+     * @param User $user
+     * @param ProfileElementModel[] $profileElementModels
+     */
+    public function setToUser(User $user, $profileElementModels)
+    {
+        // borrar todos los perfiles del usuario
+        $this->deleteAllFromUser($user);
+        $this->addToUser($user, $profileElementModels);
     }
 }

@@ -435,13 +435,24 @@ class User implements UserInterface, \Serializable
     /**
      * Get userProfiles
      *
+     * @param ProfileElementModel[]|null $profiles
      * @return Collection
      */
-    public function getProfileElements()
+    public function getProfileElements($profiles = null)
     {
         return array_map(
-            function (UserProfile $userProfile) {
-                return new ProfileElementModel($userProfile->getProfile(), $userProfile->getElement());
+            function (UserProfile $userProfile) use ($profiles) {
+                $profileElement = null;
+                if (null === $profiles) {
+                    $profileElement = new ProfileElementModel($userProfile->getProfile(), $userProfile->getElement());
+                } else {
+                    foreach ($profiles as $item) {
+                        if ($userProfile->getElement() == $item->getElement() && $userProfile->getProfile() == $item->getProfile()) {
+                            $profileElement = $item;
+                        }
+                    }
+                }
+                return $profileElement;
             },
             $this->userProfiles->toArray()
         );

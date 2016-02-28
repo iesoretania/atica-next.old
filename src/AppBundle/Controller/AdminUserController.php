@@ -20,10 +20,8 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Form\Model\ProfileElementModel;
 use Doctrine\ORM\EntityManager;
 use IesOretania\AticaCoreBundle\Entity\Membership;
-use IesOretania\AticaCoreBundle\Entity\Person;
 use IesOretania\AticaCoreBundle\Entity\User;
 use IesOretania\AticaCoreBundle\Entity\UserProfile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -102,26 +100,11 @@ class AdminUserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        if (null === $user) {
-            $user = new User();
-            $person = new Person();
-            $person->setDisplayName('');
-            $user->setPerson($person);
-
-            $membership = new Membership();
-            $membership
-                ->setOrganization($this->get('atica.core_bundle.user.extension')->getCurrentOrganization())
-                ->setUser($user)
-                ->setLocalAdministrator(false);
-            $em->persist($user->getPerson());
-            $em->persist($user);
-            $em->persist($membership);
-
-            $new = true;
-        } else {
-            $new = false;
-            $this->denyAccessUnlessGranted('manage', $user);
+        $new = (null == $user);
+        if ($new) {
+            $user = $em->getRepository('AticaCoreBundle:User')->createNewUser($this->get('atica.core_bundle.user.extension')->getCurrentOrganization(), false);
         }
+        $this->denyAccessUnlessGranted('manage', $user);
 
         $me = ($user->getId() === $this->getUser()->getId());
 
@@ -135,17 +118,7 @@ class AdminUserController extends Controller
             'user_gender' => $user->getPerson()->getGender()
         ]);
 
-        $currentProfiles = [];
-
-        foreach($user->getProfileElements() as $profileElement) {
-            foreach($profiles as $item) {
-                if ($item == $profileElement) {
-                    $currentProfiles[] = $item;
-                }
-            }
-        }
-
-        $form->get('profiles')->setData($currentProfiles);
+        $form->get('profiles')->setData($user->getProfileElements($profiles));
 
         $form->handleRequest($request);
 
@@ -166,21 +139,8 @@ class AdminUserController extends Controller
 
             // Probar a guardar los cambios
             try {
-                // borrar todos los perfiles del usuario
-                $em->getRepository('AticaCoreBundle:UserProfile')->deleteAllFromUser($user);
-
-                // añadir los seleccionados
-                /**
-                 * @var ProfileElementModel $profileElement
-                 */
-                foreach($form->get('profiles')->getData() as $profileElement) {
-                    $userProfile = new UserProfile();
-                    $userProfile
-                        ->setUser($user)
-                        ->setProfile($profileElement->getProfile())
-                        ->setElement($profileElement->getElement());
-                    $em->persist($userProfile);
-                }
+                // actualizar todos los perfiles del usuario
+                $em->getRepository('AticaCoreBundle:UserProfile')->setToUser($user, $form->get('profiles')->getData());
 
                 $em->flush();
                 $this->addFlash('success', $message);
@@ -193,8 +153,7 @@ class AdminUserController extends Controller
             }
         }
 
-        $titulo = (string) $user;
-        $titulo = $titulo ?: $this->get('translator')->trans('user.new', [], 'admin');
+        $titulo = ((string) $user) ?: $this->get('translator')->trans('user.new', [], 'admin');
 
         return $this->render('admin/form_user.html.twig', [
             'form' => $form->createView(),

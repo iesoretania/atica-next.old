@@ -48,4 +48,33 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     public function supportsClass($class) {
         return $class === 'IesOretania\AticaCoreBundle\Entity\User';
     }
+
+    /**
+     * Crea un nuevo usuario y, opcionalmente, lo incluye en una organización
+     *
+     * @param Organization|null $organization
+     * @param bool $localAdmin
+     * @return User
+     */
+    public function createNewUser(Organization $organization = null, $localAdmin = false)
+    {
+        $user = new User();
+        $person = new Person();
+        $person->setDisplayName('');
+        $user->setPerson($person);
+
+        if ($organization) {
+            $membership = new Membership();
+            $membership
+                ->setOrganization($organization)
+                ->setUser($user)
+                ->setLocalAdministrator($localAdmin);
+            $this->getEntityManager()->persist($membership);
+        }
+
+        $this->getEntityManager()->persist($user->getPerson());
+        $this->getEntityManager()->persist($user);
+
+        return $user;
+    }
 }
