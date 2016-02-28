@@ -27,7 +27,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="EnumerationRepository")
  */
 class Enumeration
 {

@@ -79,23 +79,18 @@ class AdminEnumerationController extends Controller
     public function editEnumerationAction(Request $request, Enumeration $enumeration = null)
     {
         if (null === $enumeration) {
-            $enumeration = new Enumeration();
-            $enumeration
-                ->setExternal(false)
-                ->setOrganization($this->get('atica.core_bundle.user.extension')->getCurrentOrganization());
-            $this->getDoctrine()->getManager()->persist($enumeration);
+            $enumeration = $this->getDoctrine()->getManager()->getRepository('AticaCoreBundle:Enumeration')->createNewEnumeration($this->get('atica.core_bundle.user.extension')->getCurrentOrganization());
         }
 
-        $isFromModule = $enumeration->getModule() !== null;
         $form = $this->createForm('IesOretania\AticaCoreBundle\Form\Type\EnumerationType', $enumeration, [
-            'is_module' => $isFromModule
+            'is_module' => $enumeration->getModule() !== null
         ]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if ($request->request->has('delete') && !$isFromModule) {
+            if ($request->request->has('delete') && !($enumeration->getModule() !== null)) {
                 // Eliminar la enumeración de la base de datos
                 $this->getDoctrine()->getManager()->remove($enumeration);
                 try {
