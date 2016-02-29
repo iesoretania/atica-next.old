@@ -24,4 +24,18 @@ use Gedmo\Sortable\Entity\Repository\SortableRepository;
 
 class ElementRepository extends SortableRepository
 {
+    /**
+     * Crea un nuevo elemento
+     *
+     * @param Enumeration $enumeration
+     * @return Element
+     */
+    public function createNewElement(Enumeration $enumeration)
+    {
+        $element = new Element();
+        $element->setEnumeration($enumeration);
+        $this->getEntityManager()->persist($element);
+
+        return $element;
+    }
 }

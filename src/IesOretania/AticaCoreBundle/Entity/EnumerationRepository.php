@@ -27,7 +27,7 @@ class EnumerationRepository extends EntityRepository
     /**
      * Crea una nueva lista y la incluye en una organización
      *
-     * @param Organization|null $organization
+     * @param Organization $organization
      * @param bool $external
      * @return Enumeration
      */

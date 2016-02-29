@@ -201,12 +201,9 @@ class AdminEnumerationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        if ('admin_element_new' === $request->get('_route')) {
-            $element = new Element();
-            $element->setEnumeration($enumeration);
-            $new = true;
-        } else {
-            $new = false;
+        $new = 'admin_element_new' === $request->get('_route');
+        if ($new) {
+            $element = $em->getRepository('AticaCoreBundle:Element')->createNewElement($enumeration);
         }
 
         $this->denyAccessUnlessGranted('manage', $element->getEnumeration());
