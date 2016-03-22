@@ -30,10 +30,6 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $menu = $this->get('app.menu_builders_chain')->getMenu();
-
-        return $this->render('default/frontpage.html.twig', [
-            'menu' => $menu
-        ]);
+        return $this->render('default/frontpage.html.twig');
     }
 }

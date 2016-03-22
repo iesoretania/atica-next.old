@@ -20,6 +20,7 @@
 
 namespace AppBundle\Service;
 
+use IesOretania\AticaCoreBundle\Menu\MenuItem;
 use IesOretania\AticaCoreBundle\Service\MenuBuilderInterface;
 
 class MenuBuilderChain
@@ -29,9 +30,15 @@ class MenuBuilderChain
      */
     private $menuBuilders;
 
+    /**
+     * @var MenuItem[]|null
+     */
+    private $menuCache;
+
     public function __construct()
     {
-        $this->menuBuilders = array();
+        $this->menuBuilders = [];
+        $this->menuCache = null;
     }
 
     public function addMenuBuilder($menuBuilder)
@@ -46,6 +53,10 @@ class MenuBuilderChain
 
     public function getMenu()
     {
+        if ($this->menuCache) {
+            return $this->menuCache;
+        }
+
         $menu = [];
 
         foreach($this->menuBuilders as $menuBuilder) {
@@ -56,6 +67,13 @@ class MenuBuilderChain
         }
         ksort($menu, SORT_NUMERIC);
 
+        $this->menuCache = $menu;
+
         return $menu;
+    }
+
+    public function clearCache()
+    {
+        $this->menuCache = null;
     }
 }

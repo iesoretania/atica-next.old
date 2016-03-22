@@ -57,7 +57,6 @@ class AdminController extends Controller
                 'breadcrumb' => [
                     ['caption' => 'menu.manage', 'icon' => 'wrench']
                 ],
-                'menu' => $menu,
                 'children' => $children
             ]);
     }
