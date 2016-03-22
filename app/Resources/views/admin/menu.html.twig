@@ -4,7 +4,7 @@
 
 {% block content %}
     <section class="row tile-row">
-        {% for item in children %}
+        {% for item in menu_item.children %}
             {{ mm.menu_item(item.caption, item.description, item.routeName, item.routeParams, item.color, item.icon) }}
         {% endfor %}
         <article class="col-md-4 tile tile-col-4 tile-teal">

@@ -41,14 +41,14 @@ class AdminController extends Controller
 
         $menu = $this->get('app.menu_builders_chain')->getMenu();
 
-        $children = [];
+        $menuItem = [];
 
         /**
          * @var MenuItem $item
          */
         foreach($menu as $item) {
             if ($item->getName() === 'admin') {
-                $children = $item->getChildren();
+                $menuItem = $item;
             }
         }
 
@@ -57,7 +57,7 @@ class AdminController extends Controller
                 'breadcrumb' => [
                     ['caption' => 'menu.manage', 'icon' => 'wrench']
                 ],
-                'children' => $children
+                'menu_item' => $menuItem
             ]);
     }
 }
