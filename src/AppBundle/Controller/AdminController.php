@@ -55,7 +55,7 @@ class AdminController extends Controller
         return $this->render('admin/menu.html.twig',
             [
                 'breadcrumb' => [
-                    ['caption' => 'menu.manage', 'icon' => 'wrench']
+                    ['caption' => $menuItem->getCaption(), 'icon' => $menuItem->getIcon()]
                 ],
                 'menu_item' => $menuItem
             ]);
