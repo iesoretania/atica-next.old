@@ -43,7 +43,7 @@ class EducationMenu implements MenuBuilderInterface
             ->setCaption('menu.education.groups')
             ->setDescription('menu.education.groups.detail')
             ->setColor('amber')
-            ->setIcon('group');
+            ->setIcon('slideshare');
 
         $menu->addChild($item);
 
@@ -87,7 +87,7 @@ class EducationMenu implements MenuBuilderInterface
             ->setCaption('menu.education.departments')
             ->setDescription('menu.education.departments.detail')
             ->setColor('emerald')
-            ->setIcon('object-group');
+            ->setIcon('sitemap');
 
         $menu->addChild($item);
 

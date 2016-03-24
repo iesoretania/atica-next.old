@@ -81,7 +81,7 @@ class CoreMenu implements MenuBuilderInterface
             ->setCaption('menu.admin.manage.users')
             ->setDescription('menu.admin.manage.users.detail')
             ->setColor('magenta')
-            ->setIcon('user');
+            ->setIcon('users');
 
         $menu->addChild($item);
 
