@@ -65,11 +65,17 @@ class MenuItem
     protected $children;
 
     /**
+     * @var MenuItem|null
+     */
+    protected $parent;
+
+    /**
      * MenuItem constructor
      */
     public function __construct()
     {
         $this->children = new ArrayCollection();
+        $this->parent = null;
     }
 
     /**
@@ -213,6 +219,7 @@ class MenuItem
     public function addChild($child)
     {
         $this->children->add($child);
+        $child->setParent($this);
         return $this;
     }
 
@@ -223,6 +230,24 @@ class MenuItem
     public function removeChild($child)
     {
          $this->children->remove($child);
+        return $this;
+    }
+
+    /**
+     * @return MenuItem|null
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param MenuItem|null $parent
+     * @return MenuItem
+     */
+    public function setParent($parent)
+    {
+        $this->parent = $parent;
         return $this;
     }
 }
