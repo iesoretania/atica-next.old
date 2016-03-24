@@ -1,2 +1,20 @@
 menu.education: Gestión académica
 menu.education.detail: Tareas relacionadas con la actividad académica
+
+menu.education.groups: Grupos, niveles y enseñanzas
+menu.education.groups.detail: Gestionar grupos, niveles y enseñanzas del centro
+
+menu.education.students: Alumnado
+menu.education.students.detail: Consultar datos del alumnado del centro
+
+menu.education.teachers: Profesorado
+menu.education.teachers.detail: Gestionar la plantilla docente del centro
+
+menu.education.subjects: Asignaturas
+menu.education.subjects.detail: Módulos y asignaturas impartidas en el centro
+
+menu.education.departments: Departamentos
+menu.education.departments.detail: Gestionar departamentos del centro
+
+menu.education.calendar: Calendario escolar
+menu.education.calendar.detail: Períodos lectivos y no lectivos

@@ -30,11 +30,77 @@ class EducationMenu implements MenuBuilderInterface
         $menu = new MenuItem();
         $menu
             ->setName('education')
-            ->setRouteName('frontpage')
+            ->setRouteName('edu_admin_menu')
             ->setCaption('menu.education')
             ->setDescription('menu.education.detail')
             ->setColor('yellow')
             ->setIcon('graduation-cap');
+
+        $item = new MenuItem();
+        $item
+            ->setName('edu.groups')
+            ->setRouteName('frontpage')
+            ->setCaption('menu.education.groups')
+            ->setDescription('menu.education.groups.detail')
+            ->setColor('amber')
+            ->setIcon('group');
+
+        $menu->addChild($item);
+
+        $item = new MenuItem();
+        $item
+            ->setName('edu.students')
+            ->setRouteName('frontpage')
+            ->setCaption('menu.education.students')
+            ->setDescription('menu.education.students.detail')
+            ->setColor('orange')
+            ->setIcon('child');
+
+        $menu->addChild($item);
+
+        $item = new MenuItem();
+        $item
+            ->setName('edu.teachers')
+            ->setRouteName('frontpage')
+            ->setCaption('menu.education.teachers')
+            ->setDescription('menu.education.teachers.detail')
+            ->setColor('magenta')
+            ->setIcon('lightbulb-o');
+
+        $menu->addChild($item);
+
+        $item = new MenuItem();
+        $item
+            ->setName('edu.subjects')
+            ->setRouteName('frontpage')
+            ->setCaption('menu.education.subjects')
+            ->setDescription('menu.education.subjects.detail')
+            ->setColor('green')
+            ->setIcon('leanpub');
+
+        $menu->addChild($item);
+
+        $item = new MenuItem();
+        $item
+            ->setName('edu.departments')
+            ->setRouteName('frontpage')
+            ->setCaption('menu.education.departments')
+            ->setDescription('menu.education.departments.detail')
+            ->setColor('emerald')
+            ->setIcon('object-group');
+
+        $menu->addChild($item);
+
+        $item = new MenuItem();
+        $item
+            ->setName('edu.calendar')
+            ->setRouteName('frontpage')
+            ->setCaption('menu.education.calendar')
+            ->setDescription('menu.education.calendar.detail')
+            ->setColor('cyan')
+            ->setIcon('calendar');
+
+        $menu->addChild($item);
 
         return $menu;
     }
