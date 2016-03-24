@@ -151,7 +151,7 @@ class MenuItem
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getRouteParams()
     {
@@ -159,7 +159,7 @@ class MenuItem
     }
 
     /**
-     * @param mixed $routeParams
+     * @param array $routeParams
      * @return MenuItem
      */
     public function setRouteParams($routeParams)
@@ -216,7 +216,7 @@ class MenuItem
      * @param MenuItem $child
      * @return MenuItem
      */
-    public function addChild($child)
+    public function addChild(MenuItem $child)
     {
         $this->children->add($child);
         $child->setParent($this);
@@ -227,7 +227,7 @@ class MenuItem
      * @param MenuItem $child
      * @return MenuItem
      */
-    public function removeChild($child)
+    public function removeChild(MenuItem $child)
     {
          $this->children->remove($child);
         return $this;
@@ -245,7 +245,7 @@ class MenuItem
      * @param MenuItem|null $parent
      * @return MenuItem
      */
-    public function setParent($parent)
+    public function setParent(MenuItem $parent)
     {
         $this->parent = $parent;
         return $this;
