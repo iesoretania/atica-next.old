@@ -46,8 +46,8 @@ class CoreMenu implements MenuBuilderInterface
         $menu
             ->setName('admin')
             ->setRouteName('admin_menu')
-            ->setCaption('menu.manage')
-            ->setDescription('menu.manage.detail')
+            ->setCaption('menu.admin')
+            ->setDescription('menu.admin.detail')
             ->setColor('teal')
             ->setIcon('wrench');
 
@@ -81,7 +81,7 @@ class CoreMenu implements MenuBuilderInterface
             ->setCaption('menu.admin.manage.users')
             ->setDescription('menu.admin.manage.users.detail')
             ->setColor('magenta')
-            ->setIcon('users');
+            ->setIcon('user');
 
         $menu->addChild($item);
 
@@ -106,6 +106,7 @@ class CoreMenu implements MenuBuilderInterface
             ->setIcon('list-ol');
 
         $menu->addChild($item);
+
         $item = new MenuItem();
         $item
             ->setName('admin.modules')
