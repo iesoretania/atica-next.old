@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')();
 
 gulp.task('default', function() {
+
     // procesar SCSS
     gulp.src(['node_modules/select2/dist/css/select2.css', 'web/css/**/*.scss', 'web/css/lato/css/fonts.css', 'web/css/atica.css'])
         .pipe(plugins.sass())
@@ -10,7 +11,7 @@ gulp.task('default', function() {
                 'Android 2.3',
                 'Android >= 4',
                 'Chrome >= 20',
-                'Firefox >= 24',
+                'Firefox >= 3.6',
                 'Explorer >= 8',
                 'iOS >= 6',
                 'Opera >= 12',
@@ -19,7 +20,9 @@ gulp.task('default', function() {
             cascade: false
         }))
         .pipe(plugins.concat('pack.css'))
-        .pipe(plugins.cssnano())
+        .pipe(plugins.cleanCss({
+            compability: 'ie8'
+        }))
         .pipe(gulp.dest('web/dist/css'));
 
     // copiar jQuery
