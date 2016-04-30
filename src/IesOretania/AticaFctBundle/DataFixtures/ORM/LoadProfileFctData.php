@@ -117,12 +117,12 @@ class LoadProfileFctData extends AbstractFixture implements OrderedFixtureInterf
             ->setOrganization($org)
             ->setModule($module)
             ->setCode('workcenter-manager')
-            ->setDescription('Gestor del centro de trabajo')
+            ->setDescription('Responsable del centro de trabajo')
             ->setEnumeration($this->getReference('enum-workcenter'))
-            ->setInitials('GCT')
-            ->setNameNeutral('Gestor/a de centro de trabajo')
-            ->setNameMale('Gestor de centro de trabajo')
-            ->setNameFemale('Gestora de centro de trabajo');
+            ->setInitials('RCT')
+            ->setNameNeutral('Responsable de centro de trabajo')
+            ->setNameMale('Responsable de centro de trabajo')
+            ->setNameFemale('Responsable de centro de trabajo');
 
         $manager->persist($profile);
 

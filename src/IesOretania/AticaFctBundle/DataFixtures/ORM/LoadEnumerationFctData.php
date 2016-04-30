@@ -56,6 +56,18 @@ class LoadEnumerationFctData extends AbstractFixture implements OrderedFixtureIn
 
         $manager->persist($enumeration);
 
+        $enumeration = new Enumeration();
+        $enumeration
+            ->setOrganization($org)
+            ->setModule($module)
+            ->setExternal(true)
+            ->setName('company')
+            ->setDescription('Empresas');
+
+        $this->setReference('enum-company', $enumeration);
+
+        $manager->persist($enumeration);
+
         $manager->flush();
     }
 
