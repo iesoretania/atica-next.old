@@ -18,39 +18,37 @@
   along with this program.  If not, see [http://www.gnu.org/licenses/].
 */
 
-namespace IesOretania\AticaFctBundle\Entity;
+namespace IesOretania\AticaEducationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use IesOretania\AticaCoreBundle\Entity\Person;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
+ * @UniqueEntity(fields={"code"})
  */
-class Agreement
+class Student
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * @ORM\OneToOne(targetEntity="IesOretania\AticaCoreBundle\Entity\Person")
+     * @ORM\JoinColumn(nullable=false)
      * @var int
      */
     protected $id;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
-     * @var \DateTime
-     */
-    protected $signDate;
-
-    /**
-     * @ORM\Column(type="date")
-     * @var \DateTime
-     */
-    protected $fromDate;
-
-    /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="string")
      * @var string
      */
-    protected $toDate;
+    protected $code;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Group", inversedBy="students")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $group;
 
 }

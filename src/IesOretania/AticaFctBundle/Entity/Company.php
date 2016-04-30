@@ -34,7 +34,7 @@ class Company
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
-     * @ORM\ManyToOne(targetEntity="IesOretania\AticaCoreBundle\Entity\Element")
+     * @ORM\GeneratedValue
      * @var int
      */
     protected $id;
@@ -86,20 +86,6 @@ class Company
      * @ORM\JoinColumn(nullable=false)
      */
     protected $manager;
-
-    /**
-     * Set id
-     *
-     * @param integer $id
-     *
-     * @return Company
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
 
     /**
      * Get id

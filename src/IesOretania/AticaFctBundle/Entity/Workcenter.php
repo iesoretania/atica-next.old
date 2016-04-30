@@ -33,7 +33,7 @@ class Workcenter
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
-     * @ORM\ManyToOne(targetEntity="IesOretania\AticaCoreBundle\Entity\Element")
+     * @ORM\GeneratedValue
      * @var int
      */
     protected $id;
@@ -81,24 +81,10 @@ class Workcenter
     protected $manager;
 
     /**
-     * @ORM\ManyToOne(targetEntity="IesOretania\AticaCoreBundle\Entity\Element")
+     * @ORM\ManyToOne(targetEntity="Company")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $company;
-
-    /**
-     * Set id
-     *
-     * @param integer $id
-     *
-     * @return Workcenter
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
 
     /**
      * Get id
@@ -281,11 +267,11 @@ class Workcenter
     /**
      * Set company
      *
-     * @param Element $company
+     * @param Company $company
      *
      * @return Workcenter
      */
-    public function setCompany(Element $company)
+    public function setCompany(Company $company)
     {
         $this->company = $company;
 
@@ -295,7 +281,7 @@ class Workcenter
     /**
      * Get company
      *
-     * @return Element
+     * @return Company
      */
     public function getCompany()
     {
